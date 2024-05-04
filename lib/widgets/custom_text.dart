@@ -49,3 +49,27 @@ class CustomTextTwo extends StatelessWidget {
     );
   }
 }
+class CustomTextThree extends StatelessWidget {
+  final String text;
+  final Color textColor;
+  final double? fontsize;
+  final FontWeight fontWeight;
+  final double? height;
+  const CustomTextThree(
+      {super.key,
+      required this.text,
+      required this.textColor,
+      this.fontsize,
+      required this.fontWeight, this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.lexend(
+        textStyle: TextStyle(
+            color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height ),
+      ),
+    );
+  }
+}
