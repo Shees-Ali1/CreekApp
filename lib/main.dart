@@ -1,4 +1,5 @@
 
+import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/view/on_boarding/on_boarding_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         builder: (_ , child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
+            home: HomeScreenBooks(),
           );
         }
     );

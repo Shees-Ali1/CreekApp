@@ -38,6 +38,9 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
   flutter_svg:
+  google_fonts: ^6.2.1
+  flutter_custom_clippers:
+
 
 dev_dependencies:
   flutter_test:
