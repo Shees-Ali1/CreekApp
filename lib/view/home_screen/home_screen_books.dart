@@ -4,6 +4,7 @@ import 'package:creekapp/view/home_screen/components/book_details_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +23,8 @@ class HomeScreenBooks extends StatelessWidget {
             ClipPath(
               clipper: OvalBottomBorderClipper(),
               child:  Container(
-                height: 180.h,
+                // height: 200.h,
+                // padding: EdgeInsets.symmetric(vertical: 50.h),
                 decoration: BoxDecoration(
                     color: Color(0xff29604E),
 
@@ -60,45 +62,48 @@ class HomeScreenBooks extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 273.w,
-                            child: TextField(
-                              style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.11.sp,
-                                      fontWeight: FontWeight.w500)),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  borderSide: BorderSide.none,
-                                ),
-                                fillColor: Colors.black.withOpacity(0.45),
-                                filled: true,
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 10.w, vertical: 15.h),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: Colors.white,
-                                ),
-                                hintText: 'Search',
-                                hintStyle: GoogleFonts.inter(
+                      // SizedBox(
+                      //   height: 20.h,
+                      // ),
+                      Padding(
+                        padding:  EdgeInsets.symmetric(vertical: 40.0.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 273.w,
+                              child: TextField(
+                                style: GoogleFonts.inter(
                                     textStyle: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15.11.sp,
                                         fontWeight: FontWeight.w500)),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  fillColor: Colors.black.withOpacity(0.45),
+                                  filled: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10.w, vertical: 15.h),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                  ),
+                                  hintText: 'Search',
+                                  hintStyle: GoogleFonts.inter(
+                                      textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.11.sp,
+                                          fontWeight: FontWeight.w500)),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 8.w,),
-                          SvgPicture.asset(AppIcons.filtericon),
-                        ],
+                            SizedBox(width: 8.w,),
+                            SvgPicture.asset(AppIcons.filtericon),
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -118,7 +123,7 @@ class HomeScreenBooks extends StatelessWidget {
                   return GestureDetector(
                     onTap:(){
                       Get.to(
-                        BookDetailsScreen(),
+                         BookDetailsScreen(bookDetail: books,),
                         transition: Transition.fade,
                         duration: Duration(milliseconds: 500),
                         curve: Curves.easeIn,
@@ -142,10 +147,13 @@ class HomeScreenBooks extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Container(
-                                height: 124.h,
-                                width: 77.w,
-                                color: Colors.red,
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(9.89.r),bottomLeft: Radius.circular(9.89.r)),
+                                child: SizedBox(
+                                  height:  125.23.h,
+                                  width: 77.w,
+                                child: books['bookImage']!=''?Image.asset(books['bookImage'].toString(),fit: BoxFit.cover,):Container(color: Colors.red,),
+                                ),
                               ),
                               SizedBox(width: 5.w,),
                               FittedBox(
@@ -204,7 +212,7 @@ List<dynamic> bookListing=[
     'bookClass':'Graduate',
     'bookCondition':'New',
     'bookPrice':100,
-    'bookPosted':DateTime.now(),
+    'bookPosted':'20 May 2025',
     'bookDescription':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. '
   },
   {
@@ -215,7 +223,7 @@ List<dynamic> bookListing=[
     'bookClass':'Graduate',
     'bookCondition':'New',
     'bookPrice':100,
-    'bookPosted':DateTime.now(),
+    'bookPosted':'20 May 2025',
     'bookDescription':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. '
   },
   {
@@ -226,7 +234,7 @@ List<dynamic> bookListing=[
     'bookClass':'Graduate',
     'bookCondition':'Used',
     'bookPrice':70,
-    'bookPosted':DateTime.now(),
+    'bookPosted':'20 May 2025',
     'sellerId':'qwerty',
     'bookDescription':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. '
   },

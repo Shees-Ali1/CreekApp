@@ -17,6 +17,7 @@ class AppIcons{
   static const drawericon = 'assets/svg/drawernavigation.svg';
   static const chaticon = 'assets/svg/chaticon.svg';
   static const filtericon = 'assets/svg/filtericon.svg';
+  static const msgIcon = 'assets/svg/msgIcon.svg';
 
 
 

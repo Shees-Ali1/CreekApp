@@ -27,4 +27,7 @@ class AppImages {
   static const appbardesign = 'assets/images/appbardesign.png';
   static const harryPotterBook = 'assets/images/harryPotter.png';
   static const soulBook = 'assets/images/soulBook.png';
+  static const doneTick = 'assets/images/doneTick.png';
+  static const sellMan = 'assets/images/sellMan.png';
+  static const qrscan = 'assets/images/qrscan.png';
 }
