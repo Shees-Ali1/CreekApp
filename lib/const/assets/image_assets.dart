@@ -34,4 +34,6 @@ class AppImages {
   static const doneTick = 'assets/images/doneTick.png';
   static const sellMan = 'assets/images/sellMan.png';
   static const qrscan = 'assets/images/qrscan.png';
+  static const pickImage = 'assets/images/pickImage.png';
+  static const approvalPending = 'assets/images/approvalPending.png';
 }

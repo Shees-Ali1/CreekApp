@@ -1,4 +1,6 @@
+import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/view/profile_screen/profile.dart';
+import 'package:creekapp/view/sell_screens/sell_screen_main.dart';
 import 'package:creekapp/view/splash/splash_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'controller/chat_controller.dart';
 import 'controller/login_auth_controller.dart';
 import 'controller/on_boarding_controller.dart';
+import 'view/sell_screens/list_sell_book_screen.dart';
 
 
 void main() {
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: Profile(),
+            home: SellScreenMain(),
           );
         });
   }

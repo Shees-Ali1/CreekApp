@@ -7,17 +7,19 @@ class CustomText extends StatelessWidget {
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
+  final TextAlign? textAlign;
   const CustomText(
       {super.key,
       required this.text,
       required this.textColor,
       this.fontsize,
-      required this.fontWeight, this.height});
+      required this.fontWeight, this.height, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text,textAlign: textAlign,
+
       style: GoogleFonts.inter(
         textStyle: TextStyle(
             color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height ),

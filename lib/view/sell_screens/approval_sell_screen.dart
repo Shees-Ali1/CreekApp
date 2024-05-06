@@ -1,16 +1,17 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
-import 'package:creekapp/view/sell_screens/book_sell_screen.dart';
+import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-class SellScreenMain extends StatelessWidget {
-  const SellScreenMain({super.key});
+class ApprovalSellScreen extends StatelessWidget {
+  const ApprovalSellScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class SellScreenMain extends StatelessWidget {
                               width: 20.w,
                             ),
                             CustomText(
-                              text: 'Listed Items',
+                              text: 'Sell Items',
                               textColor: Colors.white,
                               fontsize: 20.sp,
                               fontWeight: FontWeight.w600,
@@ -68,44 +69,65 @@ class SellScreenMain extends StatelessWidget {
                 ),
 
               ),
-              SizedBox(height: 66.h,),
-              CustomText(
-                text: 'No items listed for sale',
-                textColor: Color(0xff545454),
-                fontsize: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(height: 15.h,),
-              SizedBox(
-                height: 223.h,
-                width: 186.w,
-                child: Image.asset(AppImages.sellMan),
-              ),
-
-              SizedBox(height: 24.h,),
-              GestureDetector(
-                onTap:(){
-                  Get.to(
-                    BookSellScreen(),
-                    transition: Transition.fade,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeIn,
-                  );
-                } ,
-                child: Container(
-                  height: 39.h,
-                  width: 205.w,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Color(0xff29604E),
-                      borderRadius: BorderRadius.circular(8.r)
-                  ),
-                  child:
-                  FittedBox(child: CustomText(text: "Sell your first book here!", textColor: Colors.white, fontWeight: FontWeight.w500,fontsize: 14.sp,))
-
-
+              Container(
+            margin: EdgeInsets.symmetric(vertical: 63.h),
+                width: 321.w,
+                padding: EdgeInsets.only(top: 63.h,),
+                // alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                        color: Color(0xff29604E)
+                    ),
+                    color: Color(0xff29604E).withOpacity(0.08)
                 ),
+                child: Column(
+
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.symmetric(horizontal:12.0.w),
+                      child: SizedBox(
+                        width: 300.w,
+                        child: CustomText(
+                          textAlign:  TextAlign.center,
+                          text: 'Your item is pending approval from Creek',
+                          textColor: Color(0xff454545),
+                          fontsize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 32.h,),
+                    SizedBox(
+                      height: 137.h,
+                      width: 135.w,
+                      child: Image.asset(AppImages.approvalPending),
+
+                    ),
+                    SizedBox(height: 52.h,),
+                    Container(
+                        height: 58.h,
+                        width: 284.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Color(0xff29604E),
+                            borderRadius: BorderRadius.circular(20.r)
+                        ),
+                        child:
+                        CustomTextThree(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+
+
+
+                    ),
+                    SizedBox(height: 17.h,),
+
+                  ],
+                )
               ),
+
+
+
+
 
 
 
@@ -115,5 +137,3 @@ class SellScreenMain extends StatelessWidget {
     );
   }
 }
-
-

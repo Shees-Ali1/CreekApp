@@ -1,9 +1,12 @@
 import 'package:creekapp/const/assets/image_assets.dart';
+import 'package:creekapp/view/sell_screens/list_sell_book_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../const/assets/svg_assets.dart';
@@ -147,19 +150,29 @@ class BookSellScreen extends StatelessWidget {
 
               ),
               SizedBox(height: 32.h,),
-              Container(
-                height: 58.h,
-                width: 322.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Color(0xff29604E).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20.r)
+              GestureDetector(
+                onTap:(){
+                  Get.to(
+                    ListSellBookScreen(),
+                    transition: Transition.fade,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  );
+                } ,
+                child: Container(
+                  height: 58.h,
+                  width: 322.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Color(0xff29604E).withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20.r)
+                  ),
+                  child:
+                  CustomTextThree(text: "Skip to Enter details Manually", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+
+
+
                 ),
-                child:
-                CustomTextThree(text: "Skip to Enter details Manually", textColor: Color(0xff225243), fontWeight: FontWeight.w400,fontsize: 18.sp,)
-
-
-
               ),
               SizedBox(height: 20.h,),
 
