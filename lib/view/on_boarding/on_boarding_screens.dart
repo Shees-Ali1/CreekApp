@@ -1,4 +1,6 @@
+import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/widgets/custom_route.dart';
 import 'package:creekapp/view/splash/splash_sceen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -252,7 +254,9 @@ class OnBoardingThree extends StatelessWidget {
             height: 29.h,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+            CustomRoute.navigateTo(context, LoginView());
+            },
             child: Container(
                 width: 127.w,
                 height: 48.h,
