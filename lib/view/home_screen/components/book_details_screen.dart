@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../widgets/custom _backbutton.dart';
+
 class BookDetailsScreen extends StatelessWidget {
   final dynamic bookDetail;
   const BookDetailsScreen({super.key, required this.bookDetail});
@@ -36,16 +38,7 @@ class BookDetailsScreen extends StatelessWidget {
                       onTap: (){
                         Get.back();
                       },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5.h),
-                        width: 38.w,
-                        height: 38.h,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff29604E)
-                        ),
-                        child: Icon(Icons.arrow_back,color: Colors.white,),
-                      ),
+                      child:CustomBackButton()
                     ),
                   )
                 ],

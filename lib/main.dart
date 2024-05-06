@@ -3,6 +3,7 @@ import 'package:creekapp/view/splash/splash_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'controller/chat_controller.dart';
 import 'controller/login_auth_controller.dart';
 import 'controller/on_boarding_controller.dart';
 
@@ -11,6 +12,7 @@ void main() {
   runApp(const MyApp());
   Get.put(OnBoardingController());
   Get.put(LoginAuthController());
+  Get.put(ChatController());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
+            home: Profile(),
           );
         });
   }

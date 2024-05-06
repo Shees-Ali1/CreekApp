@@ -12,6 +12,7 @@ class AppIcons{
   static const termcondIcon = 'assets/svg/term&condIcon.svg';
   static const whitecreekIcon = 'assets/svg/whitecreekIcon.svg';
   static const passwordeye = 'assets/svg/passwordeye.svg';
+  static const arrowIcon = 'assets/svg/arrowIcon.svg';
 
 
 

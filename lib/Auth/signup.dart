@@ -90,12 +90,27 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         height: 8.h,
                       ),
-                      InputField(
-                        controller: emailController,
-                        hint: 'Harker',
-                        keyboard: TextInputType.emailAddress,
-                        hintStyle:
-                            TextStyle(fontSize: 16.sp, color: Colors.black54),
+                      Container(
+                        padding:  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                        width: double.infinity,
+                        height: 58.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                          color: Color(0xff29604E).withOpacity(0.06),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomTextThree(
+                              text: 'Harker',
+                              fontWeight: FontWeight.w400,
+                              fontsize: 16.sp,
+                              textColor: Colors.black,
+                            ),
+                            Icon(Icons.keyboard_arrow_down)
+
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 38.h,
