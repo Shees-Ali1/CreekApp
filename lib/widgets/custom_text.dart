@@ -50,6 +50,7 @@ class CustomTextTwo extends StatelessWidget {
   }
 }
 class CustomTextThree extends StatelessWidget {
+  final TextAlign? textAlign;
   final String text;
   final Color textColor;
   final double? fontsize;
@@ -60,15 +61,16 @@ class CustomTextThree extends StatelessWidget {
       required this.text,
       required this.textColor,
       this.fontsize,
-      required this.fontWeight, this.height});
+      required this.fontWeight, this.height, this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     return Text(
+      textAlign: textAlign,
       text,
       style: GoogleFonts.lexend(
         textStyle: TextStyle(
-            color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height ),
+            color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height, ),
       ),
     );
   }

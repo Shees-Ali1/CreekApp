@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
         builder: (_ , child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: HomeScreenBooks(),
+
+            home: SplashScreen(),
           );
         }
     );
