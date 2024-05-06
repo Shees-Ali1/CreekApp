@@ -1,12 +1,11 @@
-import 'package:creekapp/view/home_screen/home_screen_books.dart';
-import 'package:creekapp/view/on_boarding/on_boarding_screens.dart';
+import 'package:creekapp/view/profile_screen/profile.dart';
+import 'package:creekapp/view/splash/splash_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'controller/login_auth_controller.dart';
 import 'controller/on_boarding_controller.dart';
-import 'view/splash/splash_sceen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         builder: (_, child) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            home: Profile(),
+            home: SplashScreen(),
           );
         });
   }
