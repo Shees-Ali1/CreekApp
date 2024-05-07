@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/color.dart';
 import '../../../controller/chat_controller.dart';
+import '../main_chat.dart';
 
-class ChatMessageContainer extends StatefulWidget {
-  const ChatMessageContainer({super.key});
+class ChatMessageContainer extends StatelessWidget {
+  final dynamic messagedetail;
 
-  @override
-  State<ChatMessageContainer> createState() => _ChatMessageContainerState();
-}
-
-class _ChatMessageContainerState extends State<ChatMessageContainer> {
-  final ChatController chatController = Get.find();
+  const ChatMessageContainer({
+    super.key,
+    required this.messagedetail,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final ChatController chatController = Get.find();
     final width = MediaQuery.of(context).size.width;
 
     return Obx(() {
@@ -31,7 +32,7 @@ class _ChatMessageContainerState extends State<ChatMessageContainer> {
 
           return Container(
             alignment:
-            role == 'me' ? Alignment.centerRight : Alignment.centerLeft,
+                role == 'me' ? Alignment.centerRight : Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.all(7.0),
               child: Row(
@@ -45,15 +46,15 @@ class _ChatMessageContainerState extends State<ChatMessageContainer> {
                         role == 'me'
                             ? const SizedBox.shrink()
                             : Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.sp,
-                          ),
-                          child: Image.asset(
-                            AppImages.profile,
-                            height: 26.h,
-                            width: 31.w,
-                          ),
-                        ),
+                                padding: EdgeInsets.only(
+                                  top: 10.sp,
+                                ),
+                                child: Image.asset(
+                                  messagedetail['messageImage'],
+                                  height: 26.h,
+                                  width: 31.w,
+                                ),
+                              ),
                         Container(
                           margin: role == 'me'
                               ? EdgeInsets.symmetric(horizontal: 14.sp)
@@ -64,16 +65,20 @@ class _ChatMessageContainerState extends State<ChatMessageContainer> {
                             maxWidth: width / 1.3,
                           ),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.r),
-                              color: primaryColor),
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: role == 'me'
+                                  ? primaryColor
+                                  : primaryColor.withOpacity(0.08)),
                           child: SelectableText(
-                            chatController.messages[index]['message']!,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                              chatController.messages[index]['message']!,
+                              style: GoogleFonts.roboto(
+                                textStyle: TextStyle(
+                                  color:
+                                      role == 'me' ? whiteColor : Colors.black,
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              )),
                         ),
                       ],
                     ),

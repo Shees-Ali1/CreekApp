@@ -21,88 +21,105 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            margin: EdgeInsets.symmetric(horizontal: 33.sp),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 95.h,
-              ),
-              Center(
-                child: Image.asset(
-                  AppImages.ilustrationRegister,
-                  height: 288.h,
-                  width: 434.w,
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        height: 483.h,
+        width: double.infinity,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  AppImages.bgbackground,
                 ),
-              ),
-              SizedBox(
-                height: 91.h,
-              ),
-              LexendCustomText(
-                text: 'Create Your Profile',
-                fontWeight: FontWeight.w400,
-                fontsize: 32.sp,
-                textColor: Color(0xff273958),
-              ),
-              LexendCustomText(
-                text: 'Now!',
-                fontWeight: FontWeight.w600,
-                fontsize: 32.sp,
-                textColor: Color(0xff273958),
-              ),
-              SizedBox(
-                height: 28.h,
-              ),
-              LexendCustomText(
-                text:
-                    ' Create a profile to save your learning\n progress and keep learning for free!',
-                fontWeight: FontWeight.w400,
-                fontsize: 14.sp,
-                textColor: Color(0xff989EA7),
-              ),
-              SizedBox(
-                height: 80.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 60.w,
+                fit: BoxFit.cover)),
+        child: SizedBox(
+          width: 434.w,
+          height: 288.h,
+          child: Image.asset(
+            AppImages.ilustrationRegister,
+          ),
+        ),
+      ),
+      SizedBox(
+        height: 30.h,
+      ),
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 33.w),
+        child: Column(
+          children: [
+            LexendCustomText(
+              text: 'Create Your Profile',
+              fontWeight: FontWeight.w400,
+              fontsize: 32.sp,
+              textColor: Color(0xff273958),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                LexendCustomText(
+                  text: 'Now!',
+                  fontWeight: FontWeight.w600,
+                  fontsize: 32.sp,
+                  textColor: Color(0xff273958),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        navigator?.pop();
-                      },
-                      child: LexendCustomText(
-                        text: 'Back',
-                        fontWeight: FontWeight.w500,
-                        fontsize: 16.sp,
-                        textColor: primaryColor,
-                      ),
+              ],
+            ),
+            SizedBox(
+              height: 28.h,
+            ),
+            LexendCustomText(
+              text:
+                  ' Create a profile to save your learning\n progress and keep learning for free!',
+              fontWeight: FontWeight.w400,
+              fontsize: 14.sp,
+              textColor: Color(0xff989EA7),
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 60.w,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      navigator?.pop();
+                    },
+                    child: LexendCustomText(
+                      text: 'Back',
+                      fontWeight: FontWeight.w500,
+                      fontsize: 16.sp,
+                      textColor: primaryColor,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        CustomRoute.navigateTo(context, Signup());
-                      },
-                      child: Container(
-                          width: 127.w,
-                          height: 48.h,
-                          decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(40.r)),
-                          child: Center(
-                            child: LexendCustomText(
-                              textColor: whiteColor,
-                              fontsize: 16.sp,
-                              text: 'Next',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )),
-                    )
-                  ],
-                ),
-              )
-            ])));
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      CustomRoute.navigateTo(context, Signup());
+                    },
+                    child: Container(
+                        width: 127.w,
+                        height: 48.h,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(40.r)),
+                        child: Center(
+                          child: LexendCustomText(
+                            textColor: whiteColor,
+                            fontsize: 16.sp,
+                            text: 'Next',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    ]));
   }
 }
