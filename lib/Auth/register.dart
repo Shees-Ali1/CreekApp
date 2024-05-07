@@ -46,6 +46,7 @@ class _RegisterState extends State<Register> {
       Container(
         margin: EdgeInsets.symmetric(horizontal: 33.w),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LexendCustomText(
               text: 'Create Your Profile',

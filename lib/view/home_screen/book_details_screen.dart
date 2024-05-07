@@ -1,5 +1,9 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/controller/bookListing_controller.dart';
+import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
+import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +12,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../widgets/custom _backbutton.dart';
+import '../../widgets/custom _backbutton.dart';
 
 class BookDetailsScreen extends StatelessWidget {
   final dynamic bookDetail;
-  const BookDetailsScreen({super.key, required this.bookDetail});
+  final int index;
+  final bool comingfromSellScreen;
+  const BookDetailsScreen({super.key, required this.bookDetail, required this.index, required this.comingfromSellScreen});
 
   @override
   Widget build(BuildContext context) {
+    final BookListingController bookListingController=Get.find();
+    final HomeController homeController=Get.find();
     return  Scaffold(
 
       body: SingleChildScrollView(
@@ -86,63 +94,25 @@ class BookDetailsScreen extends StatelessWidget {
               SizedBox.shrink(),
               SizedBox(height: 20.h,),
               GestureDetector(
+
                 onTap: (){
+                  bookDetail['sellerId']!='qwerty'?
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         // title: Text('Hello!'),
 
-                        content: Container(
-                            // height: 335.h,
-                            width: 404.w,
-                            child:Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: 159.h,
-                                  width: 163.w,
-                                  child: Image.asset(AppImages.doneTick),
-                                ),
-                                WorkSansCustomText(text: "Book Purchased!", textColor: Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
-                                SizedBox(height: 15.h,),
-                                WorkSansCustomText(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
-                                SizedBox(height: 14.h,),
-                                Row(
-
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-
-                                    Container(
-                                      height: 54.h,
-                                      width: 154.w,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: Color(0xff29604E),
-                                          borderRadius: BorderRadius.circular(20.r)
-                                      ),
-                                      child:
-                                      PoppinsCustomText(text: "Home", textColor: Color(0xffFEFEFE), fontWeight: FontWeight.w600,fontsize: 16.sp,)
-                                    ),
-
-                                    SizedBox(width: 15.w,),
-                                    SizedBox(
-                                      height: 54.h,
-                                      width: 61.w,
-                                      child: SvgPicture.asset(AppIcons.msgIcon),
-                                    ),
-                                  ],
-                                ),
-
-
-                              ],
-                            )
-
-                        ),
+                        content: BuyDialogBox()
 
                       );
                     },
-                  );
+                  ):
+                  comingfromSellScreen==true?
+                  bookListingController.removeListingfromSell(index):
+                  homeController.removeBookListing(index);
+
+                  
                 },
                 child: Center(
                   child: Container(

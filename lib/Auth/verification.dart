@@ -1,5 +1,6 @@
 import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -122,7 +123,7 @@ class _VerificationState extends State<Verification> {
                       CustomButton(
                         text: 'Verify',
                         onPressed: () {
-                          CustomRoute.navigateTo(context, LoginView());
+                          CustomRoute.navigateTo(context, BottomNavBar());
                         },
                         backgroundColor: primaryColor, // Example color
                         textColor: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class ListSellBookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BookListingController bookListingController=Get.find();
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -171,6 +173,7 @@ class ListSellBookScreen extends StatelessWidget {
 
               GestureDetector(
                 onTap: (){
+                  bookListingController.addBookListing();
                   Get.to(
                     ApprovalSellScreen(),
                     transition: Transition.fade,

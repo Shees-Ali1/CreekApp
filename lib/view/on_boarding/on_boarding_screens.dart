@@ -56,7 +56,7 @@ class OnBoardingOne extends StatelessWidget {
                   image: AssetImage(
                     AppImages.bgbackground,
                   ),
-                  fit: BoxFit.cover)),
+                  fit: BoxFit.fill)),
           child: SizedBox(
             width: 160.w,
             height: 220.h,
@@ -145,7 +145,7 @@ class OnBoardingTwo extends StatelessWidget {
                     image: AssetImage(
                       AppImages.bgbackground,
                     ),
-                    fit: BoxFit.cover)),
+                    fit: BoxFit.fill)),
             child: SizedBox(
               width: 160.w,
               height: 220.h,
@@ -230,7 +230,7 @@ class OnBoardingThree extends StatelessWidget {
                     image: AssetImage(
                       AppImages.bgbackground,
                     ),
-                    fit: BoxFit.cover)),
+                    fit: BoxFit.fill)),
             child: SizedBox(
               width: 160.w,
               height: 220.h,
