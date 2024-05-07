@@ -13,6 +13,10 @@ class AppIcons{
   static const whitecreekIcon = 'assets/svg/whitecreekIcon.svg';
   static const passwordeye = 'assets/svg/passwordeye.svg';
   static const arrowIcon = 'assets/svg/arrowIcon.svg';
+  static const profile = 'assets/svg/profile.svg';
+  static const shopping = 'assets/svg/shopping.svg';
+  static const disc = 'assets/svg/disc.svg';
+  static const dollar = 'assets/svg/dollar.svg';
 
 
 
