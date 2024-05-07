@@ -61,6 +61,12 @@ class HomeController extends GetxController{
     Get.snackbar('Success', "Listing Removed");
   }
 
+// ******************Filters***********
+RxInt selectedCondition=0.obs;
+RxDouble priceSliderValue=50.0.obs;
+RxDouble sliderValue=50.0.obs;
+
+
 
 
 

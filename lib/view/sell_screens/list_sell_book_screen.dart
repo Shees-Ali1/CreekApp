@@ -1,5 +1,6 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
@@ -213,7 +214,8 @@ class CustomSellTextField extends StatelessWidget {
   final TextEditingController? controller;
   final Icon? prefixIcon;
   final TextInputType? keyboard;
-  const CustomSellTextField({super.key, this.controller, this.prefixIcon, this.keyboard});
+  final Icon? suffixIcon;
+  const CustomSellTextField({super.key, this.controller, this.prefixIcon, this.keyboard, this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -237,8 +239,10 @@ class CustomSellTextField extends StatelessWidget {
             fillColor: Color(0xff29604E).withOpacity(0.08),
             filled: true,
             contentPadding: EdgeInsets.symmetric(
-                horizontal: 16.w, vertical: 16.h),
-            prefixIcon:prefixIcon
+                horizontal: 16.w, vertical: 14.h),
+            prefixIcon:prefixIcon,
+            suffixIcon: suffixIcon,
+            suffixIconColor: Color(0xff57C4B7)
             // hintText: 'Search',
             // hintStyle: GoogleFonts.inter(
             //     textStyle: TextStyle(

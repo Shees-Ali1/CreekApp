@@ -2,10 +2,14 @@ import 'package:another_xlider/another_xlider.dart';
 import 'package:another_xlider/models/handler.dart';
 import 'package:another_xlider/models/trackbar.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/view/sell_screens/list_sell_book_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BooksFilterBottomSheet extends StatelessWidget {
@@ -13,13 +17,13 @@ class BooksFilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.find();
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment
-                .center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 height: 4.h,
@@ -27,8 +31,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
                 decoration: BoxDecoration(
                   // color: AppColor.green,
                   color: Color(0xff57C4B7),
-                  borderRadius:
-                  BorderRadius.circular(4.r),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
             ],
@@ -41,26 +44,24 @@ class BooksFilterBottomSheet extends StatelessWidget {
                 style: GoogleFonts.lato(
                   // color: AppColor.green,
 
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color:primaryColor
-                ),
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w700,
+                    color: primaryColor),
               ),
               const Spacer(),
               GestureDetector(
-                // onTap: () {
-                //   houseVM.miles.value = 1;
-                //   houseVM.selectedProperty.clear();
-                //   houseVM.selectedLookingTo.clear();
-                // },
+                onTap: () {
+                 homeController.priceSliderValue.value=50;
+                 homeController.selectedCondition.value=0;
+                 homeController.sliderValue.value=50;
+                },
                 child: Container(
                   width: 68.w,
                   height: 42.h,
                   decoration: BoxDecoration(
                     // color: AppColor.green,
                     color: primaryColor,
-                    borderRadius:
-                    BorderRadius.circular(35.r),
+                    borderRadius: BorderRadius.circular(35.r),
                   ),
                   child: Center(
                     child: Text(
@@ -68,8 +69,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 10.sp,
                           color: Colors.white,
-                          fontWeight: FontWeight
-                              .w500),
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -77,339 +77,196 @@ class BooksFilterBottomSheet extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-        LatoCustomText(text: 'Class', textColor: primaryColor, fontWeight: FontWeight.w700,fontsize: 18.sp,),
-
+          LatoCustomText(
+            text: 'Class',
+            textColor: primaryColor,
+            fontWeight: FontWeight.w700,
+            fontsize: 18.sp,
+          ),
           SizedBox(height: 10.h),
-          LatoCustomText(text: 'Condition', textColor: primaryColor, fontWeight: FontWeight.w700,fontsize: 18.sp,),
+          LatoCustomText(
+            text: 'Condition',
+            textColor: primaryColor,
+            fontWeight: FontWeight.w700,
+            fontsize: 18.sp,
+          ),
+          SizedBox(height: 11.h,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Obx(() {
+                return ConditionContainer(
+                  condtionText: 'All',
+                  onTap: () {
+                    homeController.selectedCondition.value = 1;
+                  },
+                  color: homeController.selectedCondition.value == 1
+                      ? primaryColor
+                      : primaryColor.withOpacity(0.08),
+                  textcolor: homeController.selectedCondition.value == 1
+                      ? Colors.white : primaryColor,
+                );
+              }),
+              Obx(() {
+                return ConditionContainer(
+                  condtionText: 'New',
+                  onTap: () {
+                    homeController.selectedCondition.value = 2;
+                  },
+                  color: homeController.selectedCondition.value == 2
+                      ? primaryColor
+                      : primaryColor.withOpacity(0.08),
+                  textcolor: homeController.selectedCondition.value == 2
+                      ? Colors.white : primaryColor,
+                );
+              }),
+              Obx(() {
+                return ConditionContainer(
+                  condtionText: 'Like New',
+                  onTap: () {
+                    homeController.selectedCondition.value = 3;
+                  },
+                  color: homeController.selectedCondition.value == 3
+                      ? primaryColor
+                      : primaryColor.withOpacity(0.08),
+                  textcolor: homeController.selectedCondition.value == 3
+                      ? Colors.white : primaryColor,
 
-          SizedBox(height: 20.h),
-          // Text(
-          //   "Looking to",
-          //   style: GoogleFonts.lato(
-          //     // color: AppColor.darkBlue,
-          //     fontSize: 18.sp,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
-          // SizedBox(height: 10.h),
-          // Obx(
-          //       () =>
-          //       Container(
-          //         child: Wrap(
-          //           runSpacing: 10.h,
-          //           spacing: 9.w,
-          //           children: List.generate(
-          //             lookingTo.length,
-          //                 (index) =>
-          //                 GestureDetector(
-          //                   onTap: () {
-          //                     if (houseVM
-          //                         .selectedLookingTo
-          //                         .contains(
-          //                         lookingTo[index])) {
-          //                       houseVM
-          //                           .selectedLookingTo
-          //                           .remove(
-          //                           lookingTo[index]);
-          //                     } else {
-          //                       houseVM
-          //                           .selectedLookingTo
-          //                           .add(
-          //                           lookingTo[index]);
-          //                     }
-          //                   },
-          //                   child: Container(
-          //                     padding: EdgeInsets
-          //                         .symmetric(
-          //                         horizontal: 10.w,
-          //                         vertical: 7.5.h),
-          //                     height: 47.h,
-          //                     constraints:
-          //                     BoxConstraints(
-          //                         maxWidth: 98.w),
-          //                     decoration: BoxDecoration(
-          //                       borderRadius:
-          //                       BorderRadius.circular(
-          //                           20),
-          //                       color: houseVM
-          //                           .selectedLookingTo
-          //                           .contains(
-          //                           lookingTo[index])
-          //                           ? AppColor.green
-          //                           : const Color(
-          //                           0xFFF5F4F8),
-          //                     ),
-          //                     child: Center(
-          //                       child: Text(
-          //                         lookingTo[index],
-          //                         style: GoogleFonts
-          //                             .lato(
-          //                           color: houseVM
-          //                               .selectedLookingTo
-          //                               .contains(
-          //                               lookingTo[index])
-          //                               ? Colors.white
-          //                               : const Color(
-          //                               0xFF2A5F59),
-          //                           fontSize: 10.sp,
-          //                           fontWeight: FontWeight
-          //                               .w700,
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //           ),
-          //         ),
-          //       ),
-          // ),
+                );
+              }),
+              Obx(() {
+                return ConditionContainer(
+                  condtionText: 'Old',
+                  onTap: () {
+                    homeController.selectedCondition.value = 4;
+                  },
+                  color: homeController.selectedCondition.value == 4
+                      ? primaryColor
+                      : primaryColor.withOpacity(0.08),
+                  textcolor: homeController.selectedCondition.value == 4
+                      ? Colors.white : primaryColor,
+
+                );
+              }),
+            ],
+          ),
           SizedBox(height: 20.h),
           RalewayCustomText(
-          text:   "Author",
-
-              // color: AppColor.green,
-              textColor: primaryColor,
-
-              fontWeight: FontWeight.w700,
-              fontsize: 18.sp,
-
-          ),
-          SizedBox(height: 5.h),
-          Container(
-            margin: EdgeInsets.symmetric(
-                vertical: 10.sp),
-            padding: EdgeInsets.symmetric(
-                horizontal: 13.w, vertical: 7.5.h),
-            height: 50.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                  20.r),
-              color: const Color(0xffF5F4F8),
-            ),
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                // SvgPicture.asset(
-                //     AppIcons.locationField),
-                SizedBox(
-                  width: 15.w,
-                ),
-                // Container(
-                //   width: 132.w,
-                //   height: 38.h,
-                //   decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius:
-                //       BorderRadius.circular(12)),
-                //   child: Stack(
-                //     children: [
-                //       CountryCodePicker(
-                //         textOverflow: TextOverflow
-                //             .ellipsis,
-                //         padding: const EdgeInsets
-                //             .only(right: 9),
-                //         showFlag: false,
-                //         onChanged: (countryCode) {
-                //           // onCountryChanged(countryCode.code); // Using callback to update the country code
-                //           debugPrint(countryCode
-                //               .toLongString());
-                //         },
-                //         initialSelection: 'US',
-                //         showCountryOnly: true,
-                //         showOnlyCountryWhenClosed: true,
-                //       ),
-                //       Positioned(
-                //           right: 0.w,
-                //           top: 7.h,
-                //           child: const Icon(
-                //             Icons.arrow_drop_down,
-                //             color: AppColor.green,
-                //           ))
-                //     ],
-                //   ),
-                // ),
-                const Spacer(),
-                // SvgPicture.asset(
-                //   AppIcons.iconSearch,
-                //   colorFilter: const ColorFilter.mode(
-                //     AppColor.greenAccent,
-                //     // Desired color
-                //     BlendMode
-                //         .srcIn, // Adjust blend mode as needed
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-
-          SizedBox(height: 20.h),
-          RalewayCustomText(
-            text:   "Teacher",
+            text: "Author",
 
             // color: AppColor.green,
             textColor: primaryColor,
 
             fontWeight: FontWeight.w700,
             fontsize: 18.sp,
-
           ),
           SizedBox(height: 5.h),
-          Container(
-            margin: EdgeInsets.symmetric(
-                vertical: 10.sp),
-            padding: EdgeInsets.symmetric(
-                horizontal: 13.w, vertical: 7.5.h),
-            height: 50.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                  20.r),
-              color: const Color(0xffF5F4F8),
-            ),
-            child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-              children: [
-                // SvgPicture.asset(
-                //     AppIcons.locationField),
-                SizedBox(
-                  width: 15.w,
-                ),
-                // Container(
-                //   width: 132.w,
-                //   height: 38.h,
-                //   decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius:
-                //       BorderRadius.circular(12)),
-                //   child: Stack(
-                //     children: [
-                //       CountryCodePicker(
-                //         textOverflow:
-                //         TextOverflow.ellipsis,
-                //         padding:
-                //         const EdgeInsets.only(
-                //             right: 9),
-                //         showFlag: false,
-                //         onChanged: (countryCode) {
-                //           // onCountryChanged(countryCode.code); // Using callback to update the country code
-                //           debugPrint(
-                //               countryCode
-                //                   .toLongString());
-                //         },
-                //         initialSelection: 'US',
-                //         showCountryOnly: true,
-                //         showOnlyCountryWhenClosed: true,
-                //       ),
-                //       Positioned(
-                //           right: 0.w,
-                //           top: 7.h,
-                //           child: const Icon(
-                //             Icons.arrow_drop_down,
-                //             color: AppColor.green,
-                //           ))
-                //     ],
-                //   ),
-                // ),
-                // const Spacer(),
-                // SvgPicture.asset(
-                //   AppIcons.iconSearch,
-                //   colorFilter: const ColorFilter.mode(
-                //     AppColor.greenAccent,
-                //     // Desired color
-                //     BlendMode
-                //         .srcIn, // Adjust blend mode as needed
-                //   ),
-                // ),
-              ],
-            ),
-          ),
+          CustomSellTextField(suffixIcon: Icon(Icons.search),),
+          SizedBox(height: 19.h),
+          RalewayCustomText(
+            text: "Teacher",
 
+            // color: AppColor.green,
+            textColor: primaryColor,
+
+            fontWeight: FontWeight.w700,
+            fontsize: 18.sp,
+          ),
+          SizedBox(height: 5.h),
+          CustomSellTextField(suffixIcon: Icon(Icons.search),),
           SizedBox(height: 20.h),
           Row(
             children: [
-            RalewayCustomText(
-            text:   "Price",
+              RalewayCustomText(
+                text: "Price",
 
-            // color: AppColor.green,
-            textColor: primaryColor,
+                // color: AppColor.green,
+                textColor: primaryColor,
 
-            fontWeight: FontWeight.w700,
-            fontsize: 18.sp,
-
-
+                fontWeight: FontWeight.w700,
+                fontsize: 18.sp,
               ),
-
               const Spacer(),
-              // Obx(
-              //       () =>
-              //       Text(
-              //         "${houseVM.miles.value} miles",
-              //         style: GoogleFonts.raleway(
-              //           color: AppColor.green,
-              //           fontSize: 18.sp,
-              //           fontWeight: FontWeight.w700,
-              //         ),
-              //       ),
-              // )
+              Obx(() {
+                return WorkSansCustomText(
+                  text: '< \$${homeController.priceSliderValue.value}',
+                  textColor: primaryColor,
+                  fontWeight: FontWeight.w700,
+                  fontsize: 18.sp,
+                );
+              })
             ],
           ),
           FlutterSlider(
-            values: [300],
+
+            values: [homeController.sliderValue.value],
             max: 500,
             min: 0,
-          trackBar: FlutterSliderTrackBar(
-            activeTrackBar: BoxDecoration(
-              color: primaryColor
-            )
-          ),
-          handler: FlutterSliderHandler(
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle
-            ),
-           child: Container(
-             height: 35.h,
-             width: 34.w,
-             decoration: BoxDecoration(
-               color: Colors.white,
-               border: Border.all(color: primaryColor),
-               borderRadius: BorderRadius.circular(9.r)
-             ),
-             child: Icon(Icons.compare_arrows_outlined),
-           )
-                      ),
+            trackBar: FlutterSliderTrackBar(
+                activeTrackBar: BoxDecoration(color: primaryColor)),
+            handler: FlutterSliderHandler(
+                decoration: BoxDecoration(shape: BoxShape.rectangle),
+                child: Container(
+                  height: 35.h,
+                  width: 34.w,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: primaryColor),
+                      borderRadius: BorderRadius.circular(9.r)),
+                  child: Icon(Icons.compare_arrows_outlined),
+                )),
             onDragging: (handlerIndex, lowerValue, upperValue) {
-
+              homeController.priceSliderValue.value = lowerValue;
+              print(homeController.priceSliderValue.value);
             },
           ),
-          //       Slider.adaptive(
-          //           min: 1,
-          //           max: 30,
-          //           // thumbColor: AppColor.green,
-          //           // activeColor: AppColor.green,
-          //            value: 20.0,
-          //           onChanged: (value) {
-          //
-          //           }
-          // ),
-          SizedBox(height: 30.h),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment
-          //       .center,
-          //   children: [
-          //     RoundButton(
-          //       width: 270.w,
-          //       height: 50.h,
-          //       buttonColor: AppColor.green,
-          //       textColor: Colors.white,
-          //       title: "Apply Now",
-          //       onTap: () {},
-          //     ),
-          //   ],
-          // ),
+          SizedBox(height: 26.h),
+          Center(
+            child: Container(
+              width: 278.w,
+              height: 63.h,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.r),
+                color: primaryColor,
+              ),
+              child: LatoCustomText(
+                  text: 'Apply Filter',
+                  textColor: Colors.white,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class ConditionContainer extends StatelessWidget {
+  final String condtionText;
+  final void Function()? onTap;
+  final Color? color;
+  final Color textcolor;
+
+  const ConditionContainer(
+      {super.key, required this.condtionText, this.onTap, this.color, required this.textcolor});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding:
+        EdgeInsets.only(top: 17.5.h, bottom: 17.5.h, left: 24.w, right: 24.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.r),
+            color: color),
+        child: RalewayCustomText(
+          text: condtionText,
+          textColor: textcolor,
+          fontWeight: FontWeight.w700,
+          fontsize: 10.sp,
+        ),
       ),
     );
   }
