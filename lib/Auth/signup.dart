@@ -3,8 +3,10 @@ import 'package:creekapp/Auth/verification.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../const/assets/image_assets.dart';
+import '../controller/home_controller.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_route.dart';
 import '../widgets/custom_text.dart';
@@ -18,6 +20,8 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final HomeController homeController = Get.find();
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
@@ -90,28 +94,60 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         height: 8.h,
                       ),
-                      Container(
-                        padding:  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                        width: double.infinity,
-                        height: 58.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: Color(0xff29604E).withOpacity(0.06),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            LexendCustomText(
-                              text: 'Harker',
-                              fontWeight: FontWeight.w400,
-                              fontsize: 16.sp,
-                              textColor: Colors.black,
-                            ),
-                            Icon(Icons.keyboard_arrow_down)
+                      Obx(() {
+                        return Container(
+                          height: 50.h,
+                          width: 327.w,
 
-                          ],
-                        ),
-                      ),
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+                          decoration: BoxDecoration(
+                              color: primaryColor.withOpacity(0.08),
+                              borderRadius: BorderRadius.circular(20.r)
+                          ),
+                          child: DropdownButton<String>(
+                              underline: SizedBox.shrink(),
+                              isExpanded: true,
+                              value: homeController.classOption.value,
+                              items: homeController.bookClass.map((String option) {
+                                return DropdownMenuItem<String>(
+                                  value: option,
+                                  child: LexendCustomText(text: option,
+                                      textColor: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                // homeController.bookClass.value=newValue!;
+                                homeController.classOption.value = newValue!;
+                              },
+                              hint: SizedBox.shrink()
+                          ),
+                        );
+                      }),
+                      // Container(
+                      //   padding:  EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      //   width: double.infinity,
+                      //   height: 58.h,
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(20.r),
+                      //     color: Color(0xff29604E).withOpacity(0.06),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     children: [
+                      //       LexendCustomText(
+                      //         text: 'Harker',
+                      //         fontWeight: FontWeight.w400,
+                      //         fontsize: 16.sp,
+                      //         textColor: Colors.black,
+                      //       ),
+                      //       Icon(Icons.keyboard_arrow_down)
+                      //
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 38.h,
                       ),

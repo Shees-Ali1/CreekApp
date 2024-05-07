@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
+import '../../../controller/home_controller.dart';
 import '../../../controller/login_auth_controller.dart';
 import '../../../widgets/custom _backbutton.dart';
 import '../../../widgets/custom_route.dart';
@@ -32,6 +33,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final LoginAuthController loginVM = Get.find<LoginAuthController>();
+  final HomeController homeController = Get.find();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -199,27 +201,59 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(
               height: 8.h,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              width: double.infinity,
-              height: 58.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                color: Color(0xff29604E).withOpacity(0.06),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  LexendCustomText(
-                    text: 'Harker',
-                    fontWeight: FontWeight.w400,
-                    fontsize: 16.sp,
-                    textColor: Colors.black,
-                  ),
-                  Icon(Icons.keyboard_arrow_down)
-                ],
-              ),
-            ),
+            Obx(() {
+              return Container(
+                height: 50.h,
+                width: 327.w,
+
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+                decoration: BoxDecoration(
+                    color: primaryColor.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(20.r)
+                ),
+                child: DropdownButton<String>(
+                    underline: SizedBox.shrink(),
+                    isExpanded: true,
+                    value: homeController.classOption.value,
+                    items: homeController.bookClass.map((String option) {
+                      return DropdownMenuItem<String>(
+                        value: option,
+                        child: LexendCustomText(text: option,
+                            textColor: Colors.black,
+                            fontWeight: FontWeight.w400),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      // homeController.bookClass.value=newValue!;
+                      homeController.classOption.value = newValue!;
+                    },
+                    hint: SizedBox.shrink()
+                ),
+              );
+            }),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            //   width: double.infinity,
+            //   height: 58.h,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(20.r),
+            //     color: Color(0xff29604E).withOpacity(0.06),
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       LexendCustomText(
+            //         text: 'Harker',
+            //         fontWeight: FontWeight.w400,
+            //         fontsize: 16.sp,
+            //         textColor: Colors.black,
+            //       ),
+            //       Icon(Icons.keyboard_arrow_down)
+            //     ],
+            //   ),
+            // ),
             // InputField(
             //   controller: nameController,
             //   hint: 'Enter Name',

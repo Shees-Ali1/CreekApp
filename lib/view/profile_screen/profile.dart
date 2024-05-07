@@ -1,3 +1,4 @@
+import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/view/profile_screen/components/term-Cond.dart';
 import 'package:creekapp/widgets/custom_button.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -291,7 +292,9 @@ class _ProfileState extends State<Profile> {
                               ),
                               CustomButton(
                                   text: 'Logout',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    CustomRoute.navigateTo(context, LoginView());
+                                  },
                                   backgroundColor: Color(0xffE60000),
                                   textColor: whiteColor),
                               SizedBox(
@@ -325,6 +328,9 @@ class _ProfileState extends State<Profile> {
               ),
             ],
           ),
+        ),
+        SizedBox(
+          height: 28.11.h,
         ),
       ],
     )));
