@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../const/assets/image_assets.dart';
 import '../const/assets/svg_assets.dart';
+import '../view/nav_bar/app_nav_bar.dart';
 import '../widgets/password_field.dart';
 import '../controller/login_auth_controller.dart';
 
@@ -96,6 +97,7 @@ class _LoginViewState extends State<LoginView> {
           CustomButton(
             text: 'Login',
             onPressed: () {
+              CustomRoute.navigateTo(context, BottomNavBar());
               // Handle button press
             },
             backgroundColor: primaryColor, // Example color

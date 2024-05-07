@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,12 @@ import 'package:image_picker/image_picker.dart';
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
 import '../../../controller/login_auth_controller.dart';
+import '../../../widgets/custom _backbutton.dart';
+import '../../../widgets/custom_route.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/custom_textfield.dart';
 import '../../../widgets/password_field.dart';
+import '../../notification/notification_screen.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -71,7 +75,7 @@ class _EditProfileState extends State<EditProfile> {
                       SizedBox(
                         width: 10.w,
                       ),
-                      SvgPicture.asset(AppIcons.drawericon),
+                      CustomBackButton(),
                       SizedBox(
                         width: 20.w,
                       ),
@@ -82,11 +86,19 @@ class _EditProfileState extends State<EditProfile> {
                         fontWeight: FontWeight.w600,
                       ),
                       Spacer(),
-                      SvgPicture.asset(AppIcons.chaticon),
+                      GestureDetector(
+                          onTap: () {
+                            CustomRoute.navigateTo(context, MainChat());
+                          },
+                          child: SvgPicture.asset(AppIcons.chaticon)),
                       SizedBox(
                         width: 10.w,
                       ),
-                      SvgPicture.asset(AppIcons.notificationIcon),
+                      GestureDetector(
+                          onTap: () {
+                            CustomRoute.navigateTo(context, NotificationScreen());
+                          },
+                          child: SvgPicture.asset(AppIcons.notificationIcon)),
                       SizedBox(
                         width: 23.w,
                       ),

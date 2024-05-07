@@ -10,6 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../widgets/custom _backbutton.dart';
+import '../../widgets/custom_route.dart';
+import '../nav_bar/app_nav_bar.dart';
 class ApprovalSellScreen extends StatelessWidget {
   const ApprovalSellScreen({super.key});
 
@@ -40,7 +44,8 @@ class ApprovalSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            SvgPicture.asset(AppIcons.drawericon),
+                            CustomBackButton(),
+
                             SizedBox(
                               width: 20.w,
                             ),
@@ -105,19 +110,24 @@ class ApprovalSellScreen extends StatelessWidget {
 
                     ),
                     SizedBox(height: 52.h,),
-                    Container(
-                        height: 58.h,
-                        width: 284.w,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Color(0xff29604E),
-                            borderRadius: BorderRadius.circular(20.r)
-                        ),
-                        child:
-                        LexendCustomText(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+                    GestureDetector(
+                      onTap: () {
+                        CustomRoute.navigateTo(context, BottomNavBar());
+                      },
+                      child: Container(
+                          height: 58.h,
+                          width: 284.w,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Color(0xff29604E),
+                              borderRadius: BorderRadius.circular(20.r)
+                          ),
+                          child:
+                          LexendCustomText(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
 
 
+                      ),
                     ),
                     SizedBox(height: 17.h,),
 

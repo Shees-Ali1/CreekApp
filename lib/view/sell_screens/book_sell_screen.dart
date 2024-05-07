@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../const/assets/svg_assets.dart';
+import '../../widgets/custom _backbutton.dart';
 
 class BookSellScreen extends StatelessWidget {
   const BookSellScreen({super.key});
@@ -42,7 +43,8 @@ class BookSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            SvgPicture.asset(AppIcons.drawericon),
+                            CustomBackButton(),
+
                             SizedBox(
                               width: 20.w,
                             ),

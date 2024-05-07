@@ -109,7 +109,11 @@ class _ProfileState extends State<Profile> {
                     textColor: Color(0xff263238),
                   ),
                   Spacer(),
-                  SvgPicture.asset(AppIcons.editIcon)
+                  GestureDetector(
+                      onTap: () {
+                        CustomRoute.navigateTo(context, EditProfile());
+                      },
+                      child: SvgPicture.asset(AppIcons.editIcon))
                 ],
               ),
               SizedBox(

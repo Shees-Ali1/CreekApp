@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
+import '../../../widgets/custom _backbutton.dart';
 import '../../../widgets/custom_text.dart';
 
 class TermCond extends StatelessWidget {
@@ -35,7 +36,8 @@ class TermCond extends StatelessWidget {
                               SizedBox(
                                 width: 10.w,
                               ),
-                              SvgPicture.asset(AppIcons.drawericon),
+                              CustomBackButton(),
+
                               SizedBox(
                                 width: 20.w,
                               ),

@@ -1,6 +1,7 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
+import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/view/home_screen/book_details_screen.dart';
 import 'package:creekapp/view/sell_screens/book_sell_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
@@ -12,6 +13,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../widgets/custom_route.dart';
+import '../notification/notification_screen.dart';
 
 class SellScreenMain extends StatelessWidget {
   const SellScreenMain({super.key});
@@ -56,11 +60,19 @@ class SellScreenMain extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                             Spacer(),
-                            SvgPicture.asset(AppIcons.chaticon),
+                            GestureDetector(
+                                onTap: () {
+                                  CustomRoute.navigateTo(context, MainChat());
+                                },
+                                child: SvgPicture.asset(AppIcons.chaticon)),
                             SizedBox(
                               width: 10.w,
                             ),
-                            SvgPicture.asset(AppIcons.notificationIcon),
+                            GestureDetector(
+                                onTap: () {
+                                  CustomRoute.navigateTo(context, NotificationScreen());
+                                },
+                                child: SvgPicture.asset(AppIcons.notificationIcon)),
                             SizedBox(
                               width: 23.w,
                             ),

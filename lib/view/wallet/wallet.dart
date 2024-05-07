@@ -8,6 +8,8 @@ import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
 import '../../widgets/custom_route.dart';
 import '../../widgets/custom_text.dart';
+import '../chat_screen/main_chat.dart';
+import '../notification/notification_screen.dart';
 
 class Wallet extends StatefulWidget {
   const Wallet({super.key});
@@ -56,7 +58,7 @@ class _WalletState extends State<Wallet> {
                       Spacer(),
                       GestureDetector(
                           onTap: () {
-                            // CustomRoute.navigateTo(context, MainChat());
+                            CustomRoute.navigateTo(context, MainChat());
                           },
                           child: SvgPicture.asset(AppIcons.chaticon)),
                       SizedBox(
@@ -64,7 +66,7 @@ class _WalletState extends State<Wallet> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            // CustomRoute.navigateTo(context, NotificationScreen());
+                            CustomRoute.navigateTo(context, NotificationScreen());
                           },
                           child: SvgPicture.asset(AppIcons.notificationIcon)),
                       SizedBox(

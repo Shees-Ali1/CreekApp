@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
+import '../../../widgets/custom _backbutton.dart';
 import '../../../widgets/custom_text.dart';
 
 class PrivacyPolicy extends StatelessWidget {
@@ -35,7 +36,7 @@ class PrivacyPolicy extends StatelessWidget {
                       SizedBox(
                         width: 10.w,
                       ),
-                      SvgPicture.asset(AppIcons.drawericon),
+                      CustomBackButton(),
                       SizedBox(
                         width: 20.w,
                       ),

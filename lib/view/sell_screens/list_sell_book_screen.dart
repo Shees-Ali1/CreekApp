@@ -13,6 +13,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../widgets/custom _backbutton.dart';
+
 class ListSellBookScreen extends StatelessWidget {
   const ListSellBookScreen({super.key});
 
@@ -45,7 +47,7 @@ class ListSellBookScreen extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            SvgPicture.asset(AppIcons.drawericon),
+                            CustomBackButton(),
                             SizedBox(
                               width: 20.w,
                             ),
