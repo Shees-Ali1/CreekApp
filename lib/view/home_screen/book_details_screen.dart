@@ -101,6 +101,8 @@ class BookDetailsScreen extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
+
+
                         // title: Text('Hello!'),
 
                         content: BuyDialogBox()

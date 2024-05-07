@@ -120,6 +120,7 @@ class ListSellBookScreen extends StatelessWidget {
               ),
               // SizedBox(height: 8.h,),
               CustomSellTextField(),
+              SizedBox(height: 6.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
 
@@ -131,6 +132,8 @@ class ListSellBookScreen extends StatelessWidget {
               ),
               // SizedBox(height: 8.h,),
               CustomSellTextField(),
+              SizedBox(height: 6.h,),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
 
@@ -142,6 +145,8 @@ class ListSellBookScreen extends StatelessWidget {
               ),
               // SizedBox(height: 8.h,),
               CustomSellTextField(),
+              SizedBox(height: 6.h,),
+
 
 
               Row(
@@ -155,7 +160,53 @@ class ListSellBookScreen extends StatelessWidget {
               ),
               // SizedBox(height: 8.h,),
               CustomSellTextField(),
+              SizedBox(height: 6.h,),
 
+
+              // SizedBox(height: 8.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: [
+                  SizedBox(width: 24.w,),
+
+                  LexendCustomText(text: 'Condition', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                ],
+              ),
+              SizedBox(height: 6.h,),
+              Obx(() {
+                return Container(
+                  height: 50.h,
+                  width: 327.w,
+
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+                  decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.08),
+                      borderRadius: BorderRadius.circular(20.r)
+                  ),
+                  child: DropdownButton<String>(
+                      underline: SizedBox.shrink(),
+                      isExpanded: true,
+                      value: bookListingController.bookCondition.value,
+                      items: bookListingController.bookConditions.map((String option) {
+                        return DropdownMenuItem<String>(
+                          value: option,
+                          child: RalewayCustomText(text: option,
+                              textColor: primaryColor,
+                              fontWeight: FontWeight.w700),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        // homeController.bookClass.value=newValue!;
+                        bookListingController.bookCondition.value = newValue!;
+                      },
+                      hint: SizedBox.shrink()
+                  ),
+                );
+              }),
+              SizedBox(height: 16.h,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,

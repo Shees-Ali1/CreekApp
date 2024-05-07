@@ -125,10 +125,15 @@ class HomeScreenBooks extends StatelessWidget {
                                       isScrollControlled: true,
                                       Container(
                                         width: double.infinity,
-                                        height: Get.height * 0.92,
-                                        color: Colors.white,
+                                        height: 703.h,
                                         padding: EdgeInsets.all(20.sp),
-                                        child: BooksFilterBottomSheet()                                      ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(30.r),topRight: Radius.circular(30.r))
+
+
+                                        ),
+                                        child: BooksFilterBottomSheet(),                                      ),
                                     );
                                   }
                                   ,
@@ -267,6 +272,8 @@ class HomeScreenBooks extends StatelessWidget {
                       );
                     });
               }),
+              SizedBox(height: 18.h,),
+
 
             ],
           ),

@@ -18,6 +18,9 @@ class BooksFilterBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find();
+final TextEditingController authorController=TextEditingController();
+final TextEditingController teacherController=TextEditingController();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,9 +54,12 @@ class BooksFilterBottomSheet extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                 homeController.priceSliderValue.value=50;
-                 homeController.selectedCondition.value=0;
-                 homeController.sliderValue.value=50;
+                  homeController.priceSliderValue.value = 50;
+                  homeController.selectedCondition.value = 0;
+                  homeController.sliderValue.value = 50;
+                  authorController.clear();
+                  teacherController.clear();
+                  homeController.classOption.value='Class 10';
                 },
                 child: Container(
                   width: 68.w,
@@ -84,7 +90,45 @@ class BooksFilterBottomSheet extends StatelessWidget {
             fontsize: 18.sp,
           ),
           SizedBox(height: 10.h),
+          Obx(() {
+            return Container(
+              height: 50.h,
+              width: 327.w,
+
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+              decoration: BoxDecoration(
+                  color: primaryColor.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(20.r)
+              ),
+              child: DropdownButton<String>(
+                  underline: SizedBox.shrink(),
+                  isExpanded: true,
+                  value: homeController.classOption.value,
+                  items: homeController.bookClass.map((String option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: RalewayCustomText(text: option,
+                          textColor: primaryColor,
+                          fontWeight: FontWeight.w700),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    // homeController.bookClass.value=newValue!;
+                    homeController.classOption.value = newValue!;
+                  },
+                  hint: SizedBox.shrink()
+              ),
+            );
+          }),
+
+
+          SizedBox(height: 11.h,),
+
+
           LatoCustomText(
+
             text: 'Condition',
             textColor: primaryColor,
             fontWeight: FontWeight.w700,
@@ -161,7 +205,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
             fontsize: 18.sp,
           ),
           SizedBox(height: 5.h),
-          CustomSellTextField(suffixIcon: Icon(Icons.search),),
+          CustomSellTextField(suffixIcon: Icon(Icons.search),controller: authorController,),
           SizedBox(height: 19.h),
           RalewayCustomText(
             text: "Teacher",
@@ -173,7 +217,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
             fontsize: 18.sp,
           ),
           SizedBox(height: 5.h),
-          CustomSellTextField(suffixIcon: Icon(Icons.search),),
+          CustomSellTextField(suffixIcon: Icon(Icons.search),controller: teacherController,),
           SizedBox(height: 20.h),
           Row(
             children: [

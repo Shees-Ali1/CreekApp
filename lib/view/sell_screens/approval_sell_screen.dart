@@ -112,7 +112,7 @@ class ApprovalSellScreen extends StatelessWidget {
                     SizedBox(height: 52.h,),
                     GestureDetector(
                       onTap: () {
-                        CustomRoute.navigateTo(context, BottomNavBar());
+                    CustomRoute1.navigateAndRemoveUntil(context, BottomNavBar(), (route) => false);
                       },
                       child: Container(
                           height: 58.h,

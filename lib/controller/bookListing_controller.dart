@@ -75,7 +75,6 @@ class BookListingController extends GetxController{
     // Get.back();
     Get.snackbar('Success', "Book Listing Added");
   }
-
   void removeListingfromSell(int index){
    try{
      mySellListings.removeAt(index);
@@ -88,5 +87,7 @@ class BookListingController extends GetxController{
 
    }
   }
+RxString bookCondition='New'.obs;
+  List<String> bookConditions = ['New','Used','Old'];
 
 }

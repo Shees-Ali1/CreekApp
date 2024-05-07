@@ -65,7 +65,9 @@ class HomeController extends GetxController{
 RxInt selectedCondition=0.obs;
 RxDouble priceSliderValue=50.0.obs;
 RxDouble sliderValue=50.0.obs;
-
+RxString classOption='Class 10'.obs;
+  // List of options for the dropdown menu
+  List<String> bookClass = ['Class 10', 'Option 2', 'Graduate', 'Option 4'];
 
 
 
