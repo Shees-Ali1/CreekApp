@@ -59,13 +59,13 @@ class OnBoardingOne extends StatelessWidget {
           SizedBox(
             height: 168.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textColor: Color(0xff273958),
             fontsize: 20.sp,
             text: 'Buy and sell used school items ',
             fontWeight: FontWeight.w400,
           ),
-          CustomTextThree(
+          LexendCustomText(
             text: 'Effortlessly!',
             fontWeight: FontWeight.w400,
             fontsize: 26.sp,
@@ -74,7 +74,7 @@ class OnBoardingOne extends StatelessWidget {
           SizedBox(
             height: 24.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textColor: Color(0xff3A3838),
             fontsize: 16.sp,
             text: 'Secure transactions with\nCreek\'sintegrated wallet!',
@@ -107,7 +107,7 @@ class OnBoardingOne extends StatelessWidget {
                     color: primaryColor,
                     borderRadius: BorderRadius.circular(40.r)),
                 child: Center(
-                  child: CustomTextThree(
+                  child: LexendCustomText(
                     textColor: whiteColor,
                     fontsize: 16.sp,
                     text: 'Next',
@@ -141,7 +141,7 @@ class OnBoardingTwo extends StatelessWidget {
           SizedBox(
             height: 168.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textColor: Color(0xff273958),
             fontsize: 20.sp,
             text: 'Browse items tailored to your\nschool community!',
@@ -150,7 +150,7 @@ class OnBoardingTwo extends StatelessWidget {
           SizedBox(
             height: 24.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textAlign: TextAlign.center,
             textColor: Color(0xff3A3838),
             fontsize: 16.sp,
@@ -184,7 +184,7 @@ class OnBoardingTwo extends StatelessWidget {
                     color: primaryColor,
                     borderRadius: BorderRadius.circular(40.r)),
                 child: Center(
-                  child: CustomTextThree(
+                  child: LexendCustomText(
                     textColor: whiteColor,
                     fontsize: 16.sp,
                     text: 'Next',
@@ -218,7 +218,7 @@ class OnBoardingThree extends StatelessWidget {
           SizedBox(
             height: 168.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textAlign: TextAlign.center,
             textColor: Color(0xff273958),
             fontsize: 20.sp,
@@ -228,7 +228,7 @@ class OnBoardingThree extends StatelessWidget {
           SizedBox(
             height: 24.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             textAlign: TextAlign.center,
             textColor: Color(0xff3A3838),
             fontsize: 16.sp,
@@ -264,7 +264,7 @@ class OnBoardingThree extends StatelessWidget {
                     color: primaryColor,
                     borderRadius: BorderRadius.circular(40.r)),
                 child: Center(
-                    child: CustomTextThree(
+                    child: LexendCustomText(
                       textColor: whiteColor,
                       fontsize: 16.sp,
                       text: 'Get Started',

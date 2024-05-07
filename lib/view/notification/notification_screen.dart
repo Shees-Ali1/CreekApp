@@ -48,7 +48,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     SizedBox(
                       width: 20.w,
                     ),
-                    CustomText(
+                    InterCustomText(
                       text: 'Notifications',
                       textColor: Colors.white,
                       fontsize: 20.sp,
@@ -92,7 +92,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 height: 20.h,
                               ),
                               Center(
-                                  child: CustomTextFour(
+                                  child: WorkSansCustomText(
                                 text:
                                     'Mike has marked this sale as complete,\n     did you finish this transaction?”',
                                 textColor: Colors.black,
@@ -125,13 +125,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   height: 32.h,
                   width: 32.w,
                 ),
-                title: CustomTextThree(
+                title: LexendCustomText(
                   text: 'Mike has marked Memory as delivered',
                   textColor: Colors.black,
                   fontWeight: FontWeight.w600,
                   fontsize: 12.sp,
                 ),
-                subtitle: CustomTextThree(
+                subtitle: LexendCustomText(
                   text: 'Today 12:32',
                   textColor: Color(0xff78838D),
                   fontWeight: FontWeight.w400,

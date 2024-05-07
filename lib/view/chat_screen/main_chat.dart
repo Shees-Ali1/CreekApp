@@ -48,7 +48,7 @@ class _MainChatState extends State<MainChat> {
                     SizedBox(
                       width: 20.w,
                     ),
-                    CustomText(
+                    InterCustomText(
                       text: 'Book Chats',
                       textColor: Colors.white,
                       fontsize: 20.sp,
@@ -77,13 +77,13 @@ class _MainChatState extends State<MainChat> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTextThree(
+                  LexendCustomText(
                     text: 'Memory',
                     textColor: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontsize: 16.sp,
                   ),
-                  CustomTextThree(
+                  LexendCustomText(
                     text: '04:43',
                     textColor: Colors.black,
                     fontWeight: FontWeight.w400,
@@ -91,7 +91,7 @@ class _MainChatState extends State<MainChat> {
                   ),
                 ],
               ),
-              subtitle: CustomTextThree(
+              subtitle: LexendCustomText(
                 text: 'Hey There what\'s up is everything a...',
                 textColor: Colors.black,
                 fontWeight: FontWeight.w400,

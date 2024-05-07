@@ -56,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(
                       width: 8.w,
                     ),
-                    CustomText(
+                    InterCustomText(
                       text: 'Memory',
                       textColor: Colors.white,
                       fontsize: 20.sp,

@@ -45,7 +45,7 @@ class HomeScreenBooks extends StatelessWidget {
                           SizedBox(
                             width: 20.w,
                           ),
-                          CustomText(
+                          InterCustomText(
                             text: 'Hey, Ali',
                             textColor: Colors.white,
                             fontsize: 20.sp,
@@ -163,14 +163,14 @@ class HomeScreenBooks extends StatelessWidget {
                                     SizedBox(height: 3.h,),
                                     SizedBox(
                                         width: 214.w,
-                                        child: CustomTextTwo(text: books['bookName'],fontsize: 16.sp, textColor: Color(0xff393939), fontWeight: FontWeight.w600,height: 1,)),
+                                        child: MontserratCustomText(text: books['bookName'],fontsize: 16.sp, textColor: Color(0xff393939), fontWeight: FontWeight.w600,height: 1,)),
                                     SizedBox(height: 5.h,),
-                                    CustomTextTwo(text: books['bookPart']??'',fontsize: 12.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
+                                    MontserratCustomText(text: books['bookPart']??'',fontsize: 12.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
                                     SizedBox(height: 14.h,),
-                                    CustomTextTwo(text: "Author: ${books['bookAuthor']}",fontsize: 10.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600,height: 1.h,),
+                                    MontserratCustomText(text: "Author: ${books['bookAuthor']}",fontsize: 10.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600,height: 1.h,),
                                     SizedBox(height: 14.h,),
-                                    CustomTextTwo(text: "Class: ${books['bookClass']}",fontsize: 8.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
-                                    CustomTextTwo(text: "Condition: ${books['bookCondition']}",fontsize: 8.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
+                                    MontserratCustomText(text: "Class: ${books['bookClass']}",fontsize: 8.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
+                                    MontserratCustomText(text: "Condition: ${books['bookCondition']}",fontsize: 8.sp, textColor: Color(0xff5C5C5C), fontWeight: FontWeight.w600),
                                     SizedBox(height: 3.h,),
 
 
@@ -188,7 +188,7 @@ class HomeScreenBooks extends StatelessWidget {
                                 color: Color(0xff29604E),
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r),bottomRight: Radius.circular(10.r))
                             ),
-                            child: CustomTextTwo(text: "\$${books['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w700,fontsize: 14.sp,),
+                            child: MontserratCustomText(text: "\$${books['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w700,fontsize: 14.sp,),
                           )
                         ],
                       ),
@@ -227,7 +227,7 @@ List<dynamic> bookListing=[
     'bookDescription':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. '
   },
   {
-    'bookImage':'',
+    'bookImage':AppImages.milliontoone ,
     'bookName':'A MILLION TO ONE',
     'bookPart':'The Fassano Trilogy - Book Two',
     'bookAuthor':'Tony Faggioli',

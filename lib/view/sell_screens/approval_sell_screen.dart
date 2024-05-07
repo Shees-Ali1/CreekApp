@@ -44,7 +44,7 @@ class ApprovalSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 20.w,
                             ),
-                            CustomText(
+                            InterCustomText(
                               text: 'Sell Items',
                               textColor: Colors.white,
                               fontsize: 20.sp,
@@ -88,7 +88,7 @@ class ApprovalSellScreen extends StatelessWidget {
                       padding:  EdgeInsets.symmetric(horizontal:12.0.w),
                       child: SizedBox(
                         width: 300.w,
-                        child: CustomText(
+                        child: InterCustomText(
                           textAlign:  TextAlign.center,
                           text: 'Your item is pending approval from Creek',
                           textColor: Color(0xff454545),
@@ -114,7 +114,7 @@ class ApprovalSellScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20.r)
                         ),
                         child:
-                        CustomTextThree(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+                        LexendCustomText(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
 
 

@@ -17,6 +17,7 @@ class AppIcons{
   static const shopping = 'assets/svg/shopping.svg';
   static const disc = 'assets/svg/disc.svg';
   static const dollar = 'assets/svg/dollar.svg';
+  static const topup = 'assets/svg/topup.svg';
 
 
 

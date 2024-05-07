@@ -43,7 +43,7 @@ class SellScreenMain extends StatelessWidget {
                             SizedBox(
                               width: 20.w,
                             ),
-                            CustomText(
+                            InterCustomText(
                               text: 'Listed Items',
                               textColor: Colors.white,
                               fontsize: 20.sp,
@@ -69,7 +69,7 @@ class SellScreenMain extends StatelessWidget {
 
               ),
               SizedBox(height: 66.h,),
-              CustomText(
+              InterCustomText(
                 text: 'No items listed for sale',
                 textColor: Color(0xff545454),
                 fontsize: 14.sp,
@@ -101,7 +101,7 @@ class SellScreenMain extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.r)
                   ),
                   child:
-                  FittedBox(child: CustomText(text: "Sell your first book here!", textColor: Colors.white, fontWeight: FontWeight.w500,fontsize: 14.sp,))
+                  FittedBox(child: InterCustomText(text: "Sell your first book here!", textColor: Colors.white, fontWeight: FontWeight.w500,fontsize: 14.sp,))
 
 
                 ),

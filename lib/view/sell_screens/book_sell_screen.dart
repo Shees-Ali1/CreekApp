@@ -46,7 +46,7 @@ class BookSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 20.w,
                             ),
-                            CustomText(
+                            InterCustomText(
                               text: 'Sell Items',
                               textColor: Colors.white,
                               fontsize: 20.sp,
@@ -76,7 +76,7 @@ class BookSellScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: 25.w,),
-                  CustomText(
+                  InterCustomText(
                     text: 'Enter ISBN Number',
                     textColor: Color(0xff454545),
                     fontsize: 20.sp,
@@ -116,13 +116,13 @@ class BookSellScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h,),
-              CustomText(
+              InterCustomText(
                 text: 'or',
                 textColor: Color(0xff454545),
                 fontsize: 16.sp,
                 fontWeight: FontWeight.w500,
               ),
-              CustomText(
+              InterCustomText(
                 text: 'Click to Scan',
                 textColor: Color(0xff454545),
                 fontsize: 20.sp,
@@ -144,7 +144,7 @@ class BookSellScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r)
                 ),
                 child:
-                CustomTextThree(text: "Confirm", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+                LexendCustomText(text: "Confirm", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
 
 
@@ -168,7 +168,7 @@ class BookSellScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.r)
                   ),
                   child:
-                  CustomTextThree(text: "Skip to Enter details Manually", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+                  LexendCustomText(text: "Skip to Enter details Manually", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
 
 

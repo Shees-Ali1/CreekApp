@@ -46,7 +46,7 @@ class ListSellBookScreen extends StatelessWidget {
                             SizedBox(
                               width: 20.w,
                             ),
-                            CustomText(
+                            InterCustomText(
                               text: 'Sell Items',
                               textColor: Colors.white,
                               fontsize: 20.sp,
@@ -76,7 +76,7 @@ class ListSellBookScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: 24.w,),
-                  CustomText(
+                  InterCustomText(
                     text: 'Enter the Details of the Book',
                     textColor: Color(0xff454545),
                     fontsize: 20.sp,
@@ -110,7 +110,7 @@ class ListSellBookScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: 24.w,),
 
-                  CustomTextThree(text: 'Title', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  LexendCustomText(text: 'Title', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ),
               // SizedBox(height: 8.h,),
@@ -121,7 +121,7 @@ class ListSellBookScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: 24.w,),
 
-                  CustomTextThree(text: 'Book Part', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  LexendCustomText(text: 'Book Part', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ),
               // SizedBox(height: 8.h,),
@@ -132,20 +132,7 @@ class ListSellBookScreen extends StatelessWidget {
                 children: [
                   SizedBox(width: 24.w,),
 
-                  CustomTextThree(text: 'Author', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                ],
-              ),
-              // SizedBox(height: 8.h,),
-              CustomSellTextField(),
-
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-
-                children: [
-                  SizedBox(width: 24.w,),
-
-                  CustomTextThree(text: 'Class name', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  LexendCustomText(text: 'Author', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ),
               // SizedBox(height: 8.h,),
@@ -157,7 +144,20 @@ class ListSellBookScreen extends StatelessWidget {
 
                 children: [
                   SizedBox(width: 24.w,),
-                  CustomTextThree(text: 'Enter your Asking Price', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+
+                  LexendCustomText(text: 'Class name', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(),
+
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: [
+                  SizedBox(width: 24.w,),
+                  LexendCustomText(text: 'Enter your Asking Price', textColor: Color(0xff1E1E1E), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ),
               // SizedBox(height: 8.h,),
@@ -187,7 +187,7 @@ class ListSellBookScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r)
                     ),
                     child:
-                    CustomTextThree(text: "Next", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
+                    LexendCustomText(text: "Next", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
 
 

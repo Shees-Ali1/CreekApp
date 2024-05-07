@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import '../../const/color.dart';
 import '../profile_screen/profile.dart';
+import '../wallet/wallet.dart';
 
 class AppNavBar extends StatefulWidget {
   const AppNavBar({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _AppNavBarState extends State<AppNavBar> {
   List<Widget> bottomBarPages = [
     const HomeScreenBooks(),
     const BookSellScreen(),
-    const Profile(),
+    const Wallet(),
     const Profile(),
   ];
   // final NavBarController navBarController = Get.put(NavBarController());

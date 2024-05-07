@@ -43,7 +43,7 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         height: 25.h,
                       ),
-                      CustomTextThree(
+                      LexendCustomText(
                         text: 'Name',
                         fontWeight: FontWeight.w500,
                         fontsize: 16.sp,
@@ -62,7 +62,7 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         height: 8.h,
                       ),
-                      CustomTextThree(
+                      LexendCustomText(
                         text: 'Email',
                         fontWeight: FontWeight.w500,
                         fontsize: 16.sp,
@@ -81,7 +81,7 @@ class _SignupState extends State<Signup> {
                       SizedBox(
                         height: 8.h,
                       ),
-                      CustomTextThree(
+                      LexendCustomText(
                         text: 'School Name',
                         fontWeight: FontWeight.w500,
                         fontsize: 16.sp,
@@ -101,7 +101,7 @@ class _SignupState extends State<Signup> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CustomTextThree(
+                            LexendCustomText(
                               text: 'Harker',
                               fontWeight: FontWeight.w400,
                               fontsize: 16.sp,
@@ -129,7 +129,7 @@ class _SignupState extends State<Signup> {
                           SizedBox(
                             width: 9.w,
                           ),
-                          CustomTextThree(
+                          LexendCustomText(
                             text:
                                 'I agree to the Terms and Conditions and Privacy Policy',
                             fontWeight: FontWeight.w500,
@@ -155,7 +155,7 @@ class _SignupState extends State<Signup> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomTextThree(
+                          LexendCustomText(
                             text: 'Already have an account?',
                             fontWeight: FontWeight.w400,
                             fontsize: 14.sp,
@@ -168,7 +168,7 @@ class _SignupState extends State<Signup> {
                             onTap: () {
                               CustomRoute.navigateTo(context,LoginView() );
                             },
-                            child: CustomTextThree(
+                            child: LexendCustomText(
                               text: 'Login',
                               fontWeight: FontWeight.w400,
                               fontsize: 14.sp,

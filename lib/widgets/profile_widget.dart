@@ -30,7 +30,7 @@ class ProfileWidget extends StatelessWidget {
         ),
         title: Padding(
           padding: EdgeInsets.only(left: 10.sp),
-          child: CustomTextFour(
+          child: WorkSansCustomText(
             textColor: Color(0xff040415),
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,

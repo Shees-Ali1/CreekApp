@@ -75,7 +75,7 @@ class _EditProfileState extends State<EditProfile> {
                       SizedBox(
                         width: 20.w,
                       ),
-                      CustomText(
+                      InterCustomText(
                         text: 'Edit Profile',
                         textColor: Colors.white,
                         fontsize: 20.sp,
@@ -142,7 +142,7 @@ class _EditProfileState extends State<EditProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTextThree(
+            LexendCustomText(
               text: 'Name',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
@@ -160,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(
               height: 8.h,
             ),
-            CustomTextThree(
+            LexendCustomText(
               text: 'Email Address',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
@@ -178,7 +178,7 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(
               height: 8.h,
             ),
-            CustomTextThree(
+            LexendCustomText(
               text: 'School Name',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
@@ -198,7 +198,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTextThree(
+                  LexendCustomText(
                     text: 'Harker',
                     fontWeight: FontWeight.w400,
                     fontsize: 16.sp,
@@ -217,7 +217,7 @@ class _EditProfileState extends State<EditProfile> {
             SizedBox(
               height: 8.h,
             ),
-            CustomTextThree(
+            LexendCustomText(
               text: 'Password',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
@@ -272,7 +272,7 @@ class _EditProfileState extends State<EditProfile> {
                             SizedBox(
                               height: 20.h,
                             ),
-                            CustomTextFour(
+                            WorkSansCustomText(
                               text: 'Confirm changes?',
                               fontWeight: FontWeight.w600,
                               textColor: Colors.black,
@@ -281,7 +281,7 @@ class _EditProfileState extends State<EditProfile> {
                             SizedBox(
                               height: 2.h,
                             ),
-                            CustomTextFour(
+                            WorkSansCustomText(
                               text:
                                   'They will be sent to admin team to be approved again',
                               fontWeight: FontWeight.w400,
@@ -317,7 +317,7 @@ class _EditProfileState extends State<EditProfile> {
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Center(
-                  child: CustomTextThree(
+                  child: LexendCustomText(
                     text: 'Change',
                     fontWeight: FontWeight.w500,
                     fontsize: 16.sp,

@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
           SizedBox(
             height: 25.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             text: 'Enter Your Email',
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,
@@ -65,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
           SizedBox(
             height: 8.h,
           ),
-          CustomTextThree(
+          LexendCustomText(
             text: 'Enter Your Password',
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,
@@ -105,7 +105,7 @@ class _LoginViewState extends State<LoginView> {
             height: 17.h,
           ),
           Center(
-            child: CustomTextThree(
+            child: LexendCustomText(
               text: 'or Login via',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
@@ -129,7 +129,7 @@ class _LoginViewState extends State<LoginView> {
                   SizedBox(
                     width: 12.w,
                   ),
-                  CustomTextFour(
+                  WorkSansCustomText(
                     text: 'Google',
                     textColor: Color(0xff475569),
                     fontWeight: FontWeight.w400,
@@ -145,7 +145,7 @@ class _LoginViewState extends State<LoginView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomTextThree(
+              LexendCustomText(
                 text: 'Doesn’t have account?',
                 fontWeight: FontWeight.w400,
                 fontsize: 14.sp,
@@ -158,7 +158,7 @@ class _LoginViewState extends State<LoginView> {
                 onTap: () {
                   CustomRoute.navigateTo(context,Register() );
                 },
-                child: CustomTextThree(
+                child: LexendCustomText(
                   text: 'Register',
                   fontWeight: FontWeight.w400,
                   fontsize: 14.sp,

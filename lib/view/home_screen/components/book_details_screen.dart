@@ -47,15 +47,15 @@ class BookDetailsScreen extends StatelessWidget {
              SizedBox(
                   width: 297.w,
         
-                  child: CustomTextTwo(text: bookDetail['bookName'], textColor: Colors.black, fontWeight: FontWeight.w700,fontsize: 24.sp,)),
+                  child: MontserratCustomText(text: bookDetail['bookName'], textColor: Colors.black, fontWeight: FontWeight.w700,fontsize: 24.sp,)),
              SizedBox(height: 5.h,),
-             CustomTextTwo(text: bookDetail['bookPart'], textColor: Colors.black, fontWeight: FontWeight.w600,fontsize: 18.sp,),
+             MontserratCustomText(text: bookDetail['bookPart'], textColor: Colors.black, fontWeight: FontWeight.w600,fontsize: 18.sp,),
              SizedBox(height: 20.h,),
              Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 CustomTextTwo(text: 'Date Posted', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                 CustomTextTwo(text: bookDetail['bookPosted'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: 'Date Posted', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: bookDetail['bookPosted'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                ],
              ),
               SizedBox(height: 15.h,),
@@ -63,24 +63,24 @@ class BookDetailsScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 CustomTextTwo(text: 'Author', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                 CustomTextTwo(text: bookDetail['bookAuthor'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: 'Author', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: bookDetail['bookAuthor'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                ],
              ),
               SizedBox(height: 15.h,),
         
-              CustomTextTwo(text: 'Description', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
+              MontserratCustomText(text: 'Description', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
               SizedBox(height: 6.h,),
               SizedBox(
               width:   319.w,
-                  child: CustomTextTwo(text: bookDetail['bookDescription'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,)),
+                  child: MontserratCustomText(text: bookDetail['bookDescription'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,)),
               SizedBox(height: 6.h,),
               bookDetail['sellerId']=='qwerty'?
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTextTwo(text: 'Price', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                  CustomTextTwo(text: "\$${bookDetail['bookPrice']}", textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  MontserratCustomText(text: 'Price', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  MontserratCustomText(text: "\$${bookDetail['bookPrice']}", textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ) :
               SizedBox.shrink(),
@@ -104,9 +104,9 @@ class BookDetailsScreen extends StatelessWidget {
                                   width: 163.w,
                                   child: Image.asset(AppImages.doneTick),
                                 ),
-                                CustomTextFour(text: "Book Purchased!", textColor: Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
+                                WorkSansCustomText(text: "Book Purchased!", textColor: Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
                                 SizedBox(height: 15.h,),
-                                CustomTextFour(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
+                                WorkSansCustomText(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
                                 SizedBox(height: 14.h,),
                                 Row(
 
@@ -122,7 +122,7 @@ class BookDetailsScreen extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(20.r)
                                       ),
                                       child:
-                                      CustomTextFive(text: "Home", textColor: Color(0xffFEFEFE), fontWeight: FontWeight.w600,fontsize: 16.sp,)
+                                      PoppinsCustomText(text: "Home", textColor: Color(0xffFEFEFE), fontWeight: FontWeight.w600,fontsize: 16.sp,)
                                     ),
 
                                     SizedBox(width: 15.w,),
@@ -154,14 +154,14 @@ class BookDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.r)
                     ),
                     child: bookDetail['sellerId']=='qwerty'?
-                    CustomTextThree(text: "Cancel This Listing", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,):
+                    LexendCustomText(text: "Cancel This Listing", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,):
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomTextThree(text: "Add to Cart ", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,),
+                        LexendCustomText(text: "Add to Cart ", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,),
 
-                        CustomTextThree(text: "\$${bookDetail['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w600,fontsize: 24.sp,),
+                        LexendCustomText(text: "\$${bookDetail['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w600,fontsize: 24.sp,),
                       ],
                     ),
 

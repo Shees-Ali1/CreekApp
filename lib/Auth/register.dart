@@ -38,13 +38,13 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 91.h,
               ),
-              CustomTextThree(
+              LexendCustomText(
                 text: 'Create Your Profile',
                 fontWeight: FontWeight.w400,
                 fontsize: 32.sp,
                 textColor: Color(0xff273958),
               ),
-              CustomTextThree(
+              LexendCustomText(
                 text: 'Now!',
                 fontWeight: FontWeight.w600,
                 fontsize: 32.sp,
@@ -53,7 +53,7 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 28.h,
               ),
-              CustomTextThree(
+              LexendCustomText(
                 text:
                     ' Create a profile to save your learning\n progress and keep learning for free!',
                 fontWeight: FontWeight.w400,
@@ -74,7 +74,7 @@ class _RegisterState extends State<Register> {
                       onTap: () {
                         navigator?.pop();
                       },
-                      child: CustomTextThree(
+                      child: LexendCustomText(
                         text: 'Back',
                         fontWeight: FontWeight.w500,
                         fontsize: 16.sp,
@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
                               color: primaryColor,
                               borderRadius: BorderRadius.circular(40.r)),
                           child: Center(
-                            child: CustomTextThree(
+                            child: LexendCustomText(
                               textColor: whiteColor,
                               fontsize: 16.sp,
                               text: 'Next',

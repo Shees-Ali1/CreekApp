@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomText extends StatelessWidget {
+class InterCustomText extends StatelessWidget {
   final String text;
   final Color textColor;
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
   final TextAlign? textAlign;
-  const CustomText(
+  const InterCustomText(
       {super.key,
       required this.text,
       required this.textColor,
@@ -27,13 +27,13 @@ class CustomText extends StatelessWidget {
     );
   }
 }
-class CustomTextTwo extends StatelessWidget {
+class MontserratCustomText extends StatelessWidget {
   final String text;
   final Color textColor;
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
-  const CustomTextTwo(
+  const MontserratCustomText(
       {super.key,
       required this.text,
       required this.textColor,
@@ -51,14 +51,14 @@ class CustomTextTwo extends StatelessWidget {
     );
   }
 }
-class CustomTextThree extends StatelessWidget {
+class LexendCustomText extends StatelessWidget {
   final TextAlign? textAlign;
   final String text;
   final Color textColor;
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
-  const CustomTextThree(
+  const LexendCustomText(
       {super.key,
       required this.text,
       required this.textColor,
@@ -78,13 +78,13 @@ class CustomTextThree extends StatelessWidget {
   }
 }
 
-class CustomTextFour extends StatelessWidget {
+class WorkSansCustomText extends StatelessWidget {
   final String text;
   final Color textColor;
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
-  const CustomTextFour(
+  const WorkSansCustomText(
       {super.key,
         required this.text,
         required this.textColor,
@@ -102,13 +102,13 @@ class CustomTextFour extends StatelessWidget {
     );
   }
 }
-class CustomTextFive extends StatelessWidget {
+class PoppinsCustomText extends StatelessWidget {
   final String text;
   final Color textColor;
   final double? fontsize;
   final FontWeight fontWeight;
   final double? height;
-  const CustomTextFive(
+  const PoppinsCustomText(
       {super.key,
         required this.text,
         required this.textColor,
@@ -120,6 +120,30 @@ class CustomTextFive extends StatelessWidget {
     return Text(
       text,
       style: GoogleFonts.poppins(
+        textStyle: TextStyle(
+            color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height ),
+      ),
+    );
+  }
+}
+class SoraCustomText extends StatelessWidget {
+  final String text;
+  final Color textColor;
+  final double? fontsize;
+  final FontWeight fontWeight;
+  final double? height;
+  const SoraCustomText(
+      {super.key,
+        required this.text,
+        required this.textColor,
+        this.fontsize,
+        required this.fontWeight, this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: GoogleFonts.sora(
         textStyle: TextStyle(
             color: textColor, fontSize: fontsize, fontWeight: fontWeight,height:height ),
       ),

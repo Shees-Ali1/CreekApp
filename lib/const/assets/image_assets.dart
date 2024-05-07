@@ -30,6 +30,7 @@ class AppImages {
   static const profile = 'assets/images/profile.png';
   static const appbardesign = 'assets/images/appbardesign.png';
   static const harryPotterBook = 'assets/images/harryPotter.png';
+  static const milliontoone = 'assets/images/milliontoone.png';
   static const soulBook = 'assets/images/soulBook.png';
   static const doneTick = 'assets/images/doneTick.png';
   static const sellMan = 'assets/images/sellMan.png';

@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           width: 20.w,
                         ),
-                        CustomText(
+                        InterCustomText(
                           text: 'Profile',
                           textColor: Colors.white,
                           fontsize: 20.sp,
@@ -102,7 +102,7 @@ class _ProfileState extends State<Profile> {
                   SizedBox(
                     width: 10.w,
                   ),
-                  CustomTextThree(
+                  LexendCustomText(
                     text: 'John Doe',
                     fontWeight: FontWeight.w400,
                     fontsize: 20.sp,
@@ -131,13 +131,13 @@ class _ProfileState extends State<Profile> {
                       children: [
                         Column(
                           children: [
-                            CustomTextThree(
+                            LexendCustomText(
                               text: '10',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
                               textColor: Color(0xff263238),
                             ),
-                            CustomTextThree(
+                            LexendCustomText(
                               text: 'Listed',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
@@ -152,13 +152,13 @@ class _ProfileState extends State<Profile> {
                         ),
                         Column(
                           children: [
-                            CustomTextThree(
+                            LexendCustomText(
                               text: '20',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
                               textColor: Color(0xff263238),
                             ),
-                            CustomTextThree(
+                            LexendCustomText(
                               text: 'Sales',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
@@ -173,13 +173,13 @@ class _ProfileState extends State<Profile> {
                         ),
                         Column(
                           children: [
-                            CustomTextThree(
+                            LexendCustomText(
                               text: '2',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
                               textColor: Color(0xff263238),
                             ),
-                            CustomTextThree(
+                            LexendCustomText(
                               text: 'Purchases',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
@@ -266,7 +266,7 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: 30.h,
                               ),
-                              CustomTextThree(
+                              LexendCustomText(
                                 text: 'Logout Account?',
                                 textColor: Color(0xff090A0A),
                                 fontWeight: FontWeight.w700,
@@ -275,7 +275,7 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: 8.h,
                               ),
-                              CustomTextThree(
+                              LexendCustomText(
                                 text:
                                     'Are you sure want to logout this account?',
                                 textColor: Color(0xff090A0A),
@@ -293,7 +293,7 @@ class _ProfileState extends State<Profile> {
                               SizedBox(
                                 height: 22.h,
                               ),
-                              CustomTextThree(
+                              LexendCustomText(
                                 text: 'Cancel',
                                 textColor: Color(0xff202325),
                                 fontWeight: FontWeight.w500,
@@ -309,7 +309,7 @@ class _ProfileState extends State<Profile> {
                     SvgPicture.asset(AppIcons.logoutIcon),
                     Padding(
                       padding: EdgeInsets.only(left: 26.sp),
-                      child: CustomTextFour(
+                      child: WorkSansCustomText(
                         textColor: Color(0xff040415),
                         fontWeight: FontWeight.w700,
                         fontsize: 16.sp,

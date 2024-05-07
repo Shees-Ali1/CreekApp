@@ -56,7 +56,7 @@ class _VerificationState extends State<Verification> {
                       SizedBox(
                         height: 44.h,
                       ),
-                      CustomTextThree(
+                      LexendCustomText(
                         text: 'Verify Your Email',
                         fontWeight: FontWeight.w700,
                         fontsize: 26.sp,
@@ -65,7 +65,7 @@ class _VerificationState extends State<Verification> {
                       SizedBox(
                         height: 11.h,
                       ),
-                      CustomTextThree(
+                      LexendCustomText(
                         textAlign: TextAlign.center,
                         text:
                             'Enter code that we have sent to your email\nyousafayub***',
@@ -94,7 +94,7 @@ class _VerificationState extends State<Verification> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomTextThree(
+                          LexendCustomText(
                             text: 'Didn’t receive the code?',
                             fontWeight: FontWeight.w400,
                             fontsize: 12.sp,
@@ -107,7 +107,7 @@ class _VerificationState extends State<Verification> {
                             onTap: () {
                               // CustomRoute.navigateTo(context,LoginView() );
                             },
-                            child: CustomTextThree(
+                            child: LexendCustomText(
                               text: 'Resend',
                               fontWeight: FontWeight.w400,
                               fontsize: 12.sp,
