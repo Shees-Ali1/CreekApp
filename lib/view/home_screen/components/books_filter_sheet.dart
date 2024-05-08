@@ -8,7 +8,6 @@ import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,9 +16,9 @@ class BooksFilterBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find();
-final TextEditingController authorController=TextEditingController();
-final TextEditingController teacherController=TextEditingController();
+    final HomeController homeController = Get.find<HomeController>();
+    final TextEditingController authorController = TextEditingController();
+    final TextEditingController teacherController = TextEditingController();
 
     return SingleChildScrollView(
       child: Column(
@@ -33,7 +32,7 @@ final TextEditingController teacherController=TextEditingController();
                 width: 50.w,
                 decoration: BoxDecoration(
                   // color: AppColor.green,
-                  color: Color(0xff57C4B7),
+                  color: greenColor,
                   borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
@@ -59,7 +58,9 @@ final TextEditingController teacherController=TextEditingController();
                   homeController.sliderValue.value = 50;
                   authorController.clear();
                   teacherController.clear();
-                  homeController.classOption.value='Class 10';
+                  homeController.classOption.value = 'Class 10';
+                  homeController.filteredBooks.value = homeController.bookListing;
+                  homeController.update();
                 },
                 child: Container(
                   width: 68.w,
@@ -103,7 +104,7 @@ final TextEditingController teacherController=TextEditingController();
                   borderRadius: BorderRadius.circular(20.r)
               ),
               child: DropdownButton<String>(
-                  underline: SizedBox.shrink(),
+                  underline: const SizedBox.shrink(),
                   isExpanded: true,
                   value: homeController.classOption.value,
                   items: homeController.bookClass.map((String option) {
@@ -118,7 +119,7 @@ final TextEditingController teacherController=TextEditingController();
                     // homeController.bookClass.value=newValue!;
                     homeController.classOption.value = newValue!;
                   },
-                  hint: SizedBox.shrink()
+                  hint: const SizedBox.shrink()
               ),
             );
           }),
@@ -205,7 +206,8 @@ final TextEditingController teacherController=TextEditingController();
             fontsize: 18.sp,
           ),
           SizedBox(height: 5.h),
-          CustomSellTextField(suffixIcon: Icon(Icons.search),controller: authorController,),
+          CustomSellTextField(suffixIcon: const Icon(Icons.search),
+            controller: authorController,),
           SizedBox(height: 19.h),
           RalewayCustomText(
             text: "Teacher",
@@ -217,7 +219,8 @@ final TextEditingController teacherController=TextEditingController();
             fontsize: 18.sp,
           ),
           SizedBox(height: 5.h),
-          CustomSellTextField(suffixIcon: Icon(Icons.search),controller: teacherController,),
+          CustomSellTextField(suffixIcon: const Icon(Icons.search),
+            controller: teacherController,),
           SizedBox(height: 20.h),
           Row(
             children: [
@@ -241,43 +244,54 @@ final TextEditingController teacherController=TextEditingController();
               })
             ],
           ),
-          FlutterSlider(
+          GetBuilder<HomeController>(
+              builder: (homeController) {
+                return FlutterSlider(
 
-            values: [homeController.sliderValue.value],
-            max: 500,
-            min: 0,
-            trackBar: FlutterSliderTrackBar(
-                activeTrackBar: BoxDecoration(color: primaryColor)),
-            handler: FlutterSliderHandler(
-                decoration: BoxDecoration(shape: BoxShape.rectangle),
-                child: Container(
-                  height: 35.h,
-                  width: 34.w,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: primaryColor),
-                      borderRadius: BorderRadius.circular(9.r)),
-                  child: Icon(Icons.compare_arrows_outlined),
-                )),
-            onDragging: (handlerIndex, lowerValue, upperValue) {
-              homeController.priceSliderValue.value = lowerValue;
-              print(homeController.priceSliderValue.value);
-            },
-          ),
+                  values: [homeController.sliderValue.value],
+                  max: 500,
+                  min: 0,
+                  trackBar: const FlutterSliderTrackBar(
+                      activeTrackBar: BoxDecoration(color: primaryColor)),
+                  handler: FlutterSliderHandler(
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle),
+                      child: Container(
+                        height: 35.h,
+                        width: 34.w,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: primaryColor),
+                            borderRadius: BorderRadius.circular(9.r)),
+                        child: const Icon(Icons.compare_arrows_outlined),
+                      )),
+                  onDragging: (handlerIndex, lowerValue, upperValue) {
+                    homeController.priceSliderValue.value = lowerValue;
+                    print(homeController.priceSliderValue.value);
+                  },
+                );
+              }),
           SizedBox(height: 26.h),
-          Center(
-            child: Container(
-              width: 278.w,
-              height: 63.h,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                color: primaryColor,
+          GestureDetector(
+            onTap: () {
+              print("HI");
+              homeController.applyFilters(authorController.text);
+              print(homeController.filteredBooks);
+            },
+            child: Center(
+              child: Container(
+                width: 278.w,
+                height: 63.h,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  color: primaryColor,
+                ),
+                child: const LatoCustomText(
+                    text: 'Apply Filter',
+                    textColor: Colors.white,
+                    fontWeight: FontWeight.w700),
               ),
-              child: LatoCustomText(
-                  text: 'Apply Filter',
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.w700),
             ),
           ),
         ],

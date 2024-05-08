@@ -22,7 +22,7 @@ class PrivacyPolicy extends StatelessWidget {
             child: Container(
                 height: 160.h,
                 // padding: EdgeInsets.symmetric(vertical: 50.h),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color(0xff29604E),
                     image: DecorationImage(
                         image: AssetImage(AppImages.appbardesign),
@@ -36,7 +36,7 @@ class PrivacyPolicy extends StatelessWidget {
                       SizedBox(
                         width: 10.w,
                       ),
-                      CustomBackButton(),
+                      const CustomBackButton(),
                       SizedBox(
                         width: 20.w,
                       ),
@@ -46,7 +46,7 @@ class PrivacyPolicy extends StatelessWidget {
                         fontsize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       SvgPicture.asset(AppIcons.chaticon),
                       SizedBox(
                         width: 10.w,

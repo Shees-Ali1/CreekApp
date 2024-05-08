@@ -1,8 +1,11 @@
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/home_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
@@ -11,16 +14,12 @@ import '../../widgets/custom_text.dart';
 import '../chat_screen/main_chat.dart';
 import '../notification/notification_screen.dart';
 
-class Wallet extends StatefulWidget {
+class Wallet extends StatelessWidget {
   const Wallet({super.key});
 
   @override
-  State<Wallet> createState() => _WalletState();
-}
-
-class _WalletState extends State<Wallet> {
-  @override
   Widget build(BuildContext context) {
+    final HomeController homeController=Get.find<HomeController>();
     return Scaffold(
         body: SingleChildScrollView(
             child:
@@ -31,8 +30,8 @@ class _WalletState extends State<Wallet> {
             child: Container(
                 height: 160.h,
                 // padding: EdgeInsets.symmetric(vertical: 50.h),
-                decoration: BoxDecoration(
-                    color: Color(0xff29604E),
+                decoration: const BoxDecoration(
+                    color:primaryColor,
                     image: DecorationImage(
                         image: AssetImage(AppImages.appbardesign),
                         fit: BoxFit.cover)),
@@ -45,7 +44,12 @@ class _WalletState extends State<Wallet> {
                       SizedBox(
                         width: 10.w,
                       ),
-                      SvgPicture.asset(AppIcons.drawericon),
+                      GestureDetector(
+                          onTap: (){
+                            homeController.openDrawer();
+
+                          },
+                          child: SvgPicture.asset(AppIcons.drawericon)),
                       SizedBox(
                         width: 20.w,
                       ),
@@ -55,10 +59,10 @@ class _WalletState extends State<Wallet> {
                         fontsize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                           onTap: () {
-                            CustomRoute.navigateTo(context, MainChat());
+                            CustomRoute.navigateTo(context, const MainChat());
                           },
                           child: SvgPicture.asset(AppIcons.chaticon)),
                       SizedBox(
@@ -66,7 +70,7 @@ class _WalletState extends State<Wallet> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            CustomRoute.navigateTo(context, NotificationScreen());
+                            CustomRoute.navigateTo(context, const NotificationScreen());
                           },
                           child: SvgPicture.asset(AppIcons.notificationIcon)),
                       SizedBox(
@@ -86,8 +90,8 @@ class _WalletState extends State<Wallet> {
         height: 143.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
-            gradient: LinearGradient(
-                colors: [primaryColor, Color(0xff447867)],
+            gradient: const LinearGradient(
+                colors: [primaryColor, lightPrimaryColor],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter)),
         child: Column(
@@ -111,7 +115,7 @@ class _WalletState extends State<Wallet> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(AppIcons.topup),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 SoraCustomText(
@@ -135,7 +139,7 @@ class _WalletState extends State<Wallet> {
           children: [
             SoraCustomText(
               text: 'Latest Transactions',
-              textColor: Color(0xff191919),
+              textColor:  darkColor,
               fontWeight: FontWeight.w600,
               fontsize: 14.sp,
             ),
@@ -157,13 +161,13 @@ class _WalletState extends State<Wallet> {
                     ),
                     title: SoraCustomText(
                       text:walletListing[index]['walletname'] ,
-                      textColor: Color(0xff191919),
+                      textColor: darkColor,
                       fontWeight: FontWeight.w600,
                       fontsize: 12.sp,
                     ),
                     subtitle: SoraCustomText(
                       text: walletListing[index]['Timestamp'] ,
-                      textColor: Color(0xff78838D),
+                      textColor: lightDarkColor,
                       fontWeight: FontWeight.w400,
                       fontsize: 12.sp,
                     ),
@@ -172,7 +176,7 @@ class _WalletState extends State<Wallet> {
                       children: [
                         SoraCustomText(
                           text: "\$${walletListing[index]['walletprice']}",
-                          textColor: Color(0xffB83232),
+                          textColor: redColor,
                           fontWeight: FontWeight.w400,
                           fontsize: 12.sp,
                         ),
@@ -190,6 +194,7 @@ class _WalletState extends State<Wallet> {
     ])));
   }
 }
+
 List<dynamic> walletListing=[
 {
   'walletImage':AppImages.notification,

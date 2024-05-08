@@ -1,5 +1,4 @@
 import 'package:creekapp/widgets/custom%20_backbutton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +29,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: Container(
               height: 160.h,
               // padding: EdgeInsets.symmetric(vertical: 50.h),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color(0xff29604E),
                   image: DecorationImage(
                       image: AssetImage(AppImages.appbardesign),
@@ -44,7 +43,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   SizedBox(
                     width: 10.w,
                   ),
-                  CustomBackButton(),
+                  const CustomBackButton(),
                   SizedBox(
                     width: 20.w,
                   ),
@@ -83,7 +82,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         borderRadius: BorderRadius.circular(20.r)),
                     context: context,
                     builder: (BuildContext context) {
-                      return Container(
+                      return SizedBox(
                         width: double.infinity,
                         height: 241.h,
                         child: Column(
@@ -147,14 +146,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   LexendCustomText(
                     text: notificationListing[index]['Timestamp'],
-                    textColor: Color(0xff78838D),
+                    textColor: const Color(0xff78838D),
                     fontWeight: FontWeight.w400,
                     fontsize: 12.sp,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   LexendCustomText(
                     text: "\$${notificationListing[index]['notificationincr']}",
-                    textColor: Color(0xff78838D),
+                    textColor: const Color(0xff78838D),
                     fontWeight: FontWeight.w400,
                     fontsize: 12.sp,
                   ),

@@ -1,5 +1,6 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -15,7 +16,7 @@ class BuyDialogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  SizedBox(
       // height: 335.h,
 
         width: 404.w,
@@ -27,9 +28,9 @@ class BuyDialogBox extends StatelessWidget {
               width: 163.w,
               child: Image.asset(AppImages.doneTick),
             ),
-            WorkSansCustomText(text: "Book Purchased!", textColor: Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
+            WorkSansCustomText(text: "Book Purchased!", textColor: const Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
             SizedBox(height: 15.h,),
-            WorkSansCustomText(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
+            WorkSansCustomText(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: const Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
             SizedBox(height: 14.h,),
             Row(
 
@@ -47,11 +48,11 @@ class BuyDialogBox extends StatelessWidget {
                       width: 154.w,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Color(0xff29604E),
+                          color: primaryColor,
                           borderRadius: BorderRadius.circular(20.r)
                       ),
                       child:
-                      PoppinsCustomText(text: "Home", textColor: Color(0xffFEFEFE), fontWeight: FontWeight.w600,fontsize: 16.sp,)
+                      PoppinsCustomText(text: "Home", textColor: lightWhiteColor, fontWeight: FontWeight.w600,fontsize: 16.sp,)
                   ),
                 ),
 
@@ -59,7 +60,7 @@ class BuyDialogBox extends StatelessWidget {
                 GestureDetector(
                   onTap: (){
                     Navigator.pop(context);
-                    CustomRoute.navigateTo(context, MainChat());
+                    CustomRoute.navigateTo(context, const MainChat());
                   },
                   child: SizedBox(
                     height: 54.h,

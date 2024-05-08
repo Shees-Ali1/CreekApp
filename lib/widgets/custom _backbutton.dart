@@ -12,22 +12,22 @@ class CustomBackButton extends StatelessWidget {
       onTap: () {
         Get.back();
       },
-      child: Image.asset(
-        fit: BoxFit.cover,
-        AppImages.backbutton,
-        width: 38.w,
-        height: 38.h,
-      ),
-      // child: Container(
-      //   margin: EdgeInsets.only(top: 5.h),
+      // child: Image.asset(
+      //   fit: BoxFit.cover,
+      //   AppImages.backbutton,
       //   width: 38.w,
       //   height: 38.h,
-      //   decoration: BoxDecoration(
-      //       shape: BoxShape.circle,
-      //       color: Color(0xff29604E)
-      //   ),
-      //   child: Icon(Icons.arrow_back,color: Colors.white,),
       // ),
+      child: Container(
+        margin: EdgeInsets.only(top: 5.h),
+        width: 38.w,
+        height: 38.h,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black.withOpacity(0.5)
+        ),
+        child: Icon(Icons.arrow_back,color: Colors.white,),
+      ),
     );
   }
 }

@@ -1,15 +1,10 @@
-import 'package:creekapp/const/assets/image_assets.dart';
-import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
-import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/widgets/custom_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/custom _backbutton.dart';
@@ -22,8 +17,8 @@ class BookDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BookListingController bookListingController=Get.find();
-    final HomeController homeController=Get.find();
+    final BookListingController bookListingController=Get.find<BookListingController>();
+    final HomeController homeController=Get.find<HomeController>();
     return  Scaffold(
 
       body: SingleChildScrollView(
@@ -46,7 +41,7 @@ class BookDetailsScreen extends StatelessWidget {
                       onTap: (){
                         Get.back();
                       },
-                      child:CustomBackButton()
+                      child:const CustomBackButton()
                     ),
                   )
                 ],
@@ -63,7 +58,7 @@ class BookDetailsScreen extends StatelessWidget {
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  MontserratCustomText(text: 'Date Posted', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                 MontserratCustomText(text: bookDetail['bookPosted'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: bookDetail['bookPosted'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
                ],
              ),
               SizedBox(height: 15.h,),
@@ -72,7 +67,7 @@ class BookDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  MontserratCustomText(text: 'Author', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                 MontserratCustomText(text: bookDetail['bookAuthor'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 MontserratCustomText(text: bookDetail['bookAuthor'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
                ],
              ),
               SizedBox(height: 15.h,),
@@ -81,17 +76,17 @@ class BookDetailsScreen extends StatelessWidget {
               SizedBox(height: 6.h,),
               SizedBox(
               width:   319.w,
-                  child: MontserratCustomText(text: bookDetail['bookDescription'], textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,)),
+                  child: MontserratCustomText(text: bookDetail['bookDescription'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,)),
               SizedBox(height: 6.h,),
               bookDetail['sellerId']=='qwerty'?
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MontserratCustomText(text: 'Price', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                  MontserratCustomText(text: "\$${bookDetail['bookPrice']}", textColor: Color(0xff919191), fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                  MontserratCustomText(text: "\$${bookDetail['bookPrice']}", textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
                 ],
               ) :
-              SizedBox.shrink(),
+              const SizedBox.shrink(),
               SizedBox(height: 20.h,),
               GestureDetector(
 
@@ -100,7 +95,7 @@ class BookDetailsScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
+                      return const AlertDialog(
 
 
                         // title: Text('Hello!'),
@@ -122,7 +117,7 @@ class BookDetailsScreen extends StatelessWidget {
                     width: 327.w,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Color(0xff29604E),
+                      color: primaryColor,
                       borderRadius: BorderRadius.circular(20.r)
                     ),
                     child: bookDetail['sellerId']=='qwerty'?

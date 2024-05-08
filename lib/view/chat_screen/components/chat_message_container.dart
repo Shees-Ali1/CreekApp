@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../const/assets/image_assets.dart';
 import '../../../const/color.dart';
 import '../../../controller/chat_controller.dart';
-import '../main_chat.dart';
 
 class ChatMessageContainer extends StatelessWidget {
   final dynamic messagedetail;
@@ -18,7 +16,7 @@ class ChatMessageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChatController chatController = Get.find();
+    final ChatController chatController = Get.find<ChatController>();
     final width = MediaQuery.of(context).size.width;
 
     return Obx(() {

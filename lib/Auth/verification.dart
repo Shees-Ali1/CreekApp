@@ -1,4 +1,3 @@
-import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class _VerificationState extends State<Verification> {
     height: 59.15.h,
     textStyle: GoogleFonts.montserrat(
       fontSize: 21.sp,
-      color: Color(0xff101623),
+      color: const Color(0xff101623),
       fontWeight: FontWeight.w700,
     ),
     decoration: BoxDecoration(
@@ -72,7 +71,7 @@ class _VerificationState extends State<Verification> {
                             'Enter code that we have sent to your email\nyousafayub***',
                         fontWeight: FontWeight.w400,
                         fontsize: 12.36.sp,
-                        textColor: Color(0xff8A8A8E),
+                        textColor: const Color(0xff8A8A8E),
                       ),
                       SizedBox(
                         height: 43.h,
@@ -99,7 +98,7 @@ class _VerificationState extends State<Verification> {
                             text: 'Didn’t receive the code?',
                             fontWeight: FontWeight.w400,
                             fontsize: 12.sp,
-                            textColor: Color(0xff3C3C43).withOpacity(0.6),
+                            textColor: const Color(0xff3C3C43).withOpacity(0.6),
                           ),
                           SizedBox(
                             width: 6.w,

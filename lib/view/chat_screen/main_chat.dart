@@ -1,15 +1,10 @@
 import 'package:creekapp/widgets/custom%20_backbutton.dart';
 import 'package:creekapp/widgets/custom_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import '../../const/assets/image_assets.dart';
-import '../../const/assets/svg_assets.dart';
 import '../../widgets/custom_text.dart';
 import 'chat_screen.dart';
 
@@ -32,7 +27,7 @@ class _MainChatState extends State<MainChat> {
             child: Container(
                 height: 160.h,
                 // padding: EdgeInsets.symmetric(vertical: 50.h),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color(0xff29604E),
                     image: DecorationImage(
                         image: AssetImage(AppImages.appbardesign),
@@ -46,7 +41,7 @@ class _MainChatState extends State<MainChat> {
                     SizedBox(
                       width: 10.w,
                     ),
-                    CustomBackButton(),
+                    const CustomBackButton(),
                     SizedBox(
                       width: 20.w,
                     ),

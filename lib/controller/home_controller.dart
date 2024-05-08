@@ -1,7 +1,16 @@
 import 'package:creekapp/const/assets/image_assets.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController{
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  void openDrawer() {
+    scaffoldKey.currentState?.openDrawer();
+  }
+
+
+  // ******************Books Listings***********
+
   RxList<dynamic> bookListing=[
     {
       'bookImage':AppImages.harryPotterBook,
@@ -52,7 +61,6 @@ class HomeController extends GetxController{
 
 
   ].obs;
-
   void removeBookListing(int index) {
     bookListing.removeAt(index);
     bookListing.refresh();
@@ -61,15 +69,66 @@ class HomeController extends GetxController{
     Get.snackbar('Success', "Listing Removed");
   }
 
-// ******************Filters***********
-RxInt selectedCondition=0.obs;
-RxDouble priceSliderValue=50.0.obs;
-RxDouble sliderValue=50.0.obs;
-RxString classOption='Class 10'.obs;
-  // List of options for the dropdown menu
-  List<String> bookClass = ['Class 10', 'Option 2', 'Graduate', 'Option 4'];
 
 
 
+// ******************Search***********
+  final TextEditingController bookSearchController=TextEditingController();
+  RxList<dynamic> filteredBooks = <dynamic>[].obs;
+  void filterBooks() {
+    List<dynamic> results = [];
+    if (bookSearchController.text.isEmpty) {
+      results = bookListing;
+    } else {
+      results = bookListing
+          .where((book) =>
+          book['bookName']
+              .toLowerCase()
+              .contains(bookSearchController.text.toLowerCase()))
+          .toList();
+    }
+    // Update the list of filtered books
+    filteredBooks.value = results;
+  }
+
+
+  // ******************Filters***********
+  RxInt selectedCondition=1.obs;
+  RxDouble priceSliderValue=100.0.obs;
+  RxDouble sliderValue=100.0.obs;
+  RxString classOption='Graduate'.obs;
+  List<String> bookClass = ['Graduate', 'Option 2', 'Class 10', 'Option 4'];
+  String normalize(String str) {
+    // Remove all punctuation and spaces, and convert to lower case
+    return str.replaceAll(RegExp(r'[\W_]+'), '').toLowerCase();
+  }
+  void applyFilters(String author) {
+    filteredBooks.value = bookListing.where((book) {
+      final matchesClass = book['bookClass'] == classOption.value;
+      final priceRange = book['bookPrice'] <= priceSliderValue.value;
+      final matchesCondition = selectedCondition.value == 1 ||
+          (selectedCondition.value == 2 && book['bookCondition'] == 'New') ||
+          (selectedCondition.value == 3 && book['bookCondition'] == 'Like New') ||
+          (selectedCondition.value == 4 && book['bookCondition'] == 'Old');
+      // final matchesAuthor = book['bookAuthor'].toLowerCase().contains(author.toLowerCase());
+      final matchesAuthor = normalize(book['bookAuthor']).contains(normalize(author));
+      return matchesClass && (matchesCondition || selectedCondition.value == 1) && matchesAuthor && priceRange;
+    }).toList();
+  }
+
+
+
+
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+  filteredBooks.value = bookListing;
+  // Listen for search text changes
+  bookSearchController.addListener(() {
+    filterBooks();
+  });
+    super.onInit();
+  }
 
 }

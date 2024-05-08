@@ -1,15 +1,11 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
-import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/widgets/custom_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/custom _backbutton.dart';
 import '../../widgets/custom_route.dart';
@@ -28,8 +24,8 @@ class ApprovalSellScreen extends StatelessWidget {
                 child:  Container(
                   // height: 200.h,
                   padding: EdgeInsets.only(bottom: 62.h),
-                  decoration: BoxDecoration(
-                      color: Color(0xff29604E),
+                  decoration: const BoxDecoration(
+                      color: primaryColor,
 
                       image: DecorationImage(image: AssetImage(AppImages.appbardesign),fit: BoxFit.cover)
                   ),
@@ -44,7 +40,7 @@ class ApprovalSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            CustomBackButton(),
+                            const CustomBackButton(),
 
                             SizedBox(
                               width: 20.w,
@@ -55,7 +51,7 @@ class ApprovalSellScreen extends StatelessWidget {
                               fontsize: 20.sp,
                               fontWeight: FontWeight.w600,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset(AppIcons.chaticon),
                             SizedBox(
                               width: 10.w,
@@ -82,9 +78,9 @@ class ApprovalSellScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     border: Border.all(
-                        color: Color(0xff29604E)
+                        color:  primaryColor
                     ),
-                    color: Color(0xff29604E).withOpacity(0.08)
+                    color:  primaryColor.withOpacity(0.08)
                 ),
                 child: Column(
 
@@ -96,7 +92,7 @@ class ApprovalSellScreen extends StatelessWidget {
                         child: InterCustomText(
                           textAlign:  TextAlign.center,
                           text: 'Your item is pending approval from Creek',
-                          textColor: Color(0xff454545),
+                          textColor: headingBlackColor,
                           fontsize: 20.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -112,14 +108,14 @@ class ApprovalSellScreen extends StatelessWidget {
                     SizedBox(height: 52.h,),
                     GestureDetector(
                       onTap: () {
-                    CustomRoute1.navigateAndRemoveUntil(context, BottomNavBar(), (route) => false);
+                    CustomRoute1.navigateAndRemoveUntil(context, const BottomNavBar(), (route) => false);
                       },
                       child: Container(
                           height: 58.h,
                           width: 284.w,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Color(0xff29604E),
+                              color:  primaryColor,
                               borderRadius: BorderRadius.circular(20.r)
                           ),
                           child:

@@ -11,14 +11,14 @@ class CustomButton extends StatelessWidget {
   final FontWeight fontWeight;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     required this.backgroundColor,
     required this.textColor,
     this.fontSize = 18,
     this.fontWeight = FontWeight.w400,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

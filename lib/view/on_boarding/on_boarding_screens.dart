@@ -1,10 +1,7 @@
 import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/widgets/custom_route.dart';
-import 'package:creekapp/view/splash/splash_sceen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -51,7 +48,7 @@ class OnBoardingOne extends StatelessWidget {
           height: 483.h,
           width: double.infinity,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
                     AppImages.bgbackground,
@@ -67,7 +64,7 @@ class OnBoardingOne extends StatelessWidget {
         ),
         SizedBox(height: 30.h,),
         LexendCustomText(
-          textColor: Color(0xff273958),
+          textColor: const Color(0xff273958),
           fontsize: 20.sp,
           text: 'Buy and sell used school items ',
           fontWeight: FontWeight.w400,
@@ -76,13 +73,13 @@ class OnBoardingOne extends StatelessWidget {
           text: 'Effortlessly!',
           fontWeight: FontWeight.w400,
           fontsize: 26.sp,
-          textColor: Color(0xff273958),
+          textColor: const Color(0xff273958),
         ),
         SizedBox(
           height: 24.h,
         ),
         LexendCustomText(
-          textColor: Color(0xff3A3838),
+          textColor: const Color(0xff3A3838),
           fontsize: 16.sp,
           text: 'Secure transactions with\nCreek\'sintegrated wallet!',
           fontWeight: FontWeight.w400,
@@ -133,81 +130,79 @@ class OnBoardingTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OnBoardingController boardingVM = Get.find<OnBoardingController>();
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            height: 483.h,
-            width: double.infinity,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      AppImages.bgbackground,
-                    ),
-                    fit: BoxFit.fill)),
-            child: SizedBox(
-              width: 160.w,
-              height: 220.h,
-              child: Image.asset(
-                AppImages.whitecreek,
-              ),
+    return Column(
+      children: [
+        Container(
+          height: 483.h,
+          width: double.infinity,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    AppImages.bgbackground,
+                  ),
+                  fit: BoxFit.fill)),
+          child: SizedBox(
+            width: 160.w,
+            height: 220.h,
+            child: Image.asset(
+              AppImages.whitecreek,
             ),
           ),
-          SizedBox(height: 30.h,),
-          LexendCustomText(
-            textColor: Color(0xff273958),
-            fontsize: 20.sp,
-            text: 'Browse items tailored to your\nschool community!',
-            fontWeight: FontWeight.w400,
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          LexendCustomText(
-            textAlign: TextAlign.center,
-            textColor: Color(0xff3A3838),
-            fontsize: 16.sp,
-            text: 'Connect with sellers through\nin-app messaging!',
-            fontWeight: FontWeight.w400,
-          ),
-          SizedBox(
-            height: 40.h,
-          ),
-          SmoothPageIndicator(
-            controller: boardingVM.pageController,
-            count: 3, // Specify the total number of pages
-            effect: const ExpandingDotsEffect(
-                dotHeight: 12,
-                radius: 40,
-                spacing: 10,
-                dotWidth: 15,
-                activeDotColor: primaryColor,
-                expansionFactor: 2,
-                dotColor: primaryColor),
-          ),
-          SizedBox(
-            height: 29.h,
-          ),
-          GestureDetector(
-            onTap: () => boardingVM.nextPage(),
-            child: Container(
-                width: 127.w,
-                height: 48.h,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(40.r)),
-                child: Center(
-                  child: LexendCustomText(
-                    textColor: whiteColor,
-                    fontsize: 16.sp,
-                    text: 'Next',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )),
-          )
-        ],
-      ),
+        ),
+        SizedBox(height: 30.h,),
+        LexendCustomText(
+          textColor: const Color(0xff273958),
+          fontsize: 20.sp,
+          text: 'Browse items tailored to your\nschool community!',
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        LexendCustomText(
+          textAlign: TextAlign.center,
+          textColor: const Color(0xff3A3838),
+          fontsize: 16.sp,
+          text: 'Connect with sellers through\nin-app messaging!',
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(
+          height: 40.h,
+        ),
+        SmoothPageIndicator(
+          controller: boardingVM.pageController,
+          count: 3, // Specify the total number of pages
+          effect: const ExpandingDotsEffect(
+              dotHeight: 12,
+              radius: 40,
+              spacing: 10,
+              dotWidth: 15,
+              activeDotColor: primaryColor,
+              expansionFactor: 2,
+              dotColor: primaryColor),
+        ),
+        SizedBox(
+          height: 29.h,
+        ),
+        GestureDetector(
+          onTap: () => boardingVM.nextPage(),
+          child: Container(
+              width: 127.w,
+              height: 48.h,
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(40.r)),
+              child: Center(
+                child: LexendCustomText(
+                  textColor: whiteColor,
+                  fontsize: 16.sp,
+                  text: 'Next',
+                  fontWeight: FontWeight.w500,
+                ),
+              )),
+        )
+      ],
     );
   }
 }
@@ -218,84 +213,82 @@ class OnBoardingThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OnBoardingController boardingVM = Get.find<OnBoardingController>();
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            height: 483.h,
-            width: double.infinity,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      AppImages.bgbackground,
-                    ),
-                    fit: BoxFit.fill)),
-            child: SizedBox(
-              width: 160.w,
-              height: 220.h,
-              child: Image.asset(
-                AppImages.whitecreek,
-              ),
+    return Column(
+      children: [
+        Container(
+          height: 483.h,
+          width: double.infinity,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    AppImages.bgbackground,
+                  ),
+                  fit: BoxFit.fill)),
+          child: SizedBox(
+            width: 160.w,
+            height: 220.h,
+            child: Image.asset(
+              AppImages.whitecreek,
             ),
           ),
-          SizedBox(height: 30.h,),
-          LexendCustomText(
-            textAlign: TextAlign.center,
-            textColor: Color(0xff273958),
-            fontsize: 20.sp,
-            text: 'Modern design for a seamless\nuser experience!',
-            fontWeight: FontWeight.w400,
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          LexendCustomText(
-            textAlign: TextAlign.center,
-            textColor: Color(0xff3A3838),
-            fontsize: 16.sp,
-            text: 'Approval system ensures\nquality listings!',
-            fontWeight: FontWeight.w400,
-          ),
-          SizedBox(
-            height: 40.h,
-          ),
-          SmoothPageIndicator(
-            controller: boardingVM.pageController,
-            count: 3, // Specify the total number of pages
-            effect: const ExpandingDotsEffect(
-                dotHeight: 12,
-                radius: 40,
-                spacing: 10,
-                dotWidth: 15,
-                activeDotColor: primaryColor,
-                expansionFactor: 2,
-                dotColor: primaryColor),
-          ),
-          SizedBox(
-            height: 29.h,
-          ),
-          GestureDetector(
-            onTap: () {
-              CustomRoute.navigateTo(context, LoginView());
-            },
-            child: Container(
-                width: 127.w,
-                height: 48.h,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(40.r)),
-                child: Center(
-                  child: LexendCustomText(
-                    textColor: whiteColor,
-                    fontsize: 16.sp,
-                    text: 'Get Started',
-                    fontWeight: FontWeight.w500,
-                  ),
-                )),
-          )
-        ],
-      ),
+        ),
+        SizedBox(height: 30.h,),
+        LexendCustomText(
+          textAlign: TextAlign.center,
+          textColor: const Color(0xff273958),
+          fontsize: 20.sp,
+          text: 'Modern design for a seamless\nuser experience!',
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        LexendCustomText(
+          textAlign: TextAlign.center,
+          textColor: const Color(0xff3A3838),
+          fontsize: 16.sp,
+          text: 'Approval system ensures\nquality listings!',
+          fontWeight: FontWeight.w400,
+        ),
+        SizedBox(
+          height: 40.h,
+        ),
+        SmoothPageIndicator(
+          controller: boardingVM.pageController,
+          count: 3, // Specify the total number of pages
+          effect: const ExpandingDotsEffect(
+              dotHeight: 12,
+              radius: 40,
+              spacing: 10,
+              dotWidth: 15,
+              activeDotColor: primaryColor,
+              expansionFactor: 2,
+              dotColor: primaryColor),
+        ),
+        SizedBox(
+          height: 29.h,
+        ),
+        GestureDetector(
+          onTap: () {
+            CustomRoute.navigateTo(context, const LoginView());
+          },
+          child: Container(
+              width: 127.w,
+              height: 48.h,
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(40.r)),
+              child: Center(
+                child: LexendCustomText(
+                  textColor: whiteColor,
+                  fontsize: 16.sp,
+                  text: 'Get Started',
+                  fontWeight: FontWeight.w500,
+                ),
+              )),
+        )
+      ],
     );
   }
 }

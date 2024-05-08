@@ -44,7 +44,7 @@ class InputField extends StatelessWidget {
       cursorColor: cursorColor,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Color(0xff29604E).withOpacity(0.06),
+        fillColor: const Color(0xff29604E).withOpacity(0.06),
         hintText: hint,
         hintStyle: hintStyle,
         // labelText: label,

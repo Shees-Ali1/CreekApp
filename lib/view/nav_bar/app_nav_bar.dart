@@ -196,6 +196,8 @@
 // }
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/view/profile_screen/profile.dart';
 import 'package:creekapp/view/sell_screens/sell_screen_main.dart';
@@ -205,23 +207,27 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _page = 0;
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   late final List<Widget> _pages;
+  final HomeController homeController=Get.find<HomeController>();
 
   @override
   void initState() {
     _pages = [
-      HomeScreenBooks(),
-      SellScreenMain(),
+      const HomeScreenBooks(),
+      const SellScreenMain(),
       const Wallet(),
       const Profile(),
     ];
@@ -231,8 +237,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+key: homeController.scaffoldKey,
+resizeToAvoidBottomInset: false,
+      drawer: MyDrawer(),
       bottomNavigationBar: Builder(builder: (BuildContext innerContext) {
         return CurvedNavigationBar(
+
           iconPadding: 16,
           height: 70.h,
           key: _bottomNavigationKey,
@@ -310,9 +320,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ],
           color: primaryColor,
           buttonBackgroundColor: primaryColor,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           animationCurve: Curves.easeInOut,
-          animationDuration: Duration(milliseconds: 300),
+          animationDuration: const Duration(milliseconds: 300),
           onTap: (index) {
             setState(() {
               _page = index;

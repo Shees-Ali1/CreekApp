@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'custom_text.dart';
 
 class ProfileWidget extends StatelessWidget {
-  String title;
-  String imgUrl;
-  void Function()? onTap;
+  final String title;
+  final String imgUrl;
+  final void Function()? onTap;
 
   ProfileWidget(
       {super.key,
@@ -31,7 +31,7 @@ class ProfileWidget extends StatelessWidget {
         title: Padding(
           padding: EdgeInsets.only(left: 10.sp),
           child: WorkSansCustomText(
-            textColor: Color(0xff040415),
+            textColor: const Color(0xff040415),
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,
             text: title,

@@ -25,6 +25,12 @@ class AppIcons{
   static const chaticon = 'assets/svg/chaticon.svg';
   static const filtericon = 'assets/svg/filtericon.svg';
   static const msgIcon = 'assets/svg/msgIcon.svg';
+  static const customercare = 'assets/svg/customercare.svg';
+  static const deleteaccount = 'assets/svg/deleteaccount.svg';
+  static const password = 'assets/svg/password.svg';
+  static const privacy = 'assets/svg/privacy.svg';
+  static const profileIcon = 'assets/svg/profileIcon.svg';
+  static const terms = 'assets/svg/terms.svg';
 
 
 

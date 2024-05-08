@@ -1,11 +1,11 @@
 import 'package:creekapp/Auth/login_view.dart';
+import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/view/profile_screen/components/term-Cond.dart';
 import 'package:creekapp/widgets/custom_button.dart';
 import 'package:creekapp/widgets/custom_route.dart';
 import 'package:creekapp/widgets/profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,16 +20,12 @@ import '../notification/notification_screen.dart';
 import 'components/edit_profile.dart';
 import 'components/privacy_policy.dart';
 
-class Profile extends StatefulWidget {
+class Profile extends StatelessWidget {
   const Profile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-  @override
   Widget build(BuildContext context) {
+    final HomeController homeController=Get.find<HomeController>();
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -40,8 +36,8 @@ class _ProfileState extends State<Profile> {
               child: Container(
                   height: 160.h,
                   // padding: EdgeInsets.symmetric(vertical: 50.h),
-                  decoration: BoxDecoration(
-                      color: Color(0xff29604E),
+                  decoration: const BoxDecoration(
+                      color: primaryColor,
                       image: DecorationImage(
                           image: AssetImage(AppImages.appbardesign),
                           fit: BoxFit.cover)),
@@ -54,7 +50,12 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           width: 10.w,
                         ),
-                        SvgPicture.asset(AppIcons.drawericon),
+                        GestureDetector(
+                            onTap: (){
+                              homeController.openDrawer();
+
+                            },
+                            child: SvgPicture.asset(AppIcons.drawericon)),
                         SizedBox(
                           width: 20.w,
                         ),
@@ -64,10 +65,10 @@ class _ProfileState extends State<Profile> {
                           fontsize: 20.sp,
                           fontWeight: FontWeight.w600,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         GestureDetector(
                             onTap: () {
-                              CustomRoute.navigateTo(context, MainChat());
+                              CustomRoute.navigateTo(context, const MainChat());
                             },
                             child: SvgPicture.asset(AppIcons.chaticon)),
                         SizedBox(
@@ -75,7 +76,8 @@ class _ProfileState extends State<Profile> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              CustomRoute.navigateTo(context, NotificationScreen());
+                              CustomRoute.navigateTo(
+                                  context, const NotificationScreen());
                             },
                             child: SvgPicture.asset(AppIcons.notificationIcon)),
                         SizedBox(
@@ -107,12 +109,12 @@ class _ProfileState extends State<Profile> {
                     text: 'John Doe',
                     fontWeight: FontWeight.w400,
                     fontsize: 20.sp,
-                    textColor: Color(0xff263238),
+                    textColor: blackTitleColor,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   GestureDetector(
                       onTap: () {
-                        CustomRoute.navigateTo(context, EditProfile());
+                        CustomRoute.navigateTo(context, const EditProfile());
                       },
                       child: SvgPicture.asset(AppIcons.editIcon))
                 ],
@@ -120,7 +122,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 36.h,
               ),
-              Divider(
+              const Divider(
                 color: Color(0xffDADADA),
                 thickness: 1.5,
               ),
@@ -140,20 +142,20 @@ class _ProfileState extends State<Profile> {
                               text: '10',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
-                              textColor: Color(0xff263238),
+                              textColor: blackTitleColor,
                             ),
                             LexendCustomText(
                               text: 'Listed',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
-                              textColor: Color(0xff898989),
+                              textColor: lightTitleColor,
                             ),
                           ],
                         ),
                         Container(
                           height: 24.h,
                           width: 2.w,
-                          color: Color(0xffE0E0E0),
+                          color: const Color(0xffE0E0E0),
                         ),
                         Column(
                           children: [
@@ -161,20 +163,20 @@ class _ProfileState extends State<Profile> {
                               text: '20',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
-                              textColor: Color(0xff263238),
+                              textColor: blackTitleColor,
                             ),
                             LexendCustomText(
                               text: 'Sales',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
-                              textColor: Color(0xff898989),
+                              textColor: lightTitleColor,
                             ),
                           ],
                         ),
                         Container(
                           height: 24.h,
                           width: 2.w,
-                          color: Color(0xffE0E0E0),
+                          color: const Color(0xffE0E0E0),
                         ),
                         Column(
                           children: [
@@ -182,13 +184,13 @@ class _ProfileState extends State<Profile> {
                               text: '2',
                               fontWeight: FontWeight.w400,
                               fontsize: 20.sp,
-                              textColor: Color(0xff263238),
+                              textColor:blackTitleColor,
                             ),
                             LexendCustomText(
                               text: 'Purchases',
                               fontWeight: FontWeight.w400,
                               fontsize: 10.sp,
-                              textColor: Color(0xff898989),
+                              textColor: lightTitleColor,
                             ),
                           ],
                         ),
@@ -210,7 +212,7 @@ class _ProfileState extends State<Profile> {
             children: [
               ProfileWidget(
                 onTap: () {
-                  CustomRoute.navigateTo(context, EditProfile());
+                  CustomRoute.navigateTo(context, const EditProfile());
                 },
                 title: 'Edit Profile',
                 imgUrl: AppIcons.editprofileIcon,
@@ -220,7 +222,7 @@ class _ProfileState extends State<Profile> {
               ),
               ProfileWidget(
                 onTap: () {
-                  CustomRoute.navigateTo(context, PrivacyPolicy());
+                  CustomRoute.navigateTo(context, const PrivacyPolicy());
                 },
                 title: 'Privacy Policy',
                 imgUrl: AppIcons.privacyIcon,
@@ -238,7 +240,7 @@ class _ProfileState extends State<Profile> {
               ),
               ProfileWidget(
                 onTap: () {
-                  CustomRoute.navigateTo(context, TermCond());
+                  CustomRoute.navigateTo(context, const TermCond());
                 },
                 title: 'Terms and Conditions',
                 imgUrl: AppIcons.termcondIcon,
@@ -254,7 +256,7 @@ class _ProfileState extends State<Profile> {
                           borderRadius: BorderRadius.circular(20.r)),
                       context: context,
                       builder: (BuildContext context) {
-                        return Container(
+                        return SizedBox(
                           height: 290.h,
                           width: double.infinity,
                           child: Column(
@@ -265,15 +267,15 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 width: 48.w,
                                 height: 5.h,
-                                decoration:
-                                    BoxDecoration(color: Color(0xffCDCFD0)),
+                                decoration: const BoxDecoration(
+                                    color: Color(0xffCDCFD0)),
                               ),
                               SizedBox(
                                 height: 30.h,
                               ),
                               LexendCustomText(
                                 text: 'Logout Account?',
-                                textColor: Color(0xff090A0A),
+                                textColor: const Color(0xff090A0A),
                                 fontWeight: FontWeight.w700,
                                 fontsize: 24.sp,
                               ),
@@ -283,7 +285,7 @@ class _ProfileState extends State<Profile> {
                               LexendCustomText(
                                 text:
                                     'Are you sure want to logout this account?',
-                                textColor: Color(0xff090A0A),
+                                textColor: const Color(0xff090A0A),
                                 fontWeight: FontWeight.w400,
                                 fontsize: 16.sp,
                               ),
@@ -293,16 +295,17 @@ class _ProfileState extends State<Profile> {
                               CustomButton(
                                   text: 'Logout',
                                   onPressed: () {
-                                    CustomRoute.navigateTo(context, LoginView());
+                                    CustomRoute.navigateTo(
+                                        context, const LoginView());
                                   },
-                                  backgroundColor: Color(0xffE60000),
+                                  backgroundColor: const Color(0xffE60000),
                                   textColor: whiteColor),
                               SizedBox(
                                 height: 22.h,
                               ),
                               LexendCustomText(
                                 text: 'Cancel',
-                                textColor: Color(0xff202325),
+                                textColor: const Color(0xff202325),
                                 fontWeight: FontWeight.w500,
                                 fontsize: 16.sp,
                               ),
@@ -317,7 +320,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: EdgeInsets.only(left: 26.sp),
                       child: WorkSansCustomText(
-                        textColor: Color(0xff040415),
+                        textColor: const Color(0xff040415),
                         fontWeight: FontWeight.w700,
                         fontsize: 16.sp,
                         text: 'Log Out',

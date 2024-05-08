@@ -1,12 +1,13 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
+import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/book_details_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,9 +23,12 @@ class HomeScreenBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find();
+    final HomeController homeController = Get.find<HomeController>();
+    // final TextEditingController bookController=TextEditingController();
     return Scaffold(
-
+      resizeToAvoidBottomInset: false,
+        // key: homeController.scaffoldKey,
+       // drawer: MyDrawer(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -33,13 +37,11 @@ class HomeScreenBooks extends StatelessWidget {
                 child: Container(
                   // height: 200.h,
                   // padding: EdgeInsets.symmetric(vertical: 50.h),
-                  decoration: BoxDecoration(
-                      color: Color(0xff29604E),
-
+                  decoration: const BoxDecoration(
+                      color: primaryColor,
                       image: DecorationImage(
                           image: AssetImage(AppImages.appbardesign),
-                          fit: BoxFit.cover)
-                  ),
+                          fit: BoxFit.cover)),
                   child: SafeArea(
                     child: Column(
                       children: [
@@ -51,7 +53,11 @@ class HomeScreenBooks extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            SvgPicture.asset(AppIcons.drawericon),
+                            GestureDetector(
+                                onTap: () {
+                                  homeController.openDrawer();
+                                },
+                                child: SvgPicture.asset(AppIcons.drawericon)),
                             SizedBox(
                               width: 20.w,
                             ),
@@ -61,10 +67,11 @@ class HomeScreenBooks extends StatelessWidget {
                               fontsize: 20.sp,
                               fontWeight: FontWeight.w600,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             GestureDetector(
                                 onTap: () {
-                                  CustomRoute.navigateTo(context, MainChat());
+                                  CustomRoute.navigateTo(
+                                      context, const MainChat());
                                 },
                                 child: SvgPicture.asset(AppIcons.chaticon)),
                             SizedBox(
@@ -72,9 +79,11 @@ class HomeScreenBooks extends StatelessWidget {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  CustomRoute.navigateTo(context, NotificationScreen());
+                                  CustomRoute.navigateTo(
+                                      context, const NotificationScreen());
                                 },
-                                child: SvgPicture.asset(AppIcons.notificationIcon)),
+                                child: SvgPicture.asset(
+                                    AppIcons.notificationIcon)),
                             SizedBox(
                               width: 23.w,
                             ),
@@ -91,6 +100,8 @@ class HomeScreenBooks extends StatelessWidget {
                               SizedBox(
                                 width: 273.w,
                                 child: TextField(
+                                  controller: homeController.bookSearchController,
+
                                   style: GoogleFonts.inter(
                                       textStyle: TextStyle(
                                           color: Colors.white,
@@ -105,7 +116,7 @@ class HomeScreenBooks extends StatelessWidget {
                                     filled: true,
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: 10.w, vertical: 15.h),
-                                    prefixIcon: Icon(
+                                    prefixIcon: const Icon(
                                       Icons.search,
                                       color: Colors.white,
                                     ),
@@ -118,9 +129,11 @@ class HomeScreenBooks extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 8.w,),
+                              SizedBox(
+                                width: 8.w,
+                              ),
                               GestureDetector(
-                                  onTap:(){
+                                  onTap: () {
                                     Get.bottomSheet(
                                       isScrollControlled: true,
                                       Container(
@@ -128,15 +141,15 @@ class HomeScreenBooks extends StatelessWidget {
                                         height: 703.h,
                                         padding: EdgeInsets.all(20.sp),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(30.r),topRight: Radius.circular(30.r))
-
-
-                                        ),
-                                        child: BooksFilterBottomSheet(),                                      ),
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(30.r),
+                                                topRight:
+                                                    Radius.circular(30.r))),
+                                        child: const BooksFilterBottomSheet(),
+                                      ),
                                     );
-                                  }
-                                  ,
+                                  },
                                   child: SvgPicture.asset(AppIcons.filtericon)),
                             ],
                           ),
@@ -145,44 +158,46 @@ class HomeScreenBooks extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ),
-              SizedBox(height: 18.h,),
+              SizedBox(
+                height: 18.h,
+              ),
               Obx(() {
                 return ListView.builder(
                     clipBehavior: Clip.none,
                     padding: EdgeInsets.zero,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: homeController.bookListing.length,
+                    itemCount: homeController.filteredBooks.length,
                     itemBuilder: (context, index) {
-                      final books = homeController.bookListing[index];
-                      return  GestureDetector(
+                      final books = homeController.filteredBooks[index];
+                      return GestureDetector(
                           onTap: () {
                             Get.to(
-                              BookDetailsScreen(bookDetail: books,
+                              BookDetailsScreen(
+                                bookDetail: books,
                                 index: index,
-                                comingfromSellScreen: false,),
+                                comingfromSellScreen: false,
+                              ),
                               transition: Transition.fade,
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeIn,
                             );
                           },
                           child: Container(
                             height: 125.23.h,
                             width: 303.w,
-                            margin: EdgeInsets.symmetric(vertical: 8.h,
-                                horizontal: 36.w),
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8.h, horizontal: 36.w),
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                boxShadow: [BoxShadow(
-                                    color: Color(0xff9EC6B9),
-                                    blurRadius: 20,
-                                    offset: Offset(0, 4.h)
-                                )
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: shadowColor,
+                                      blurRadius: 20,
+                                      offset: Offset(0, 4.h))
                                 ],
-                                borderRadius: BorderRadius.circular(9.89.r)
-                            ),
+                                borderRadius: BorderRadius.circular(9.89.r)),
                             child: Stack(
                               alignment: Alignment.bottomRight,
                               children: [
@@ -195,55 +210,73 @@ class HomeScreenBooks extends StatelessWidget {
                                       child: SizedBox(
                                         height: 125.23.h,
                                         width: 77.w,
-                                        child: books['bookImage'] != '' ? Image
-                                            .asset(
-                                          books['bookImage'].toString(),
-                                          fit: BoxFit.cover,) : Container(
-                                          color: Colors.red,),
+                                        child: books['bookImage'] != ''
+                                            ? Image.asset(
+                                                books['bookImage'].toString(),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(
+                                                color: Colors.red,
+                                              ),
                                       ),
                                     ),
-                                    SizedBox(width: 5.w,),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
                                     FittedBox(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          SizedBox(height: 3.h,),
+                                          SizedBox(
+                                            height: 3.h,
+                                          ),
                                           SizedBox(
                                               width: 214.w,
                                               child: MontserratCustomText(
                                                 text: books['bookName'],
                                                 fontsize: 16.sp,
-                                                textColor: Color(0xff393939),
+                                                textColor: textColor,
                                                 fontWeight: FontWeight.w600,
-                                                height: 1,)),
-                                          SizedBox(height: 5.h,),
+                                                height: 1,
+                                              )),
+                                          SizedBox(
+                                            height: 5.h,
+                                          ),
                                           MontserratCustomText(
                                               text: books['bookPart'] ?? '',
                                               fontsize: 12.sp,
-                                              textColor: Color(0xff5C5C5C),
+                                              textColor: mainTextColor,
                                               fontWeight: FontWeight.w600),
-                                          SizedBox(height: 14.h,),
+                                          SizedBox(
+                                            height: 14.h,
+                                          ),
                                           MontserratCustomText(
-                                            text: "Author: ${books['bookAuthor']}",
+                                            text:
+                                                "Author: ${books['bookAuthor']}",
                                             fontsize: 10.sp,
-                                            textColor: Color(0xff5C5C5C),
+                                            textColor: mainTextColor,
                                             fontWeight: FontWeight.w600,
-                                            height: 1.h,),
-                                          SizedBox(height: 14.h,),
+                                            height: 1.h,
+                                          ),
+                                          SizedBox(
+                                            height: 14.h,
+                                          ),
                                           MontserratCustomText(
-                                              text: "Class: ${books['bookClass']}",
+                                              text:
+                                                  "Class: ${books['bookClass']}",
                                               fontsize: 8.sp,
-                                              textColor: Color(0xff5C5C5C),
+                                              textColor: mainTextColor,
                                               fontWeight: FontWeight.w600),
                                           MontserratCustomText(
-                                              text: "Condition: ${books['bookCondition']}",
+                                              text:
+                                                  "Condition: ${books['bookCondition']}",
                                               fontsize: 8.sp,
-                                              textColor: Color(0xff5C5C5C),
+                                              textColor: mainTextColor,
                                               fontWeight: FontWeight.w600),
-                                          SizedBox(height: 3.h,),
-
-
+                                          SizedBox(
+                                            height: 3.h,
+                                          ),
                                         ],
                                       ),
                                     )
@@ -254,30 +287,27 @@ class HomeScreenBooks extends StatelessWidget {
                                   height: 29.h,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      color: Color(0xff29604E),
+                                      color: primaryColor,
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10.r),
-                                          bottomRight: Radius.circular(10.r))
-                                  ),
+                                          bottomRight: Radius.circular(10.r))),
                                   child: MontserratCustomText(
                                     text: "\$${books['bookPrice'].toString()}",
                                     textColor: Colors.white,
                                     fontWeight: FontWeight.w700,
-                                    fontsize: 14.sp,),
+                                    fontsize: 14.sp,
+                                  ),
                                 )
                               ],
                             ),
-
-                          )
-                      );
+                          ));
                     });
               }),
-              SizedBox(height: 18.h,),
-
-
+              SizedBox(
+                height: 18.h,
+              ),
             ],
           ),
-        )
-    );
+        ));
   }
 }

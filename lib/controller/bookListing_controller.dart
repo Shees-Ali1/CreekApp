@@ -1,9 +1,35 @@
+import 'dart:io';
+
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
+import 'package:creekapp/widgets/custom_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class BookListingController extends GetxController{
-  final HomeController homeController=Get.find();
+  final HomeController homeController=Get.find<HomeController>();
+  final TextEditingController titleController=TextEditingController();
+  final TextEditingController bookPartController=TextEditingController();
+  final TextEditingController authorController=TextEditingController();
+  final TextEditingController classNameController=TextEditingController();
+  final TextEditingController priceController=TextEditingController();
+  RxString bookCondition='New'.obs;
+  List<String> bookConditions = ['New','Used','Old'];
+  File? imageFile;
+  void pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile =
+    await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      update();
+
+    }
+  }
+
   RxList<dynamic> mySellListings=[
     {
       'bookImage':AppImages.harryPotterBook,
@@ -51,16 +77,16 @@ class BookListingController extends GetxController{
 
 
   ].obs;
-
-  void addBookListing(){
-    mySellListings.add({
+  void addBookListing(BuildContext context){
+    if(titleController.text.isNotEmpty){
+      mySellListings.add({
         'bookImage':AppImages.harryPotterBook,
-        'bookName':'Harry Potter and the cursed child',
-        'bookPart':'Parts One And Two',
-        'bookAuthor':'J.K. Rowling',
-        'bookClass':'Graduate',
-        'bookCondition':'New',
-        'bookPrice':100,
+        'bookName':titleController.text,
+        'bookPart':bookPartController.text,
+        'bookAuthor':authorController.text,
+        'bookClass':classNameController.text,
+        'bookCondition':bookCondition,
+        'bookPrice':priceController.text,
         'bookPosted':'20 May 2025',
         'sellerId':'qwerty',
 
@@ -68,12 +94,22 @@ class BookListingController extends GetxController{
         'approval':false,
       },);
 
+      mySellListings.refresh();
+      update();
+      // Get.back();
+      Get.snackbar('Success', "Book Listing Added");
+      CustomRoute.navigateTo(context, ApprovalSellScreen());
+      titleController.clear();
+      bookPartController.clear();
+      authorController.clear();
+      classNameController.clear();
+      priceController.clear();
 
+    }else{
+      Get.snackbar('Missing Values', "Enter All Fields");
 
-    mySellListings.refresh();
-    update();
-    // Get.back();
-    Get.snackbar('Success', "Book Listing Added");
+    }
+
   }
   void removeListingfromSell(int index){
    try{
@@ -87,7 +123,7 @@ class BookListingController extends GetxController{
 
    }
   }
-RxString bookCondition='New'.obs;
-  List<String> bookConditions = ['New','Used','Old'];
+
+
 
 }

@@ -4,7 +4,6 @@ import 'package:creekapp/widgets/custom_button.dart';
 import 'package:creekapp/widgets/custom_route.dart';
 import 'package:creekapp/widgets/custom_textfield.dart';
 import 'package:creekapp/widgets/custom_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,20 +15,14 @@ import '../view/nav_bar/app_nav_bar.dart';
 import '../widgets/password_field.dart';
 import '../controller/login_auth_controller.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final LoginAuthController loginVM = Get.find<LoginAuthController>();
-
-  @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final LoginAuthController loginVM = Get.find<LoginAuthController>();
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -52,7 +45,7 @@ class _LoginViewState extends State<LoginView> {
             text: 'Enter Your Email',
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,
-            textColor: Color(0xff1E1E1E),
+            textColor: const Color(0xff1E1E1E),
           ),
           SizedBox(
             height: 8.h,
@@ -70,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
             text: 'Enter Your Password',
             fontWeight: FontWeight.w500,
             fontsize: 16.sp,
-            textColor: Color(0xff1E1E1E),
+            textColor: const Color(0xff1E1E1E),
           ),
           SizedBox(
             height: 8.h,
@@ -97,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
           CustomButton(
             text: 'Login',
             onPressed: () {
-              CustomRoute.navigateTo(context, BottomNavBar());
+              CustomRoute.navigateTo(context, const BottomNavBar());
               // Handle button press
             },
             backgroundColor: primaryColor, // Example color
@@ -111,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
               text: 'or Login via',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              textColor: Color(0xff3C3C43).withOpacity(0.6),
+              textColor: const Color(0xff3C3C43).withOpacity(0.6),
             ),
           ),
           SizedBox(
@@ -122,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
               width: 154.w,
               height: 61.h,
               decoration: BoxDecoration(
-                  color: Color(0xffE1E9E6),
+                  color: const Color(0xffE1E9E6),
                   borderRadius: BorderRadius.circular(15.r)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   WorkSansCustomText(
                     text: 'Google',
-                    textColor: Color(0xff475569),
+                    textColor: const Color(0xff475569),
                     fontWeight: FontWeight.w400,
                     fontsize: 20.sp,
                   )
@@ -151,14 +144,14 @@ class _LoginViewState extends State<LoginView> {
                 text: 'Doesn’t have account?',
                 fontWeight: FontWeight.w400,
                 fontsize: 14.sp,
-                textColor: Color(0xff3C3C43).withOpacity(0.6),
+                textColor: const Color(0xff3C3C43).withOpacity(0.6),
               ),
               SizedBox(
                 width: 6.w,
               ),
               GestureDetector(
                 onTap: () {
-                  CustomRoute.navigateTo(context,Register() );
+                  CustomRoute.navigateTo(context,const Register() );
                 },
                 child: LexendCustomText(
                   text: 'Register',

@@ -1,7 +1,7 @@
 import 'package:creekapp/const/assets/image_assets.dart';
+import 'package:creekapp/const/color.dart';
 import 'package:creekapp/view/sell_screens/list_sell_book_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,8 +27,8 @@ class BookSellScreen extends StatelessWidget {
                 child:  Container(
                   // height: 200.h,
                   padding: EdgeInsets.only(bottom: 62.h),
-                  decoration: BoxDecoration(
-                      color: Color(0xff29604E),
+                  decoration: const BoxDecoration(
+                      color: primaryColor,
 
                       image: DecorationImage(image: AssetImage(AppImages.appbardesign),fit: BoxFit.cover)
                   ),
@@ -43,7 +43,7 @@ class BookSellScreen extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            CustomBackButton(),
+                            const CustomBackButton(),
 
                             SizedBox(
                               width: 20.w,
@@ -54,7 +54,7 @@ class BookSellScreen extends StatelessWidget {
                               fontsize: 20.sp,
                               fontWeight: FontWeight.w600,
                             ),
-                            Spacer(),
+                            const Spacer(),
                             SvgPicture.asset(AppIcons.chaticon),
                             SizedBox(
                               width: 10.w,
@@ -80,7 +80,7 @@ class BookSellScreen extends StatelessWidget {
                   SizedBox(width: 25.w,),
                   InterCustomText(
                     text: 'Enter ISBN Number',
-                    textColor: Color(0xff454545),
+                    textColor: headingBlackColor,
                     fontsize: 20.sp,
                     fontWeight: FontWeight.w600,
                   ),
@@ -92,7 +92,7 @@ class BookSellScreen extends StatelessWidget {
                 child: TextField(
                   style: GoogleFonts.lexend(
                       textStyle: TextStyle(
-                          color: Color(0xff1E1E1E),
+                          color: const Color(0xff1E1E1E),
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500)),
                   decoration: InputDecoration(
@@ -100,7 +100,7 @@ class BookSellScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.r),
                       borderSide: BorderSide.none,
                     ),
-                    fillColor: Color(0xff29604E).withOpacity(0.08),
+                    fillColor:  primaryColor.withOpacity(0.08),
                     filled: true,
                     contentPadding: EdgeInsets.symmetric(
                         horizontal: 16.w, vertical: 16.h),
@@ -120,13 +120,13 @@ class BookSellScreen extends StatelessWidget {
               SizedBox(height: 8.h,),
               InterCustomText(
                 text: 'or',
-                textColor: Color(0xff454545),
+                textColor: headingBlackColor,
                 fontsize: 16.sp,
                 fontWeight: FontWeight.w500,
               ),
               InterCustomText(
                 text: 'Click to Scan',
-                textColor: Color(0xff454545),
+                textColor: headingBlackColor,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -142,7 +142,7 @@ class BookSellScreen extends StatelessWidget {
                 width: 322.w,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Color(0xff29604E),
+                    color:  primaryColor,
                     borderRadius: BorderRadius.circular(20.r)
                 ),
                 child:
@@ -155,9 +155,9 @@ class BookSellScreen extends StatelessWidget {
               GestureDetector(
                 onTap:(){
                   Get.to(
-                    ListSellBookScreen(),
+                    const ListSellBookScreen(title:'',bookCondition:'',bookPrice:0,bookClass:'',author:'',bookPart: ''),
                     transition: Transition.fade,
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,
                   );
                 } ,
@@ -166,7 +166,7 @@ class BookSellScreen extends StatelessWidget {
                   width: 322.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Color(0xff29604E).withOpacity(0.5),
+                      color:  primaryColor.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(20.r)
                   ),
                   child:

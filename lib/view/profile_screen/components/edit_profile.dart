@@ -1,17 +1,13 @@
-import 'dart:io';
 
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/widgets/custom_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
@@ -24,35 +20,22 @@ import '../../../widgets/custom_textfield.dart';
 import '../../../widgets/password_field.dart';
 import '../../notification/notification_screen.dart';
 
-class EditProfile extends StatefulWidget {
+class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
 
   @override
-  State<EditProfile> createState() => _EditProfileState();
-}
-
-class _EditProfileState extends State<EditProfile> {
-  final LoginAuthController loginVM = Get.find<LoginAuthController>();
-  final HomeController homeController = Get.find();
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  File? _imageFile;
-  void _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final LoginAuthController loginVM = Get.find<LoginAuthController>();
+
+    final HomeController homeController = Get.find<HomeController>();
+
+    final UserController userController = Get.find<UserController>();
+
+    final TextEditingController nameController = TextEditingController();
+
+    final TextEditingController emailController = TextEditingController();
+
+    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
         body: SingleChildScrollView(
             child:
@@ -63,7 +46,7 @@ class _EditProfileState extends State<EditProfile> {
             child: Container(
                 height: 160.h,
                 // padding: EdgeInsets.symmetric(vertical: 50.h),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Color(0xff29604E),
                     image: DecorationImage(
                         image: AssetImage(AppImages.appbardesign),
@@ -77,7 +60,7 @@ class _EditProfileState extends State<EditProfile> {
                       SizedBox(
                         width: 10.w,
                       ),
-                      CustomBackButton(),
+                      const CustomBackButton(),
                       SizedBox(
                         width: 20.w,
                       ),
@@ -87,10 +70,10 @@ class _EditProfileState extends State<EditProfile> {
                         fontsize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                           onTap: () {
-                            CustomRoute.navigateTo(context, MainChat());
+                            CustomRoute.navigateTo(context, const MainChat());
                           },
                           child: SvgPicture.asset(AppIcons.chaticon)),
                       SizedBox(
@@ -98,7 +81,8 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            CustomRoute.navigateTo(context, NotificationScreen());
+                            CustomRoute.navigateTo(
+                                context, const NotificationScreen());
                           },
                           child: SvgPicture.asset(AppIcons.notificationIcon)),
                       SizedBox(
@@ -115,34 +99,34 @@ class _EditProfileState extends State<EditProfile> {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            _imageFile != null
-                ? Container(
-                    height: 101.78.h,
-                    width: 101.78.w,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.file(
-                        _imageFile!,
-                        height: 14.h,
-                        width: 26.w,
-                        fit: BoxFit.cover,
+            GetBuilder<UserController>(builder: (userController) {
+              return userController.imageFile != null
+                  ? Container(
+                      height: 106.78.h,
+                      width: 106.78.w,
+                      decoration:  BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey,
+                        image: DecorationImage(image: FileImage(
+                          userController.imageFile!,
+                          // height: 14.h,
+                          // width: 26.w,
+
+                        ),fit: BoxFit.cover)
                       ),
-                    ),
-                  )
-                : Image.asset(
-                    AppImages.profile,
-                    height: 106.h,
-                    width: 106.w,
-                  ),
+                    )
+                  : Image.asset(
+                      AppImages.profile,
+                      height: 106.h,
+                      width: 106.w,
+                    );
+            }),
             Positioned(
                 right: 0,
                 bottom: -5,
                 child: GestureDetector(
                     onTap: () {
-                      _pickImage();
+                      userController.pickImage();
                     },
                     child: SvgPicture.asset(AppIcons.editcameraIcon)))
           ],
@@ -160,7 +144,7 @@ class _EditProfileState extends State<EditProfile> {
               text: 'Name',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              textColor: Color(0xff1E1E1E),
+              textColor: const Color(0xff1E1E1E),
             ),
             SizedBox(
               height: 8.h,
@@ -178,13 +162,13 @@ class _EditProfileState extends State<EditProfile> {
               text: 'Email Address',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              textColor: Color(0xff1E1E1E),
+              textColor: const Color(0xff1E1E1E),
             ),
             SizedBox(
               height: 8.h,
             ),
             InputField(
-              controller: nameController,
+              controller: emailController,
               hint: 'Enter Email Address',
               keyboard: TextInputType.emailAddress,
               hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
@@ -196,7 +180,7 @@ class _EditProfileState extends State<EditProfile> {
               text: 'School Name',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              textColor: Color(0xff1E1E1E),
+              textColor: const Color(0xff1E1E1E),
             ),
             SizedBox(
               height: 8.h,
@@ -205,22 +189,20 @@ class _EditProfileState extends State<EditProfile> {
               return Container(
                 height: 50.h,
                 width: 327.w,
-
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-
                 decoration: BoxDecoration(
                     color: primaryColor.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(20.r)
-                ),
+                    borderRadius: BorderRadius.circular(20.r)),
                 child: DropdownButton<String>(
-                    underline: SizedBox.shrink(),
+                    underline: const SizedBox.shrink(),
                     isExpanded: true,
                     value: homeController.classOption.value,
                     items: homeController.bookClass.map((String option) {
                       return DropdownMenuItem<String>(
                         value: option,
-                        child: LexendCustomText(text: option,
+                        child: LexendCustomText(
+                            text: option,
                             textColor: Colors.black,
                             fontWeight: FontWeight.w400),
                       );
@@ -229,8 +211,7 @@ class _EditProfileState extends State<EditProfile> {
                       // homeController.bookClass.value=newValue!;
                       homeController.classOption.value = newValue!;
                     },
-                    hint: SizedBox.shrink()
-                ),
+                    hint: const SizedBox.shrink()),
               );
             }),
             // Container(
@@ -267,7 +248,7 @@ class _EditProfileState extends State<EditProfile> {
               text: 'Password',
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              textColor: Color(0xff1E1E1E),
+              textColor: const Color(0xff1E1E1E),
             ),
             SizedBox(
               height: 8.h,
@@ -299,10 +280,11 @@ class _EditProfileState extends State<EditProfile> {
                         borderRadius: BorderRadius.circular(20.r)),
                     context: context,
                     builder: (BuildContext context) {
-                      return Container(
+                      return SizedBox(
                         width: double.infinity,
-                        height: 241.h,
+                        // height: 250.h,
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
@@ -350,6 +332,9 @@ class _EditProfileState extends State<EditProfile> {
                                 onPressed: () {},
                                 backgroundColor: primaryColor.withOpacity(0.2),
                                 textColor: whiteColor),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                           ],
                         ),
                       );

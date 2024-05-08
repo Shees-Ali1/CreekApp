@@ -1,11 +1,9 @@
 import 'package:creekapp/const/color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../const/assets/image_assets.dart';
-import '../widgets/custom_button.dart';
 import '../widgets/custom_route.dart';
 import '../widgets/custom_text.dart';
 import 'signup.dart';
@@ -26,12 +24,12 @@ class _RegisterState extends State<Register> {
         height: 483.h,
         width: double.infinity,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   AppImages.bgbackground,
                 ),
-                fit: BoxFit.cover)),
+                fit: BoxFit.fill)),
         child: SizedBox(
           width: 434.w,
           height: 288.h,
@@ -52,7 +50,7 @@ class _RegisterState extends State<Register> {
               text: 'Create Your Profile',
               fontWeight: FontWeight.w400,
               fontsize: 32.sp,
-              textColor: Color(0xff273958),
+              textColor: const Color(0xff273958),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +59,7 @@ class _RegisterState extends State<Register> {
                   text: 'Now!',
                   fontWeight: FontWeight.w600,
                   fontsize: 32.sp,
-                  textColor: Color(0xff273958),
+                  textColor: const Color(0xff273958),
                 ),
               ],
             ),
@@ -73,7 +71,7 @@ class _RegisterState extends State<Register> {
                   ' Create a profile to save your learning\n progress and keep learning for free!',
               fontWeight: FontWeight.w400,
               fontsize: 14.sp,
-              textColor: Color(0xff989EA7),
+              textColor: const Color(0xff989EA7),
             ),
             SizedBox(
               height: 40.h,
@@ -98,7 +96,7 @@ class _RegisterState extends State<Register> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      CustomRoute.navigateTo(context, Signup());
+                      CustomRoute.navigateTo(context, const Signup());
                     },
                     child: Container(
                         width: 127.w,
