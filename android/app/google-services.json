@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1093450275531",
+    "project_id": "creekapp-f4408",
+    "storage_bucket": "creekapp-f4408.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093450275531:android:036ed96723f43560e1994e",
+        "android_client_info": {
+          "package_name": "com.example.creekapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBITBPL-S1yq8qccdZxTjs0F2r2FTUrSyg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
