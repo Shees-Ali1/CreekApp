@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserController extends GetxController{
+  RxString userName = ''.obs;
+
   File? imageFile;
   void pickImage() async {
     final ImagePicker picker = ImagePicker();

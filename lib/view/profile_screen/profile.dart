@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
 import '../../const/color.dart';
+import '../../controller/user_controller.dart';
 import '../../widgets/custom_text.dart';
 import '../chat_screen/main_chat.dart';
 import '../notification/notification_screen.dart';
@@ -26,6 +27,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController=Get.find<HomeController>();
+    final UserController userController=Get.find<UserController>();
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(
@@ -106,7 +108,7 @@ class Profile extends StatelessWidget {
                     width: 10.w,
                   ),
                   LexendCustomText(
-                    text: 'John Doe',
+                    text: userController.userName.value,
                     fontWeight: FontWeight.w400,
                     fontsize: 20.sp,
                     textColor: blackTitleColor,

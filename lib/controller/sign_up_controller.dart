@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/Auth/verification.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:creekapp/widgets/custom_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,7 @@ class SignUpController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final UserController userController =Get.put(UserController());
   RxBool isChecked = false.obs;
   RxBool isLoading = false.obs;
   Future<void> sendEmailMessage(
@@ -165,6 +167,7 @@ class SignUpController extends GetxController {
         'userEmail': emailController.text,
         'userSchool': "Harker",
       },SetOptions(merge: true));
+      userController.userName.value = nameController.text;
       Get.offAll(BottomNavBar());
     } catch (e) {
       print("Error storing user data $e");

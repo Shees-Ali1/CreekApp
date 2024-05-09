@@ -14,14 +14,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../controller/user_controller.dart';
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
 
-    final LoginAuthController loginAuthController=Get.find<LoginAuthController>();
-    return  Drawer(
+
+    final LoginAuthController loginAuthController = Get.find<
+        LoginAuthController>();
+    return Drawer(
 
       backgroundColor: Colors.white,
       child: SafeArea(
@@ -37,32 +42,45 @@ class MyDrawer extends StatelessWidget {
                 SizedBox(width: 25.w,),
                 SizedBox(
                   width: 146.w,
-                  child: LexendCustomText(
-                    text: 'John Doe',
-                    fontWeight: FontWeight.w400,
-                    fontsize: 20.sp,
-                    textColor: blackTitleColor,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: Obx(() {
+                    return LexendCustomText(
+                      text: userController.userName.value,
+                      fontWeight: FontWeight.w400,
+                      fontsize: 20.sp,
+                      textColor: blackTitleColor,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  }),
                 ),
               ],
             ),
             SizedBox(height: 30.h,),
-            DrawerItemsWidget(text: 'Edit Profile', image: AppIcons.profileIcon,onTap: (){CustomRoute.navigateTo(context, const EditProfile());},),
-            DrawerItemsWidget(text: 'Privacy Policy', image: AppIcons.privacy,onTap: (){CustomRoute.navigateTo(context, const PrivacyPolicy());},),
-            DrawerItemsWidget(text: 'Term of Use', image: AppIcons.terms,onTap: (){CustomRoute.navigateTo(context, const TermCond());},),
-            const DrawerItemsWidget(text: 'Change Password', image:AppIcons.password,),
-            const DrawerItemsWidget(text: 'Customer Support', image: AppIcons.customercare,),
-            const DrawerItemsWidget(text: 'Delete Account', image: AppIcons.deleteaccount,),
+            DrawerItemsWidget(
+              text: 'Edit Profile', image: AppIcons.profileIcon, onTap: () {
+              CustomRoute.navigateTo(context, const EditProfile());
+            },),
+            DrawerItemsWidget(
+              text: 'Privacy Policy', image: AppIcons.privacy, onTap: () {
+              CustomRoute.navigateTo(context, const PrivacyPolicy());
+            },),
+            DrawerItemsWidget(
+              text: 'Term of Use', image: AppIcons.terms, onTap: () {
+              CustomRoute.navigateTo(context, const TermCond());
+            },),
+            const DrawerItemsWidget(
+              text: 'Change Password', image: AppIcons.password,),
+            const DrawerItemsWidget(
+              text: 'Customer Support', image: AppIcons.customercare,),
+            const DrawerItemsWidget(
+              text: 'Delete Account', image: AppIcons.deleteaccount,),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: ()async{
-                  await  loginAuthController.logOut();
-
+                  onTap: () async {
+                    await loginAuthController.logOut();
                   },
                   child: Row(
                     children: [
@@ -83,7 +101,6 @@ class MyDrawer extends StatelessWidget {
             const Spacer(),
 
 
-
           ],
         ),
       ),
@@ -96,14 +113,16 @@ class DrawerItemsWidget extends StatelessWidget {
   final String text;
   final String image;
   final void Function()? onTap;
-  const DrawerItemsWidget({super.key, required this.text, required this.image, this.onTap});
+
+  const DrawerItemsWidget(
+      {super.key, required this.text, required this.image, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 19.w,vertical: 17.h),
+        padding: EdgeInsets.symmetric(horizontal: 19.w, vertical: 17.h),
         child: Row(
           children: [
             SizedBox(
@@ -116,7 +135,7 @@ class DrawerItemsWidget extends StatelessWidget {
               textColor: const Color(0xff040415),
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
-              text:text,
+              text: text,
             ),
 
           ],
