@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../controller/sign_up_controller.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -22,6 +25,8 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignUpController signUpController = Get.find<SignUpController>();
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -33,14 +38,14 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
         ),
       ),
-      child: Text(
+      child: Obx(() => signUpController.isLoading.value==false?Text(
         text,
         style: TextStyle(
           fontSize: fontSize.sp,
           fontWeight: fontWeight,
           color: textColor,
         ),
-      ),
+      ):CircularProgressIndicator(color: Colors.white,),)
     );
   }
 }

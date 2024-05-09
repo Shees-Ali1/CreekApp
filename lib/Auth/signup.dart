@@ -4,24 +4,29 @@ import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/sign_up_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../const/assets/image_assets.dart';
+import '../const/assets/svg_assets.dart';
 import '../controller/home_controller.dart';
+import '../controller/login_auth_controller.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_route.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_textfield.dart';
+import '../widgets/password_field.dart';
 
 class Signup extends StatelessWidget {
   const Signup({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find();
-    final SignUpController signUpController = Get.find();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
+    final HomeController homeController = Get.find<HomeController>();
+    final SignUpController signUpController = Get.find<SignUpController>();
+    final LoginAuthController loginVM = Get.find<LoginAuthController>();
+
+
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -53,7 +58,7 @@ class Signup extends StatelessWidget {
                         height: 8.h,
                       ),
                       InputField(
-                        controller: nameController,
+                        controller: signUpController.nameController,
                         hint: 'Enter Name',
                         keyboard: TextInputType.emailAddress,
                         hintStyle:
@@ -72,12 +77,40 @@ class Signup extends StatelessWidget {
                         height: 8.h,
                       ),
                       InputField(
-                        controller: emailController,
+                        controller: signUpController.emailController,
                         hint: 'Enter Email',
                         keyboard: TextInputType.emailAddress,
                         hintStyle:
                         TextStyle(fontSize: 16.sp, color: Colors.black54),
                       ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      LexendCustomText(
+                        text: 'Password',
+                        fontWeight: FontWeight.w500,
+                        fontsize: 16.sp,
+                        textColor: const Color(0xff1E1E1E),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      Obx(() {
+                        return PasswordField(
+                          onTap: () => loginVM.eyeIconLogin(),
+                          controller: signUpController.passwordController,
+                          keyboard: TextInputType.text,
+                          isObscure: !loginVM.loginObscure.value,
+                          trailIcon: loginVM.loginObscure.value
+                              ? SvgPicture.asset(AppIcons.passwordeyeIcon)
+                              : const Icon(
+                            Icons.visibility_off_outlined,
+                            size: 20,
+                          ),
+                          hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
+                          hint: 'Enter Password',
+                        );
+                      }),
                       SizedBox(
                         height: 8.h,
                       ),
@@ -189,7 +222,8 @@ class Signup extends StatelessWidget {
                       CustomButton(
                         text: 'Register',
                         onPressed: () {
-                          CustomRoute.navigateTo(context, const Verification());
+                          signUpController.sentCodeEmail();
+                          // CustomRoute.navigateTo(context, const Verification());
                         },
                         backgroundColor: primaryColor, // Example color
                         textColor: Colors.white,

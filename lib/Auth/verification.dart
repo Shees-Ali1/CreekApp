@@ -1,41 +1,42 @@
+import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
 import '../const/assets/image_assets.dart';
+import '../controller/sign_up_controller.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_route.dart';
 import '../widgets/custom_text.dart';
 
-class Verification extends StatefulWidget {
-  const Verification({super.key});
+class Verification extends StatelessWidget {
+ final String email;
+  const Verification({super.key, required this.email});
 
-  @override
-  State<Verification> createState() => _VerificationState();
-}
-
-class _VerificationState extends State<Verification> {
-  final verifyController = TextEditingController();
-
-  final defaultPinTheme = PinTheme(
-    width: 56.5.w,
-    height: 59.15.h,
-    textStyle: GoogleFonts.montserrat(
-      fontSize: 21.sp,
-      color: const Color(0xff101623),
-      fontWeight: FontWeight.w700,
-    ),
-    decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: whiteColor,
-        border: Border.all(color: primaryColor, width: 1.32),
-        borderRadius: BorderRadius.circular(5.3.r)),
-  );
   @override
   Widget build(BuildContext context) {
+    final verifyController = TextEditingController();
+
+    final SignUpController signUpController = Get.find<SignUpController>();
+
+    final defaultPinTheme = PinTheme(
+      width: 56.5.w,
+      height: 59.15.h,
+      textStyle: GoogleFonts.montserrat(
+        fontSize: 21.sp,
+        color: const Color(0xff101623),
+        fontWeight: FontWeight.w700,
+      ),
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          color: whiteColor,
+          border: Border.all(color: primaryColor, width: 1.32),
+          borderRadius: BorderRadius.circular(5.3.r)),
+    );
     return Scaffold(
         body: SingleChildScrollView(
             child: Container(
@@ -122,7 +123,12 @@ class _VerificationState extends State<Verification> {
                       CustomButton(
                         text: 'Verify',
                         onPressed: () {
-                          CustomRoute.navigateTo(context, BottomNavBar());
+                          signUpController.verifyOtp(
+                            verifyController,email,
+
+
+                          );
+                           // CustomRoute.navigateTo(context, LoginView());
                         },
                         backgroundColor: primaryColor, // Example color
                         textColor: Colors.white,
