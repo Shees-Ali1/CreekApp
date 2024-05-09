@@ -1,7 +1,11 @@
 import 'package:creekapp/const/assets/image_assets.dart';
+import 'package:creekapp/controller/login_auth_controller.dart';
+import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:creekapp/view/on_boarding/on_boarding_screens.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -12,17 +16,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final LoginAuthController loginAuthController=Get.find<LoginAuthController>();
   @override
   void initState() {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnBoarding()),
-      );
+      loginAuthController.checkUserLogin();
+
+
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

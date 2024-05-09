@@ -164,7 +164,7 @@ class SignUpController extends GetxController {
         'userPassword': passwordController.text,
         'userEmail': emailController.text,
         'userSchool': "Harker",
-      });
+      },SetOptions(merge: true));
       Get.offAll(BottomNavBar());
     } catch (e) {
       print("Error storing user data $e");

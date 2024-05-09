@@ -2,6 +2,7 @@ import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/login_auth_controller.dart';
 import 'package:creekapp/view/profile_screen/components/edit_profile.dart';
 import 'package:creekapp/view/profile_screen/components/privacy_policy.dart';
 import 'package:creekapp/view/profile_screen/components/term-Cond.dart';
@@ -18,7 +19,8 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController=Get.find<HomeController>();
+
+    final LoginAuthController loginAuthController=Get.find<LoginAuthController>();
     return  Drawer(
 
       backgroundColor: Colors.white,
@@ -58,8 +60,8 @@ class MyDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 GestureDetector(
-                  onTap: (){
-                    Get.offAll(const LoginView());
+                  onTap: ()async{
+                  await  loginAuthController.logOut();
 
                   },
                   child: Row(

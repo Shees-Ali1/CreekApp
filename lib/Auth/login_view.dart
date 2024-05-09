@@ -20,8 +20,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+
     final LoginAuthController loginVM = Get.find<LoginAuthController>();
     return Scaffold(
         body: SingleChildScrollView(
@@ -51,7 +50,7 @@ class LoginView extends StatelessWidget {
             height: 8.h,
           ),
           InputField(
-            controller: emailController,
+            controller: loginVM.emailController,
             hint: 'Enter Email',
             keyboard: TextInputType.emailAddress,
             hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
@@ -71,7 +70,7 @@ class LoginView extends StatelessWidget {
           Obx(() {
             return PasswordField(
               onTap: () => loginVM.eyeIconLogin(),
-              controller: passwordController,
+              controller: loginVM.passwordController,
               keyboard: TextInputType.text,
               isObscure: !loginVM.loginObscure.value,
               trailIcon: loginVM.loginObscure.value
@@ -90,7 +89,8 @@ class LoginView extends StatelessWidget {
           CustomButton(
             text: 'Login',
             onPressed: () {
-              CustomRoute.navigateTo(context, const BottomNavBar());
+              loginVM.loginUser();
+              // CustomRoute.navigateTo(context, const BottomNavBar());
               // Handle button press
             },
             backgroundColor: primaryColor, // Example color
