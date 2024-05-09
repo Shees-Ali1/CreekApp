@@ -37,8 +37,7 @@ class ListSellBookScreen extends StatefulWidget {
 }
 
 class _ListSellBookScreenState extends State<ListSellBookScreen> {
-  final BookListingController bookListingController =
-      Get.find<BookListingController>();
+  final BookListingController bookListingController = Get.find<BookListingController>();
   @override
   void initState() {
     // TODO: implement initState
@@ -53,11 +52,11 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
   }
   @override
   void dispose() {
-    bookListingController.titleController.dispose();
-    bookListingController.bookPartController.dispose();
-    bookListingController.authorController.dispose();
-    bookListingController.classNameController.dispose();
-    bookListingController.priceController.dispose();
+    // bookListingController.titleController.dispose();
+    // bookListingController.bookPartController.dispose();
+    // bookListingController.authorController.dispose();
+    // bookListingController.classNameController.dispose();
+    // bookListingController.priceController.dispose();
     super.dispose();
   }
 

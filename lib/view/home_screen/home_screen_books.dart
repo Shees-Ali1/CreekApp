@@ -2,10 +2,12 @@ import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/book_details_screen.dart';
 import 'package:creekapp/widgets/custom_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -24,11 +26,12 @@ class HomeScreenBooks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
+    final UserController userController = Get.find<UserController>();
     // final TextEditingController bookController=TextEditingController();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         // key: homeController.scaffoldKey,
-       // drawer: MyDrawer(),
+        // drawer: MyDrawer(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -61,12 +64,19 @@ class HomeScreenBooks extends StatelessWidget {
                             SizedBox(
                               width: 20.w,
                             ),
-                            InterCustomText(
-                              text: 'Hey, Ali',
-                              textColor: Colors.white,
-                              fontsize: 20.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            Obx(() {
+                              return SizedBox(
+                                width: 210.w,
+                                child: InterCustomText(
+                                  text: 'Hey, ${userController.userName.value}',
+                                  textColor: Colors.white,
+                                  fontsize: 20.sp,
+                                  fontWeight: FontWeight.w600,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              );
+                            }),
                             const Spacer(),
                             GestureDetector(
                                 onTap: () {
@@ -100,7 +110,8 @@ class HomeScreenBooks extends StatelessWidget {
                               SizedBox(
                                 width: 273.w,
                                 child: TextField(
-                                  controller: homeController.bookSearchController,
+                                  controller: homeController
+                                      .bookSearchController,
 
                                   style: GoogleFonts.inter(
                                       textStyle: TextStyle(
@@ -145,7 +156,7 @@ class HomeScreenBooks extends StatelessWidget {
                                             borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(30.r),
                                                 topRight:
-                                                    Radius.circular(30.r))),
+                                                Radius.circular(30.r))),
                                         child: const BooksFilterBottomSheet(),
                                       ),
                                     );
@@ -211,13 +222,13 @@ class HomeScreenBooks extends StatelessWidget {
                                         height: 125.23.h,
                                         width: 77.w,
                                         child: books['bookImage'] != ''
-                                            ? Image.asset(
-                                                books['bookImage'].toString(),
-                                                fit: BoxFit.cover,
-                                              )
+                                            ? Image.network(
+                                          books['bookImage'].toString(),
+                                          fit: BoxFit.fill,
+                                        )
                                             : Container(
-                                                color: Colors.red,
-                                              ),
+                                          color: Colors.red,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -226,7 +237,7 @@ class HomeScreenBooks extends StatelessWidget {
                                     FittedBox(
                                       child: Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
                                             height: 3.h,
@@ -253,7 +264,7 @@ class HomeScreenBooks extends StatelessWidget {
                                           ),
                                           MontserratCustomText(
                                             text:
-                                                "Author: ${books['bookAuthor']}",
+                                            "Author: ${books['bookAuthor']}",
                                             fontsize: 10.sp,
                                             textColor: mainTextColor,
                                             fontWeight: FontWeight.w600,
@@ -264,13 +275,13 @@ class HomeScreenBooks extends StatelessWidget {
                                           ),
                                           MontserratCustomText(
                                               text:
-                                                  "Class: ${books['bookClass']}",
+                                              "Class: ${books['bookClass']}",
                                               fontsize: 8.sp,
                                               textColor: mainTextColor,
                                               fontWeight: FontWeight.w600),
                                           MontserratCustomText(
                                               text:
-                                                  "Condition: ${books['bookCondition']}",
+                                              "Condition: ${books['bookCondition']}",
                                               fontsize: 8.sp,
                                               textColor: mainTextColor,
                                               fontWeight: FontWeight.w600),

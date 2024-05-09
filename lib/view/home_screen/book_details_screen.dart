@@ -58,7 +58,7 @@ class BookDetailsScreen extends StatelessWidget {
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  MontserratCustomText(text: 'Date Posted', textColor: Colors.black, fontWeight: FontWeight.w500,fontsize: 16.sp,),
-                 MontserratCustomText(text: bookDetail['bookPosted'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
+                 // MontserratCustomText(text: bookDetail['bookPosted'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
                ],
              ),
               SizedBox(height: 15.h,),
@@ -106,8 +106,8 @@ class BookDetailsScreen extends StatelessWidget {
                     },
                   ):
                   comingfromSellScreen==true?
-                  bookListingController.removeListingfromSell(index):
-                  homeController.removeBookListing(index);
+                  bookListingController.removeListingfromSell(index,bookDetail['listingId']):
+                  homeController.removeBookListing(index,bookDetail['listingId']);
 
                   
                 },

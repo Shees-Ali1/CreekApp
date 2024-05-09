@@ -19,13 +19,25 @@ import 'package:get/get.dart';
 import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
 
-class SellScreenMain extends StatelessWidget {
+class SellScreenMain extends StatefulWidget {
   const SellScreenMain({super.key});
 
   @override
+  State<SellScreenMain> createState() => _SellScreenMainState();
+}
+
+class _SellScreenMainState extends State<SellScreenMain> {
+  final BookListingController bookListingController = Get.find<BookListingController>();
+  final HomeController homeController=Get.find<HomeController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    bookListingController.fetchUserBookListing();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    final BookListingController bookListingController = Get.find<BookListingController>();
-    final HomeController homeController=Get.find<HomeController>();
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -241,7 +253,7 @@ class SellScreenMain extends StatelessWidget {
                                               height: 125.23.h,
                                               width: 77.w,
                                               child: books['bookImage'] != ''
-                                                  ? Image.asset(
+                                                  ? Image.network(
                                                 books['bookImage'].toString(),
                                                 fit: BoxFit.cover,)
                                                   : Container(color: Colors.red,),

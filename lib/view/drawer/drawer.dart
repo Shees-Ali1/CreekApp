@@ -41,7 +41,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 SizedBox(width: 25.w,),
                 SizedBox(
-                  width: 146.w,
+                  width: 160.w,
                   child: Obx(() {
                     return LexendCustomText(
                       text: userController.userName.value,
