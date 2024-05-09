@@ -39,7 +39,7 @@ class LoginAuthController extends GetxController {
         // await prefs.setString('email', emailController.text);
         // await prefs.setString('password', passwordController.text);
         signUpController.isLoading.value = false;
-
+        Get.snackbar('Success', 'Login Success');
         Get.offAll(const BottomNavBar());
       } else {
         signUpController.isLoading.value = false;
@@ -66,6 +66,7 @@ class LoginAuthController extends GetxController {
   void checkUserLogin()async{
   try{
     if( FirebaseAuth.instance.currentUser?.uid!= null){
+
       Get.offAll(BottomNavBar());
     }else{
       Get.offAll(OnBoarding());

@@ -18,8 +18,10 @@ import '../controller/login_auth_controller.dart';
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+
 
     final LoginAuthController loginVM = Get.find<LoginAuthController>();
     return Scaffold(
@@ -89,13 +91,23 @@ class LoginView extends StatelessWidget {
           CustomButton(
             text: 'Login',
             onPressed: () {
-              loginVM.loginUser();
-              // CustomRoute.navigateTo(context, const BottomNavBar());
-              // Handle button press
+              if (loginVM.emailController.text.isEmpty || loginVM.passwordController.text.isEmpty) {
+                Get.snackbar(
+                  "Error", // title
+                  "Email and password cannot be empty", // message
+
+
+                );
+              } else {
+                loginVM.loginUser();
+                // CustomRoute.navigateTo(context, const BottomNavBar());
+                // Handle successful login navigation if needed
+              }
             },
             backgroundColor: primaryColor, // Example color
             textColor: Colors.white,
           ),
+
           SizedBox(
             height: 17.h,
           ),
