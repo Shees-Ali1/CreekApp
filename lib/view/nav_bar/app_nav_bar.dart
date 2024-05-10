@@ -196,6 +196,7 @@
 // }
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/home_screen_books.dart';
@@ -222,6 +223,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   late final List<Widget> _pages;
   final HomeController homeController=Get.find<HomeController>();
+  final BookListingController bookListingController=Get.find<BookListingController>();
 
   @override
   void initState() {
@@ -231,6 +233,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const Wallet(),
       const Profile(),
     ];
+    bookListingController.fetchUserBookListing();
     super.initState();
   }
 

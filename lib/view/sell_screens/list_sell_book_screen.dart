@@ -22,6 +22,7 @@ class ListSellBookScreen extends StatefulWidget {
   final String? bookCondition;
   final int? bookPrice;
   final bool? comingFromEdit;
+  final String? listingId;
   const ListSellBookScreen(
       {super.key,
       this.title,
@@ -30,7 +31,7 @@ class ListSellBookScreen extends StatefulWidget {
       this.bookClass,
       this.bookCondition,
       this.bookPrice,
-      this.comingFromEdit});
+      this.comingFromEdit, this.listingId});
 
   @override
   State<ListSellBookScreen> createState() => _ListSellBookScreenState();
@@ -345,7 +346,9 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
 
           GestureDetector(
             onTap: () {
-              bookListingController.addBookListing(context);
+              widget.comingFromEdit==false?
+              bookListingController.addBookListing(context):
+              bookListingController.updateBookListing(context, widget.listingId.toString());
             },
             child: Container(
                 height: 58.h,

@@ -27,17 +27,10 @@ class SellScreenMain extends StatefulWidget {
 }
 
 class _SellScreenMainState extends State<SellScreenMain> {
-  final BookListingController bookListingController = Get.find<BookListingController>();
-  final HomeController homeController=Get.find<HomeController>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    bookListingController.fetchUserBookListing();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
-
+    final BookListingController bookListingController = Get.find<BookListingController>();
+    final HomeController homeController=Get.find<HomeController>();
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -335,7 +328,7 @@ class _SellScreenMainState extends State<SellScreenMain> {
                                           right: 3.h,
                                           child: GestureDetector(
                                               onTap:(){
-                                                CustomRoute.navigateTo(context, ListSellBookScreen(title: books['bookName'],bookPart: books['bookPart'],author:books['bookAuthor'],bookClass: books['bookClass'],bookCondition: books['bookCondition'],bookPrice: books['bookPrice'] ,comingFromEdit: true,)) ;
+                                                CustomRoute.navigateTo(context, ListSellBookScreen(title: books['bookName'],bookPart: books['bookPart'],author:books['bookAuthor'],bookClass: books['bookClass'],bookCondition: books['bookCondition'],bookPrice: books['bookPrice'] ,listingId:books['listingId'] ,comingFromEdit: true,)) ;
                                               },
                                               child: SizedBox(height: 24.h,width: 24.w,child: SvgPicture.asset(AppIcons.editIcon,color: primaryColor,),)))
                                     ],

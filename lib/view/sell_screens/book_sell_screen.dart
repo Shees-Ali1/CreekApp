@@ -155,7 +155,7 @@ class BookSellScreen extends StatelessWidget {
               GestureDetector(
                 onTap:(){
                   Get.to(
-                    const ListSellBookScreen(title:'',bookCondition:'',bookPrice:0,bookClass:'',author:'',bookPart: ''),
+                    const ListSellBookScreen(title:'',bookCondition:'',bookPrice:0,bookClass:'',author:'',bookPart: '',comingFromEdit: false),
                     transition: Transition.fade,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeIn,

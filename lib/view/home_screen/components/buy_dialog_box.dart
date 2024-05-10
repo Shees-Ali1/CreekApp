@@ -1,6 +1,7 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -10,17 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class BuyDialogBox extends StatelessWidget {
   const BuyDialogBox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
+    final BookListingController bookListingController = Get.find<
+        BookListingController>();
+    return SizedBox(
       // height: 335.h,
 
         width: 404.w,
-        child:Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
@@ -28,9 +32,19 @@ class BuyDialogBox extends StatelessWidget {
               width: 163.w,
               child: Image.asset(AppImages.doneTick),
             ),
-            WorkSansCustomText(text: "Book Purchased!", textColor: const Color(0xff29604E), fontWeight: FontWeight.w700,fontsize: 22.sp,),
+            WorkSansCustomText(text: "Book Purchased!",
+              textColor: const Color(0xff29604E),
+              fontWeight: FontWeight.w700,
+              fontsize: 22.sp,),
             SizedBox(height: 15.h,),
-            WorkSansCustomText(text: "You bought this book from Sue S. You can now chat with Sue S about delivering the book at school.", textColor: const Color(0xff010101), fontWeight: FontWeight.w400,fontsize: 14.sp,),
+            Obx(() {
+              return WorkSansCustomText(
+                text: "You bought this book from Sue S. You can now chat with ${bookListingController
+                    .sellerName.value} about delivering the book at school.",
+                textColor: const Color(0xff010101),
+                fontWeight: FontWeight.w400,
+                fontsize: 14.sp,);
+            }),
             SizedBox(height: 14.h,),
             Row(
 
@@ -38,10 +52,9 @@ class BuyDialogBox extends StatelessWidget {
               children: [
 
                 GestureDetector(
-                  onTap: ()
-                  {
-                    CustomRoute1.navigateAndRemoveUntil(context, BottomNavBar(), (route) => false);
-
+                  onTap: () {
+                    CustomRoute1.navigateAndRemoveUntil(
+                        context, BottomNavBar(), (route) => false);
                   },
                   child: Container(
                       height: 54.h,
@@ -52,13 +65,16 @@ class BuyDialogBox extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.r)
                       ),
                       child:
-                      PoppinsCustomText(text: "Home", textColor: lightWhiteColor, fontWeight: FontWeight.w600,fontsize: 16.sp,)
+                      PoppinsCustomText(text: "Home",
+                        textColor: lightWhiteColor,
+                        fontWeight: FontWeight.w600,
+                        fontsize: 16.sp,)
                   ),
                 ),
 
                 SizedBox(width: 15.w,),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                     CustomRoute.navigateTo(context, const MainChat());
                   },

@@ -12,11 +12,17 @@ import 'components/chat_message_container.dart';
 
 class ChatScreen extends StatelessWidget {
   final dynamic messagedetail;
-  const ChatScreen({super.key, required this.messagedetail});
+  final String image;
+  final String chatName;
+  final String chatId;
+  const ChatScreen(
+      {super.key,
+      required this.messagedetail,
+      required this.image,
+      required this.chatName, required this.chatId});
 
   @override
   Widget build(BuildContext context) {
-
     final ChatController chatController = Get.find<ChatController>();
     final TextEditingController messageController = TextEditingController();
     return Scaffold(
@@ -44,11 +50,13 @@ class ChatScreen extends StatelessWidget {
                   SizedBox(
                     width: 20.w,
                   ),
-                  Image.asset(
-                    messagedetail['messageImage'],
-                    height: 53.h,
-                    width: 53.w,
-                  ),
+                  image != ''
+                      ? Image.network(
+                          image,
+                          height: 53.h,
+                          width: 53.w,
+                        )
+                      : CircleAvatar(),
                   SizedBox(
                     width: 8.w,
                   ),
@@ -57,7 +65,7 @@ class ChatScreen extends StatelessWidget {
                     child: InterCustomText(
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      text: messagedetail['messagename'],
+                      text: chatName,
                       textColor: Colors.white,
                       fontsize: 20.sp,
                       fontWeight: FontWeight.w600,
@@ -65,7 +73,9 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ])
               ])))),
-      Expanded(child: ChatMessageContainer(messagedetail:messagedetail)),
+      Expanded(
+          child: ChatMessageContainer(chatId: chatId,
+      )),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -105,7 +115,7 @@ class ChatScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               print(messageController.text);
-              chatController.sendmessage(messageController);
+              chatController.sendmessage(messageController,chatId);
             },
             child: SizedBox(
                 height: 53.h, width: 53.w, child: Image.asset(AppImages.send)),

@@ -51,6 +51,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   mailer: ^6.1.0
+  intl:
 
 
 dev_dependencies:
