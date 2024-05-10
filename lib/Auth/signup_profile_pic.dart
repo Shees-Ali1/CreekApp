@@ -39,57 +39,56 @@ class SignupProfilePic extends StatelessWidget {
               SizedBox(
                 height: 60.h,
               ),
-
-                  GetBuilder<UserController>(builder: (userController){
-                 return   userController.imageFile != null
-                        ? GestureDetector(
-                   onTap: () {
-                     userController.pickImage();
-                   },
-                          child: Center(
-                            child: Container(
-                                                  height: 106.78.h,
-                                                  width: 106.78.w,
-                                                  decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey,
-                              image: DecorationImage(
-                                  image: FileImage(
-                                    userController.imageFile!,
-                                    // height: 14.h,
-                                    // width: 26.w,
-                                  ),
-                                  fit: BoxFit.cover)),
-                                                ),
+              GetBuilder<UserController>(builder: (userController) {
+                return userController.imageFile != null
+                    ? GestureDetector(
+                        onTap: () {
+                          userController.pickImage();
+                        },
+                        child: Center(
+                          child: Container(
+                            height: 106.78.h,
+                            width: 106.78.w,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey,
+                                image: DecorationImage(
+                                    image: FileImage(
+                                      userController.imageFile!,
+                                      // height: 14.h,
+                                      // width: 26.w,
+                                    ),
+                                    fit: BoxFit.cover)),
                           ),
-                        )
-                        : GestureDetector(
-                      onTap: () {
-                        userController.pickImage();
-                      },
-                      child: Center(
-                          child: CircleAvatar(
-                            backgroundColor: primaryColor.withOpacity(0.7),
-                            radius: 50.r,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  AppImages.upload,
-                                  color: whiteColor,
-                                  scale: 3,
-                                ),
-                                LexendCustomText(
-                                  text: 'Upload Image',
-                                  fontWeight: FontWeight.w500,
-                                  fontsize: 16.sp,
-                                  textColor: whiteColor,
-                                ),
-                              ],
-                            ),
-                          )),
-                    );
-                  }),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          userController.pickImage();
+                        },
+                        child: Center(
+                            child: CircleAvatar(
+                          backgroundColor: primaryColor.withOpacity(0.7),
+                          radius: 50.r,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                AppImages.upload,
+                                color: whiteColor,
+                                scale: 3,
+                              ),
+                              LexendCustomText(
+                                text: 'Upload Image',
+                                fontWeight: FontWeight.w500,
+                                fontsize: 16.sp,
+                                textColor: whiteColor,
+                              ),
+                            ],
+                          ),
+                        )),
+                      );
+              }),
               Spacer(),
               Padding(
                 padding: EdgeInsets.only(
@@ -100,7 +99,7 @@ class SignupProfilePic extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        navigator?.pop();
+                        Get.offAll(BottomNavBar());
                       },
                       child: LexendCustomText(
                         text: 'Skip',
@@ -110,20 +109,16 @@ class SignupProfilePic extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () async{
-                      String imageUrl =
-                      await  signupController.uploadImage(
-                          FirebaseAuth.instance.currentUser!.uid
-                        );
-                      await FirebaseFirestore.instance.collection('userDetails').doc(
-                        FirebaseAuth.instance.currentUser!.uid
-                      ).set(
-                        {
-                          'userImage':imageUrl
-                        },SetOptions(merge: true)
-                      );
-                      userController.userImage.value = imageUrl;
-                         CustomRoute.navigateTo(context, const BottomNavBar());
+                      onTap: () async {
+                        String imageUrl = await signupController.uploadImage(
+                            FirebaseAuth.instance.currentUser!.uid);
+                        await FirebaseFirestore.instance
+                            .collection('userDetails')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .set({'userImage': imageUrl},
+                                SetOptions(merge: true));
+                        userController.userImage.value = imageUrl;
+                        CustomRoute.navigateTo(context, const BottomNavBar());
                       },
                       child: Container(
                           width: 127.w,
