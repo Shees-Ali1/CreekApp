@@ -44,6 +44,7 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     nameController.text = userController.userName.value;
     emailController.text = userController.userEmail.value;
+    userController.imageFile=null;
 
 
 
@@ -116,7 +117,8 @@ class _EditProfileState extends State<EditProfile> {
           clipBehavior: Clip.none,
           children: [
             GetBuilder<UserController>(builder: (userController) {
-              return userController.userImage != null
+              return  userController.imageFile==null?
+              userController.userImage.value != null
                   ? Container(
                       height: 106.78.h,
                       width: 106.78.w,
@@ -131,11 +133,24 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                               fit: BoxFit.cover)),
                     )
-                  : Image.asset(
+                  :Image.asset(
                       AppImages.profile,
                       height: 106.h,
                       width: 106.w,
-                    );
+                    ):Container(
+                height: 106.78.h,
+                width: 106.78.w,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                    image: DecorationImage(
+                        image: FileImage(
+                         userController.imageFile!
+                          // height: 14.h,
+                          // width: 26.w,
+                        ),
+                        fit: BoxFit.cover)),
+              );
             }),
             Positioned(
                 right: 0,

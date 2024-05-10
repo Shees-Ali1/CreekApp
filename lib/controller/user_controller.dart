@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
@@ -15,7 +16,7 @@ class UserController extends GetxController {
   RxString userImage = ''.obs;
   RxString userEmail = ''.obs;
   RxString userSchool = ''.obs;
-final HomeController homeController =Get.put(HomeController());
+  final HomeController homeController = Get.put(HomeController());
   File? imageFile;
   void pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -44,7 +45,7 @@ final HomeController homeController =Get.put(HomeController());
           userName.value = userInfo["userName"] ?? "";
           userEmail.value = userInfo["userEmail"] ?? "";
           userImage.value = userInfo["userImage"] ?? "";
-          homeController.classOption.value  = userInfo["userSchool"] ?? "";
+          homeController.classOption.value = userInfo["userSchool"] ?? "";
         } else {
           // User not found
         }
@@ -65,12 +66,45 @@ final HomeController homeController =Get.put(HomeController());
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
         'userName': nameController.text.trim(),
-         'userSchool': homeController.classOption.value,
+        'userSchool': homeController.classOption.value,
       });
-      userName.value=nameController.text;
+      if(imageFile!=null){
+        String img=await updateUserImage(FirebaseAuth.instance.currentUser!.uid);
+        await FirebaseFirestore.instance
+            .collection('userDetails')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+        'userImage':img
+
+        });
+        userImage.value = img;
+      }
+      userName.value = nameController.text;
       Get.back();
     } catch (e) {
       print('Error Updateing Profile $e');
+    }
+  }
+
+  Future<String> updateUserImage(String userId) async {
+    try {
+      // Get a reference to the Firebase Storage location
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('profile_images')
+          .child('$userId.jpg'); // You can customize the file name as needed
+
+      // Upload the image
+      UploadTask uploadTask = storageReference.putFile(imageFile!);
+      TaskSnapshot taskSnapshot = await uploadTask;
+
+      // Get the download URL of the uploaded image
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+
+      return imageUrl;
+    } catch (e) {
+      print('Error uploading image to Firebase Storage: $e');
+      throw e;
     }
   }
 }
