@@ -198,6 +198,7 @@ import 'package:creekapp/const/assets/svg_assets.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/view/profile_screen/profile.dart';
@@ -224,6 +225,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   late final List<Widget> _pages;
   final HomeController homeController=Get.find<HomeController>();
   final BookListingController bookListingController=Get.find<BookListingController>();
+  final UserController userController=Get.find<UserController>();
 
   @override
   void initState() {
@@ -234,6 +236,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const Profile(),
     ];
     bookListingController.fetchUserBookListing();
+    userController.fetchUserData();
     super.initState();
   }
 

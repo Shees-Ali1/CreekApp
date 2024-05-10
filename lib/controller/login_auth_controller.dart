@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Auth/login_view.dart';
+import '../Auth/signup_profile_pic.dart';
 
 class LoginAuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();

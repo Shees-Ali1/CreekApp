@@ -21,5 +21,6 @@ class AppImages {
   static const profile2 = 'assets/images/profile2.png';
   static const profile3 = 'assets/images/profile3.png';
   static const onlinedot = 'assets/images/onlinedot.png';
+  static const upload = 'assets/images/upload.png';
   static const backbutton = 'assets/images/backbutton.png';
 }

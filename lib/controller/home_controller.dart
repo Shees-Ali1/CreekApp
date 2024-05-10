@@ -130,7 +130,7 @@ class HomeController extends GetxController{
   RxDouble priceSliderValue=100.0.obs;
   RxDouble sliderValue=100.0.obs;
   RxString classOption='Graduate'.obs;
-  List<String> bookClass = ['Graduate', 'Option 2', 'Class 10', 'Option 4'];
+  List<String> bookClass = ['Graduate', 'Option 2', 'Class 10', 'Option 4','Harker'];
   String normalize(String str) {
     // Remove all punctuation and spaces, and convert to lower case
     return str.replaceAll(RegExp(r'[\W_]+'), '').toLowerCase();

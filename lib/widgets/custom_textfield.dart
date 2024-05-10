@@ -14,8 +14,10 @@ class InputField extends StatelessWidget {
   final TextStyle inputTextStyle;
   final TextInputType keyboard;
   final Color? cursorColor;
+  final bool readOnly;
 
   const InputField(
+
       {super.key,
         // required this.label,
         required this.hint,
@@ -28,11 +30,12 @@ class InputField extends StatelessWidget {
         this.inputTextStyle = const TextStyle(color: Colors.black),
         this.controller,
         this.cursorColor,
-        this.validator});
+        this.validator, this.readOnly=false});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       keyboardType: keyboard,

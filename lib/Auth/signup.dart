@@ -223,7 +223,7 @@ class Signup extends StatelessWidget {
                         text: 'Register',
                         onPressed: () {
                           signUpController.sentCodeEmail();
-                          // CustomRoute.navigateTo(context, const Verification());
+                           // CustomRoute.navigateTo(context, const Verification(email: '',));
                         },
                         backgroundColor: primaryColor, // Example color
                         textColor: Colors.white,

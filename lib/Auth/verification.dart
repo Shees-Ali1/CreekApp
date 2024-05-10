@@ -1,4 +1,5 @@
 import 'package:creekapp/Auth/login_view.dart';
+import 'package:creekapp/Auth/signup_profile_pic.dart';
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,7 @@ class Verification extends StatelessWidget {
 
 
                           );
-                           // CustomRoute.navigateTo(context, LoginView());
+                          //  CustomRoute.navigateTo(context, SignupProfilePic());
                         },
                         backgroundColor: primaryColor, // Example color
                         textColor: Colors.white,

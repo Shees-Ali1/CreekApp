@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/Auth/verification.dart';
@@ -11,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
+
+import '../Auth/signup_profile_pic.dart';
 
 class SignUpController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
@@ -166,11 +169,37 @@ class SignUpController extends GetxController {
         'userPassword': passwordController.text,
         'userEmail': emailController.text,
         'userSchool': "Harker",
+
       },SetOptions(merge: true));
       userController.userName.value = nameController.text;
-      Get.offAll(BottomNavBar());
+      Get.offAll(SignupProfilePic());
     } catch (e) {
       print("Error storing user data $e");
     }
   }
+  Future<String> uploadImage(String userId) async {
+    try {
+      isLoading.value = true;
+
+      // Get a reference to the Firebase Storage location
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('profile_images')
+          .child('$userId.jpg'); // You can customize the file name as needed
+
+      // Upload the image
+      UploadTask uploadTask = storageReference.putFile(userController.imageFile!);
+      TaskSnapshot taskSnapshot = await uploadTask;
+
+      // Get the download URL of the uploaded image
+      String imageUrl = await taskSnapshot.ref.getDownloadURL();
+      isLoading.value = false;
+
+      return imageUrl;
+    } catch (e) {
+      print('Error uploading image to Firebase Storage: $e');
+      throw e;
+    }
+  }
+
 }

@@ -1,4 +1,3 @@
-
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/chat_screen/main_chat.dart';
@@ -20,22 +19,39 @@ import '../../../widgets/custom_textfield.dart';
 import '../../../widgets/password_field.dart';
 import '../../notification/notification_screen.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
 
   @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+  final LoginAuthController loginVM = Get.find<LoginAuthController>();
+
+  final HomeController homeController = Get.find<HomeController>();
+
+  final UserController userController = Get.find<UserController>();
+
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController.text = userController.userName.value;
+    emailController.text = userController.userEmail.value;
+
+
+
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final LoginAuthController loginVM = Get.find<LoginAuthController>();
 
-    final HomeController homeController = Get.find<HomeController>();
-
-    final UserController userController = Get.find<UserController>();
-
-    final TextEditingController nameController = TextEditingController();
-
-    final TextEditingController emailController = TextEditingController();
-
-    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
         body: SingleChildScrollView(
             child:
@@ -100,20 +116,20 @@ class EditProfile extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             GetBuilder<UserController>(builder: (userController) {
-              return userController.imageFile != null
+              return userController.userImage != null
                   ? Container(
                       height: 106.78.h,
                       width: 106.78.w,
-                      decoration:  BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey,
-                        image: DecorationImage(image: FileImage(
-                          userController.imageFile!,
-                          // height: 14.h,
-                          // width: 26.w,
-
-                        ),fit: BoxFit.cover)
-                      ),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                userController.userImage.value,
+                                // height: 14.h,
+                                // width: 26.w,
+                              ),
+                              fit: BoxFit.cover)),
                     )
                   : Image.asset(
                       AppImages.profile,
@@ -168,6 +184,7 @@ class EditProfile extends StatelessWidget {
               height: 8.h,
             ),
             InputField(
+              readOnly: true,
               controller: emailController,
               hint: 'Enter Email Address',
               keyboard: TextInputType.emailAddress,
@@ -321,7 +338,9 @@ class EditProfile extends StatelessWidget {
                             ),
                             CustomButton(
                                 text: 'Yes',
-                                onPressed: () {},
+                                onPressed: () {
+                                  userController.profileUpdate(nameController);
+                                },
                                 backgroundColor: primaryColor,
                                 textColor: whiteColor),
                             SizedBox(

@@ -23,23 +23,37 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserController userController = Get.find<UserController>();
 
-
-    final LoginAuthController loginAuthController = Get.find<
-        LoginAuthController>();
+    final LoginAuthController loginAuthController =
+        Get.find<LoginAuthController>();
     return Drawer(
-
       backgroundColor: Colors.white,
       child: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 32.h,),
+            SizedBox(
+              height: 32.h,
+            ),
             Row(
               children: [
-                SizedBox(width: 28.w,),
-                CircleAvatar(
-                  radius: 35.r,
+                SizedBox(
+                  width: 28.w,
                 ),
-                SizedBox(width: 25.w,),
+                Obx(() {
+                  return Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              userController.userImage.value,
+                            ),
+                            fit: BoxFit.cover)),
+                    height: 76.h,
+                    width: 76.w,
+                  );
+                }),
+                SizedBox(
+                  width: 25.w,
+                ),
                 SizedBox(
                   width: 160.w,
                   child: Obx(() {
@@ -55,25 +69,42 @@ class MyDrawer extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 30.h,),
+            SizedBox(
+              height: 30.h,
+            ),
             DrawerItemsWidget(
-              text: 'Edit Profile', image: AppIcons.profileIcon, onTap: () {
-              CustomRoute.navigateTo(context, const EditProfile());
-            },),
+              text: 'Edit Profile',
+              image: AppIcons.profileIcon,
+              onTap: () {
+                CustomRoute.navigateTo(context, const EditProfile());
+              },
+            ),
             DrawerItemsWidget(
-              text: 'Privacy Policy', image: AppIcons.privacy, onTap: () {
-              CustomRoute.navigateTo(context, const PrivacyPolicy());
-            },),
+              text: 'Privacy Policy',
+              image: AppIcons.privacy,
+              onTap: () {
+                CustomRoute.navigateTo(context, const PrivacyPolicy());
+              },
+            ),
             DrawerItemsWidget(
-              text: 'Term of Use', image: AppIcons.terms, onTap: () {
-              CustomRoute.navigateTo(context, const TermCond());
-            },),
+              text: 'Term of Use',
+              image: AppIcons.terms,
+              onTap: () {
+                CustomRoute.navigateTo(context, const TermCond());
+              },
+            ),
             const DrawerItemsWidget(
-              text: 'Change Password', image: AppIcons.password,),
+              text: 'Change Password',
+              image: AppIcons.password,
+            ),
             const DrawerItemsWidget(
-              text: 'Customer Support', image: AppIcons.customercare,),
+              text: 'Customer Support',
+              image: AppIcons.customercare,
+            ),
             const DrawerItemsWidget(
-              text: 'Delete Account', image: AppIcons.deleteaccount,),
+              text: 'Delete Account',
+              image: AppIcons.deleteaccount,
+            ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -85,7 +116,9 @@ class MyDrawer extends StatelessWidget {
                   child: Row(
                     children: [
                       const Icon(Icons.logout),
-                      SizedBox(width: 15.w,),
+                      SizedBox(
+                        width: 15.w,
+                      ),
                       WorkSansCustomText(
                         textColor: const Color(0xff040415),
                         fontWeight: FontWeight.w700,
@@ -95,19 +128,18 @@ class MyDrawer extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: 30.w,)
+                SizedBox(
+                  width: 30.w,
+                )
               ],
             ),
             const Spacer(),
-
-
           ],
         ),
       ),
     );
   }
 }
-
 
 class DrawerItemsWidget extends StatelessWidget {
   final String text;
@@ -130,18 +162,18 @@ class DrawerItemsWidget extends StatelessWidget {
               width: 36.7.w,
               child: SvgPicture.asset(image),
             ),
-            SizedBox(width: 31.09.w,),
+            SizedBox(
+              width: 31.09.w,
+            ),
             WorkSansCustomText(
               textColor: const Color(0xff040415),
               fontWeight: FontWeight.w500,
               fontsize: 16.sp,
               text: text,
             ),
-
           ],
         ),
       ),
     );
   }
 }
-
