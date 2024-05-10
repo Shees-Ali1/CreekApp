@@ -69,7 +69,7 @@ class SignupProfilePic extends StatelessWidget {
                         child: Center(
                             child: CircleAvatar(
                           backgroundColor: primaryColor.withOpacity(0.7),
-                          radius: 50.r,
+                          radius: 60.r,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -81,7 +81,7 @@ class SignupProfilePic extends StatelessWidget {
                               LexendCustomText(
                                 text: 'Upload Image',
                                 fontWeight: FontWeight.w500,
-                                fontsize: 16.sp,
+                                fontsize: 12.sp,
                                 textColor: whiteColor,
                               ),
                             ],

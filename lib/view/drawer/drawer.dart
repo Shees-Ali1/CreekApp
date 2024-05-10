@@ -41,6 +41,7 @@ class MyDrawer extends StatelessWidget {
                 Obx(() {
                   return Container(
                     decoration: BoxDecoration(
+                        color: Colors.grey,
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: NetworkImage(

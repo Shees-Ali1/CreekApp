@@ -52,8 +52,8 @@ class SignUpController extends GetxController {
 
   Future<void> sentCodeEmail() async {
     try {
-      if (emailController.text.isEmpty) {
-        Get.snackbar("Error", "Please Enter your email.");
+      if (emailController.text.isEmpty || nameController.text.isEmpty|| passwordController.text.isEmpty) {
+        Get.snackbar("Error", "Please Enter All Fields.");
       } else {
         isLoading.value = true;
 
