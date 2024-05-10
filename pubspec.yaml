@@ -53,6 +53,7 @@ dependencies:
   mailer: ^6.1.0
   intl:
   firebase_storage:
+  google_sign_in:
 
 
 dev_dependencies:

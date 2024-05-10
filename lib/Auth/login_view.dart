@@ -5,6 +5,7 @@ import 'package:creekapp/widgets/custom_route.dart';
 import 'package:creekapp/widgets/custom_textfield.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -122,27 +123,32 @@ class LoginView extends StatelessWidget {
           SizedBox(
             height: 4.h,
           ),
-          Center(
-            child: Container(
-              width: 154.w,
-              height: 61.h,
-              decoration: BoxDecoration(
-                  color: const Color(0xffE1E9E6),
-                  borderRadius: BorderRadius.circular(15.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(AppIcons.googleIcon),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  WorkSansCustomText(
-                    text: 'Google',
-                    textColor: const Color(0xff475569),
-                    fontWeight: FontWeight.w400,
-                    fontsize: 20.sp,
-                  )
-                ],
+          GestureDetector(
+            onTap: () {
+              loginVM.handleGoogleSignIn();
+            },
+            child: Center(
+              child: Container(
+                width: 154.w,
+                height: 61.h,
+                decoration: BoxDecoration(
+                    color: const Color(0xffE1E9E6),
+                    borderRadius: BorderRadius.circular(15.r)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(AppIcons.googleIcon),
+                    SizedBox(
+                      width: 12.w,
+                    ),
+                    WorkSansCustomText(
+                      text: 'Google',
+                      textColor: const Color(0xff475569),
+                      fontWeight: FontWeight.w400,
+                      fontsize: 20.sp,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
