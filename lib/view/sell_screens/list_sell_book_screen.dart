@@ -23,22 +23,24 @@ class ListSellBookScreen extends StatefulWidget {
   final int? bookPrice;
   final bool? comingFromEdit;
   final String? listingId;
-  const ListSellBookScreen(
-      {super.key,
-      this.title,
-      this.bookPart,
-      this.author,
-      this.bookClass,
-      this.bookCondition,
-      this.bookPrice,
-      this.comingFromEdit, this.listingId});
+
+  const ListSellBookScreen({super.key,
+    this.title,
+    this.bookPart,
+    this.author,
+    this.bookClass,
+    this.bookCondition,
+    this.bookPrice,
+    this.comingFromEdit, this.listingId});
 
   @override
   State<ListSellBookScreen> createState() => _ListSellBookScreenState();
 }
 
 class _ListSellBookScreenState extends State<ListSellBookScreen> {
-  final BookListingController bookListingController = Get.find<BookListingController>();
+  final BookListingController bookListingController = Get.find<
+      BookListingController>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -51,6 +53,7 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
 
     super.initState();
   }
+
   @override
   void dispose() {
     // bookListingController.titleController.dispose();
@@ -65,311 +68,318 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-      child: Column(
-        children: [
-          ClipPath(
-            clipper: OvalBottomBorderClipper(),
-            child: Container(
-              // height: 200.h,
-              padding: EdgeInsets.only(bottom: 62.h),
-              decoration: const BoxDecoration(
-                  color: primaryColor,
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.appbardesign),
-                      fit: BoxFit.cover)),
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Row(
+          child: Column(
+            children: [
+              ClipPath(
+                clipper: OvalBottomBorderClipper(),
+                child: Container(
+                  // height: 200.h,
+                  padding: EdgeInsets.only(bottom: 62.h),
+                  decoration: const BoxDecoration(
+                      color: primaryColor,
+                      image: DecorationImage(
+                          image: AssetImage(AppImages.appbardesign),
+                          fit: BoxFit.cover)),
+                  child: SafeArea(
+                    child: Column(
                       children: [
                         SizedBox(
-                          width: 10.w,
+                          height: 10.h,
                         ),
-                        const CustomBackButton(),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        InterCustomText(
-                          text: 'Sell Items',
-                          textColor: Colors.white,
-                          fontsize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        const Spacer(),
-                        SvgPicture.asset(AppIcons.chaticon),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        SvgPicture.asset(AppIcons.notificationIcon),
-                        SizedBox(
-                          width: 23.w,
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            const CustomBackButton(),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            InterCustomText(
+                              text: 'Sell Items',
+                              textColor: Colors.white,
+                              fontsize: 20.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            const Spacer(),
+                            SvgPicture.asset(AppIcons.chaticon),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            SvgPicture.asset(AppIcons.notificationIcon),
+                            SizedBox(
+                              width: 23.w,
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 14.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
               SizedBox(
-                width: 24.w,
+                height: 14.h,
               ),
-              InterCustomText(
-                text: 'Enter the Details of the Book',
-                textColor: headingBlackColor,
-                fontsize: 20.sp,
-                fontWeight: FontWeight.w600,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  InterCustomText(
+                    text: 'Enter the Details of the Book',
+                    textColor: headingBlackColor,
+                    fontsize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          GetBuilder<BookListingController>(builder: (bookListingController) {
-            return bookListingController.imageFile == null
-                ? GestureDetector(
-                    onTap: () {
-                      bookListingController.pickImage();
-                    },
-                    child: Container(
-                      width: 321.w,
-                      height: 129.h,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: primaryColor),
-                          color: primaryColor.withOpacity(0.08)),
-                      child: SizedBox(
-                          height: 65.h,
-                          width: 68.w,
-                          child: Image.asset(AppImages.pickImage)),
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      bookListingController.pickImage();
-                    },
-                    child: Container(
-                      width: 321.w,
-                      height: 129.h,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: primaryColor),
-                          color: primaryColor.withOpacity(0.08),
-                          image: DecorationImage(
-                              image:
-                                  FileImage(bookListingController.imageFile!),
-                              fit: BoxFit.fill)),
-                    ),
-                  );
-          }),
-          SizedBox(
-            height: 8.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
               SizedBox(
-                width: 24.w,
+                height: 12.h,
               ),
-              LexendCustomText(
-                text: 'Title',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-              ),
-            ],
-          ),
-          // SizedBox(height: 8.h,),
-          CustomSellTextField(
-            controller: bookListingController.titleController,
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 24.w,
-              ),
-              LexendCustomText(
-                text: 'Book Part',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-              ),
-            ],
-          ),
-          // SizedBox(height: 8.h,),
-          CustomSellTextField(
-            controller: bookListingController.bookPartController,
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 24.w,
-              ),
-              LexendCustomText(
-                text: 'Author',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-              ),
-            ],
-          ),
-          // SizedBox(height: 8.h,),
-          CustomSellTextField(
-            controller: bookListingController.authorController,
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 24.w,
-              ),
-              LexendCustomText(
-                text: 'Class name',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-              ),
-            ],
-          ),
-          // SizedBox(height: 8.h,),
-          CustomSellTextField(
-            controller: bookListingController.classNameController,
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-
-          // SizedBox(height: 8.h,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 24.w,
-              ),
-              LexendCustomText(
-                text: 'Condition',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-          Obx(() {
-            return Container(
-              height: 50.h,
-              width: 327.w,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              decoration: BoxDecoration(
-                  color: primaryColor.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(20.r)),
-              child: DropdownButton<String>(
-                  underline: const SizedBox.shrink(),
-                  isExpanded: true,
-                  value: bookListingController.bookCondition.value,
-                  items:
-                      bookListingController.bookConditions.map((String option) {
-                    return DropdownMenuItem<String>(
-                      value: option,
-                      child: RalewayCustomText(
-                          text: option,
-                          textColor: primaryColor,
-                          fontWeight: FontWeight.w700),
+              GetBuilder<BookListingController>(
+                  builder: (bookListingController) {
+                    return bookListingController.imageFile == null
+                        ? GestureDetector(
+                      onTap: () {
+                        bookListingController.pickImage();
+                      },
+                      child: Container(
+                        width: 321.w,
+                        height: 129.h,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: Border.all(color: primaryColor),
+                            color: primaryColor.withOpacity(0.08)),
+                        child: SizedBox(
+                            height: 65.h,
+                            width: 68.w,
+                            child: Image.asset(AppImages.pickImage)),
+                      ),
+                    )
+                        : GestureDetector(
+                      onTap: () {
+                        bookListingController.pickImage();
+                      },
+                      child: Container(
+                        width: 321.w,
+                        height: 129.h,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: Border.all(color: primaryColor),
+                            color: primaryColor.withOpacity(0.08),
+                            image: DecorationImage(
+                                image:
+                                FileImage(bookListingController.imageFile!),
+                                fit: BoxFit.fill)),
+                      ),
                     );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    // homeController.bookClass.value=newValue!;
-                    bookListingController.bookCondition.value = newValue!;
-                  },
-                  hint: const SizedBox.shrink()),
-            );
-          }),
-          SizedBox(
-            height: 16.h,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+                  }),
               SizedBox(
-                width: 24.w,
+                height: 8.h,
               ),
-              LexendCustomText(
-                text: 'Enter your Asking Price',
-                textColor: titleColor,
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Title',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(
+                controller: bookListingController.titleController,
+              ),
+              SizedBox(
+                height: 6.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Book Part',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(
+                controller: bookListingController.bookPartController,
+              ),
+              SizedBox(
+                height: 6.h,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Author',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(
+                controller: bookListingController.authorController,
+              ),
+              SizedBox(
+                height: 6.h,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Class name',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(
+                controller: bookListingController.classNameController,
+              ),
+              SizedBox(
+                height: 6.h,
+              ),
+
+              // SizedBox(height: 8.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Condition',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 6.h,
+              ),
+              Obx(() {
+                return Container(
+                  height: 50.h,
+                  width: 327.w,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.08),
+                      borderRadius: BorderRadius.circular(20.r)),
+                  child: DropdownButton<String>(
+                      underline: const SizedBox.shrink(),
+                      isExpanded: true,
+                      value: bookListingController.bookCondition.value,
+                      items:
+                      bookListingController.bookConditions.map((String option) {
+                        return DropdownMenuItem<String>(
+                          value: option,
+                          child: RalewayCustomText(
+                              text: option,
+                              textColor: primaryColor,
+                              fontWeight: FontWeight.w700),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        // homeController.bookClass.value=newValue!;
+                        bookListingController.bookCondition.value = newValue!;
+                      },
+                      hint: const SizedBox.shrink()),
+                );
+              }),
+              SizedBox(
+                height: 16.h,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 24.w,
+                  ),
+                  LexendCustomText(
+                    text: 'Enter your Asking Price',
+                    textColor: titleColor,
+                    fontWeight: FontWeight.w500,
+                    fontsize: 16.sp,
+                  ),
+                ],
+              ),
+              // SizedBox(height: 8.h,),
+              CustomSellTextField(
+                prefixIcon: Icon(
+                  Icons.currency_exchange_sharp,
+                  color: titleColor,
+                  size: 24.sp,
+                ),
+                keyboard: TextInputType.number,
+                controller: bookListingController.priceController,
+              ),
+
+              SizedBox(
+                height: 16.h,
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  widget.comingFromEdit == false ?
+                  bookListingController.addBookListing(context) :
+                  bookListingController.updateBookListing(
+                      context, widget.listingId.toString());
+                },
+                child: Obx(() {
+                  return Container(
+                      height: 58.h,
+                      width: 322.w,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(20.r)),
+                      child: bookListingController.isLoading.value == false
+                          ? LexendCustomText(
+                        text: "Next",
+                        textColor: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        fontsize: 18.sp,
+                      )
+                          : Center(child: CircularProgressIndicator(
+                        color: Colors.white,),));
+                }),
+              ),
+              SizedBox(
+                height: 32.h,
               ),
             ],
           ),
-          // SizedBox(height: 8.h,),
-          CustomSellTextField(
-            prefixIcon: Icon(
-              Icons.currency_exchange_sharp,
-              color: titleColor,
-              size: 24.sp,
-            ),
-            keyboard: TextInputType.number,
-            controller: bookListingController.priceController,
-          ),
-
-          SizedBox(
-            height: 16.h,
-          ),
-
-          GestureDetector(
-            onTap: () {
-              widget.comingFromEdit==false?
-              bookListingController.addBookListing(context):
-              bookListingController.updateBookListing(context, widget.listingId.toString());
-            },
-            child: Container(
-                height: 58.h,
-                width: 322.w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(20.r)),
-                child: LexendCustomText(
-                  text: "Next",
-                  textColor: Colors.white,
-                  fontWeight: FontWeight.w400,
-                  fontsize: 18.sp,
-                )),
-          ),
-          SizedBox(
-            height: 32.h,
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -379,12 +389,11 @@ class CustomSellTextField extends StatelessWidget {
   final TextInputType? keyboard;
   final Icon? suffixIcon;
 
-  const CustomSellTextField(
-      {super.key,
-      this.controller,
-      this.prefixIcon,
-      this.keyboard,
-      this.suffixIcon});
+  const CustomSellTextField({super.key,
+    this.controller,
+    this.prefixIcon,
+    this.keyboard,
+    this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -408,17 +417,17 @@ class CustomSellTextField extends StatelessWidget {
               fillColor: primaryColor.withOpacity(0.08),
               filled: true,
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+              EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               suffixIconColor: greenColor
-              // hintText: 'Search',
-              // hintStyle: GoogleFonts.inter(
-              //     textStyle: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 15.11.sp,
-              //         fontWeight: FontWeight.w500)),
-              ),
+            // hintText: 'Search',
+            // hintStyle: GoogleFonts.inter(
+            //     textStyle: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 15.11.sp,
+            //         fontWeight: FontWeight.w500)),
+          ),
         ),
       ),
     );

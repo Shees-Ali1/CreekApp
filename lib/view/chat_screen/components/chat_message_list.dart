@@ -40,7 +40,6 @@ class ChatMessageList extends StatelessWidget {
                   final bookName=chatsList['bookName'];
                   final buyerId=chatsList['buyerId'];
                   final chatId=chatsList['chatId'];
-
                   return StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance.collection('chatMessages').doc(chatId).collection('messages').orderBy('timeStamp',descending: true).snapshots(),
                       builder: (context, snapshot) {

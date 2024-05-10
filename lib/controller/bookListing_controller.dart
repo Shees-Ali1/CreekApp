@@ -7,6 +7,7 @@ import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
 import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class BookListingController extends GetxController {
 
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
+
       update();
     }
   }
@@ -86,10 +88,11 @@ class BookListingController extends GetxController {
   // **************Store book listing by user**********
   Future<void> addBookListing(BuildContext context) async {
     try {
+      isLoading.value=true;
       if (titleController.text.isNotEmpty &&
           priceController.text.isNotEmpty &&
           classNameController.text.isNotEmpty &&
-          authorController.text.isNotEmpty) {
+          authorController.text.isNotEmpty && imageFile!=null) {
         // mySellListings.add({
         //   'bookImage':AppImages.harryPotterBook,
         //   'bookName':titleController.text,
@@ -104,11 +107,10 @@ class BookListingController extends GetxController {
         //   'bookDescription':'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
         //   'approval':false,
         // },);
+
         DocumentReference bookId =
             await FirebaseFirestore.instance.collection('booksListing').add({
-          'bookImage':
-              "https://img.freepik.com/free-vector/hand-drawn-flat-design-stack-books-illustration_23-2149341898.jpg?size=338&ext=jpg&ga=GA1.1.1224184972.1715212800&semt=sph",
-          'bookName': titleController.text,
+              'bookName': titleController.text,
           'bookPart': bookPartController.text,
           'bookAuthor': authorController.text,
           'bookClass': classNameController.text,
@@ -119,16 +121,16 @@ class BookListingController extends GetxController {
           'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
         });
+        await uploadBookImage(bookId.id);
         await FirebaseFirestore.instance
             .collection('booksListing')
             .doc(bookId.id)
             .set({
           'listingId': bookId.id,
+         'bookImage': imageUrl,
         }, SetOptions(merge: true));
-        // mySellListings.refresh();
-        // update();
-        // Get.back();
         Get.snackbar('Success', "Book Listing Added");
+        isLoading.value=false;
         CustomRoute.navigateTo(context, ApprovalSellScreen());
        await fetchUserBookListing();
         titleController.clear();
@@ -136,16 +138,45 @@ class BookListingController extends GetxController {
         authorController.clear();
         classNameController.clear();
         priceController.clear();
+
       } else {
         Get.snackbar('Missing Values', "Enter All Fields");
+        isLoading.value=false;
       }
     } catch (e) {
+      isLoading.value=false;
       print("Error listing book $e");
     }
+  }
+String imageUrl='';
+  Future<void> uploadBookImage(String listingId) async{
+    try {
+      // Get a reference to the Firebase Storage location
+      Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('book_listing_images')
+          .child('$listingId.jpg');
+
+      // Upload the image
+      UploadTask uploadTask = storageReference.putFile(imageFile!);
+      TaskSnapshot taskSnapshot = await uploadTask;
+
+       imageUrl=await taskSnapshot.ref.getDownloadURL();
+       imageFile=null;
+       update();
+
+      print("Image uploaded");
+
+    } catch (e) {
+      print('Error uploading image to Firebase Storage: $e');
+
+    }
+
   }
   // **************update book listings of  user**********
   Future<void> updateBookListing(BuildContext context,String listingId) async {
     try {
+      isLoading.value=true;
       if (titleController.text.isNotEmpty &&
           priceController.text.isNotEmpty &&
           classNameController.text.isNotEmpty &&
@@ -166,8 +197,6 @@ class BookListingController extends GetxController {
         // },);
 
         await FirebaseFirestore.instance.collection('booksListing').doc(listingId).update({
-          'bookImage':
-          "https://img.freepik.com/free-vector/hand-drawn-flat-design-stack-books-illustration_23-2149341898.jpg?size=338&ext=jpg&ga=GA1.1.1224184972.1715212800&semt=sph",
           'bookName': titleController.text,
           'bookPart': bookPartController.text,
           'bookAuthor': authorController.text,
@@ -179,16 +208,19 @@ class BookListingController extends GetxController {
           'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
         });
-        // await FirebaseFirestore.instance
-        //     .collection('booksListing')
-        //     .doc(bookId.id)
-        //     .set({
-        //   'listingId': bookId.id,
-        // }, SetOptions(merge: true));
+        await uploadBookImage(listingId);
+        await FirebaseFirestore.instance
+            .collection('booksListing')
+            .doc(listingId)
+            .set({
+          'bookImage': imageUrl,
+        }, SetOptions(merge: true));
         // mySellListings.refresh();
         // update();
         // Get.back();
         Get.snackbar('Success', "Book Listing Updated");
+        isLoading.value=false;
+
         CustomRoute.navigateTo(context, ApprovalSellScreen());
         await fetchUserBookListing();
         await homeController.fetchAllListings();
@@ -199,8 +231,12 @@ class BookListingController extends GetxController {
         priceController.clear();
       } else {
         Get.snackbar('Missing Values', "Enter All Fields");
+        isLoading.value=false;
+
       }
     } catch (e) {
+      isLoading.value=false;
+
       print("Error listing book $e");
     }
   }
