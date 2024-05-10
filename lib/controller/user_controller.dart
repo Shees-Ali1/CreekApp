@@ -16,6 +16,7 @@ class UserController extends GetxController {
   RxString userImage = ''.obs;
   RxString userEmail = ''.obs;
   RxString userSchool = ''.obs;
+  RxList<dynamic> userPurchases=[].obs;
   final HomeController homeController = Get.put(HomeController());
   File? imageFile;
   void pickImage() async {
@@ -42,10 +43,13 @@ class UserController extends GetxController {
             .get();
 
         if (userInfo.exists) {
+          userPurchases.clear();
           userName.value = userInfo["userName"] ?? "";
           userEmail.value = userInfo["userEmail"] ?? "";
           userImage.value = userInfo["userImage"] ?? "";
           homeController.classOption.value = userInfo["userSchool"] ?? "";
+          userPurchases.value=userInfo['userPurchases'];
+          update();
         } else {
           // User not found
         }
@@ -68,15 +72,13 @@ class UserController extends GetxController {
         'userName': nameController.text.trim(),
         'userSchool': homeController.classOption.value,
       });
-      if(imageFile!=null){
-        String img=await updateUserImage(FirebaseAuth.instance.currentUser!.uid);
+      if (imageFile != null) {
+        String img =
+            await updateUserImage(FirebaseAuth.instance.currentUser!.uid);
         await FirebaseFirestore.instance
             .collection('userDetails')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({
-        'userImage':img
-
-        });
+            .update({'userImage': img});
         userImage.value = img;
       }
       userName.value = nameController.text;
@@ -107,4 +109,52 @@ class UserController extends GetxController {
       throw e;
     }
   }
+
+//   ************Get user history sell
+  List<dynamic> bookId = [];
+  List<dynamic> booksSale = [];
+  RxInt saleSum=0.obs;
+  Future<void> getSellHistory() async {
+   try{
+     bookId.clear();
+     booksSale.clear();
+     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+         .collection('booksListing')
+         .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+         .get();
+     if (querySnapshot.docs.isNotEmpty) {
+       querySnapshot.docs.forEach((booksList) async {
+         bookId.add(booksList['listingId']);
+       });
+       bookId.forEach((ids) async {
+         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+             .collection('booksListing')
+             .doc(ids)
+             .collection('orders')
+             .get();
+         if (querySnapshot.docs.isNotEmpty) {
+           // print(querySnapshot.docs.length);
+           booksSale.add(querySnapshot.docs.length);
+           print(booksSale);
+           saleSum.value = booksSale.reduce((a, b) => a + b);
+           update();
+
+         }else{
+           print('no orders');
+         }
+       });
+
+     }else{
+       print('no listing or seller listing found');
+     }
+
+   }catch(e){
+     print("error getting sales $e");
+   }
+  }
+
+
+
+
+
 }

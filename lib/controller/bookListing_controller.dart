@@ -308,6 +308,9 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context) asyn
        'orderDate':DateTime.now(),
        'deliveryStatus':false
      });
+     await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
+      'userPurchases':FieldValue.arrayUnion([listingId]),
+     },SetOptions(merge: true));
 
      await checkUserBookOrder(listingId,sellerId);
 
