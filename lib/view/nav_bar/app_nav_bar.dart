@@ -199,6 +199,7 @@ import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/controller/user_controller.dart';
+import 'package:creekapp/helper/app_life_cycle.dart';
 import 'package:creekapp/view/drawer/drawer.dart';
 import 'package:creekapp/view/home_screen/home_screen_books.dart';
 import 'package:creekapp/view/profile_screen/profile.dart';
@@ -219,7 +220,7 @@ class BottomNavBar extends StatefulWidget {
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver{
   int _page = 0;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   late final List<Widget> _pages;
@@ -235,9 +236,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const Wallet(),
       const Profile(),
     ];
+    WidgetsBinding.instance?.addObserver(lifecycleObserver);
+
     bookListingController.fetchUserBookListing();
     userController.fetchUserData();
     super.initState();
+  }
+  final AppLifecycleObserver lifecycleObserver = AppLifecycleObserver();
+
+
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(lifecycleObserver);
+    super.dispose();
   }
 
   @override

@@ -18,6 +18,7 @@ class UserController extends GetxController {
   RxString userEmail = ''.obs;
   RxString userSchool = ''.obs;
   RxString userPassword = ''.obs;
+
   RxList<dynamic> userPurchases = [].obs;
   final HomeController homeController = Get.put(HomeController());
   File? imageFile;
@@ -234,4 +235,24 @@ class UserController extends GetxController {
       Get.offAll(LoginView());
     }
   }
+
+
+
+//   *****************Check if user online
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void updateUserPresence(bool isOnline) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        DocumentReference userRef = _firestore.collection('userDetails').doc(user.uid);
+        await userRef.update({'online': isOnline});
+        print("USer online status $isOnline");
+      }
+    } catch (e) {
+      print('Error updating user presence: $e');
+    }
+  }
+
 }
