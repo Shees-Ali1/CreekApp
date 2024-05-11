@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/widgets/custom%20_backbutton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,101 +69,122 @@ class _NotificationScreenState extends State<NotificationScreen> {
           fontsize: 14.sp,
         ),
       ),
-      ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: notificationListing.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ListTile(
-              contentPadding: EdgeInsets.only(left: 23.5, right: 24.w),
-              horizontalTitleGap: 8,
-              onTap: () {
-                showModalBottomSheet(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.r)),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                        width: double.infinity,
-                        height: 241.h,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Container(
-                              width: 30.w,
-                              height: 4.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(4.r)),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Center(
-                                child: WorkSansCustomText(
-                              text:
-                                  'Mike has marked this sale as complete,\n     did you finish this transaction?”',
-                              textColor: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontsize: 16.sp,
-                            )),
-                            SizedBox(
-                              height: 14.h,
-                            ),
-                            CustomButton(
-                                text: 'Yes',
-                                onPressed: () {},
-                                backgroundColor: primaryColor,
-                                textColor: whiteColor),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            CustomButton(
-                                text: 'No, I have not recieved.',
-                                onPressed: () {},
-                                backgroundColor: primaryColor.withOpacity(0.2),
-                                textColor: whiteColor),
-                          ],
-                        ),
-                      );
-                    });
-              },
-              leading: Image.asset(
-                notificationListing[index]['notificationImage'].toString(),
-                height: 32.h,
-                width: 32.w,
-              ),
-              title: LexendCustomText(
-                text: notificationListing[index]['notificationname'],
-                textColor: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontsize: 12.sp,
-              ),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  LexendCustomText(
-                    text: notificationListing[index]['Timestamp'],
-                    textColor: const Color(0xff78838D),
-                    fontWeight: FontWeight.w400,
-                    fontsize: 12.sp,
-                  ),
-                  const Spacer(),
-                  LexendCustomText(
-                    text: "\$${notificationListing[index]['notificationincr']}",
-                    textColor: const Color(0xff78838D),
-                    fontWeight: FontWeight.w400,
-                    fontsize: 12.sp,
-                  ),
-                  SizedBox(width: 4.w),
-                  SvgPicture.asset(AppIcons.arrowIcon)
-                ],
-              ),
-            );
+      StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('userNotifications')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('notifications')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("Snapshot Error");
+            } else if (snapshot.data!.docs.isEmpty) {
+              return Text("NO Data");
+            } else {
+              dynamic notification = snapshot.data!.docs;
+              return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: notification.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      contentPadding: EdgeInsets.only(left: 23.5, right: 24.w),
+                      horizontalTitleGap: 8,
+                      onTap: () {
+                        showModalBottomSheet(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.r)),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 241.h,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    Container(
+                                      width: 30.w,
+                                      height: 4.h,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(4.r)),
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    Center(
+                                        child: WorkSansCustomText(
+                                      text:
+                                          'Mike has marked this sale as complete,\n     did you finish this transaction?”',
+                                      textColor: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontsize: 16.sp,
+                                    )),
+                                    SizedBox(
+                                      height: 14.h,
+                                    ),
+                                    CustomButton(
+                                        text: 'Yes',
+                                        onPressed: () {},
+                                        backgroundColor: primaryColor,
+                                        textColor: whiteColor),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    CustomButton(
+                                        text: 'No, I have not recieved.',
+                                        onPressed: () {},
+                                        backgroundColor:
+                                            primaryColor.withOpacity(0.2),
+                                        textColor: whiteColor),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                      leading: Image.asset(
+                        notificationListing[index]['notificationImage']
+                            .toString(),
+                        height: 32.h,
+                        width: 32.w,
+                      ),
+                      title: LexendCustomText(
+                        text: notification[index]['title'].toString(),
+                        textColor: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontsize: 12.sp,
+                      ),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LexendCustomText(
+                            text: notificationListing[index]['Timestamp'],
+                            textColor: const Color(0xff78838D),
+                            fontWeight: FontWeight.w400,
+                            fontsize: 12.sp,
+                          ),
+                          const Spacer(),
+                          LexendCustomText(
+                            text:
+                                "\$${notification[index]['price'].toString()}",
+                            textColor: const Color(0xff78838D),
+                            fontWeight: FontWeight.w400,
+                            fontsize: 12.sp,
+                          ),
+                          SizedBox(width: 4.w),
+                          SvgPicture.asset(AppIcons.arrowIcon)
+                        ],
+                      ),
+                    );
+                  });
+            }
           })
     ])));
   }

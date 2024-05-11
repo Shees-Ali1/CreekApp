@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
 import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -13,8 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'notification_controller.dart';
+
 class BookListingController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
+  final NotificationController notificationController = Get.put(NotificationController());
+  final UserController userController = Get.put(UserController());
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bookPartController = TextEditingController();
   final TextEditingController authorController = TextEditingController();
@@ -302,17 +307,22 @@ String imageUrl='';
 Future<void> buyBook(String listingId,String sellerId,BuildContext context) async{
    try{
      isLoading.value=true;
-     await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
+     DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
        'bookId':listingId,
        'buyerId':FirebaseAuth.instance.currentUser!.uid,
        'orderDate':DateTime.now(),
        'deliveryStatus':false
      });
+     await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
+       'orderId':docRef.id
+     },SetOptions(merge: true)
+     );
      await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
       'userPurchases':FieldValue.arrayUnion([listingId]),
      },SetOptions(merge: true));
-
-     await checkUserBookOrder(listingId,sellerId);
+     userController.userPurchases.add(listingId);
+await notificationController.storeNotification(50, docRef.id, listingId);
+     // await checkUserBookOrder(listingId,sellerId);
 
      showDialog(
        context: context,
