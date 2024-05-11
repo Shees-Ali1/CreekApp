@@ -8,6 +8,14 @@ class HomeController extends GetxController{
   void openDrawer() {
     scaffoldKey.currentState?.openDrawer();
   }
+  ScrollController scrollController = ScrollController();
+  void _scrollListener() {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      // User reached the end of the list
+ print("user reach end");
+    }
+  }
+
 
 
   // ******************Books Listings***********
@@ -161,7 +169,9 @@ class HomeController extends GetxController{
     filterBooks();
   });
   fetchAllListings();
-    super.onInit();
+  scrollController.addListener(_scrollListener);
+
+  super.onInit();
   }
 
 }

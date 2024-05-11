@@ -45,6 +45,8 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
         // key: homeController.scaffoldKey,
         // drawer: MyDrawer(),
         body: SingleChildScrollView(
+          controller: homeController.scrollController,
+
           child: Column(
             children: [
               ClipPath(

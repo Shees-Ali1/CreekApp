@@ -1,6 +1,7 @@
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/chat_screen/chat_screen.dart';
 import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -25,11 +26,12 @@ class BookDetailsScreen extends StatefulWidget {
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   final BookListingController bookListingController=Get.find<BookListingController>();
   final HomeController homeController=Get.find<HomeController>();
+  final UserController userController=Get.find<UserController>();
 
   @override
   void initState() {
     // TODO: implement initState
-    bookListingController.checkUserBookOrder(widget.bookDetail['listingId'],widget.bookDetail['sellerId']);
+    // bookListingController.checkUserBookOrder(widget.bookDetail['listingId'],widget.bookDetail['sellerId']);
     bookListingController.getSellerData(widget.bookDetail['sellerId']);
     super.initState();
   }
@@ -105,12 +107,40 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               ) :
               const SizedBox.shrink(),
               SizedBox(height: 20.h,),
-              Obx(() => bookListingController.userBoughtBook.value==false?
+              Obx(() => userController.userPurchases.contains(widget.bookDetail['listingId'])?
+              GestureDetector(
+                onTap: (){
+                },
+                child: Center(
+                  child: Container(
+                    height: 58.h,
+                    width: 327.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(20.r)
+                    ),
+                    child:
+                    // bookDetail['sellerId']==FirebaseAuth.instance.currentUser!.uid?
+                    // LexendCustomText(text: "Cancel This Listing", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,):
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LexendCustomText(text: "Chat with seller", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,),
+
+                        // LexendCustomText(text: "\$${bookDetail['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w600,fontsize: 24.sp,),
+                      ],
+                    ),
+
+                  ),
+                ),
+              ):
               GestureDetector(
 
                 onTap: (){
                   widget.bookDetail['sellerId']!=FirebaseAuth.instance.currentUser!.uid?
-                  bookListingController.buyBook(widget.bookDetail['listingId'],widget.bookDetail['sellerId'],context):
+                  bookListingController.buyBook(widget.bookDetail['listingId'],widget.bookDetail['sellerId'],context,widget.bookDetail['bookName']):
 
                   widget.comingfromSellScreen==true?
                   bookListingController.removeListingfromSell(widget.index,widget.bookDetail['listingId']):
@@ -141,35 +171,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
                   ),
                 ),
-              ) :
-              GestureDetector(
-                onTap: (){
-                },
-                child: Center(
-                  child: Container(
-                    height: 58.h,
-                    width: 327.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(20.r)
-                    ),
-                    child:
-                    // bookDetail['sellerId']==FirebaseAuth.instance.currentUser!.uid?
-                    // LexendCustomText(text: "Cancel This Listing", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,):
+              )
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        LexendCustomText(text: "Chat with seller", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,),
-
-                        // LexendCustomText(text: "\$${bookDetail['bookPrice'].toString()}", textColor: Colors.white, fontWeight: FontWeight.w600,fontsize: 24.sp,),
-                      ],
-                    ),
-
-                  ),
-                ),
-              ),),
+              ),
               SizedBox(height: 20.h,),
 
 

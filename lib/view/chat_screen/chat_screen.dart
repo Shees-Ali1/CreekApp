@@ -11,13 +11,13 @@ import '../../widgets/custom_text.dart';
 import 'components/chat_message_container.dart';
 
 class ChatScreen extends StatelessWidget {
-  final dynamic messagedetail;
+  // final dynamic messagedetail;
   final String image;
   final String chatName;
   final String chatId;
   const ChatScreen(
       {super.key,
-      required this.messagedetail,
+      // required this.messagedetail,
       required this.image,
       required this.chatName, required this.chatId});
 
@@ -51,11 +51,19 @@ class ChatScreen extends StatelessWidget {
                     width: 20.w,
                   ),
                   image != ''
-                      ? Image.network(
-                          image,
-                          height: 53.h,
-                          width: 53.w,
-                        )
+                      ? Container(
+                    height: 53.h,
+                    width: 53.w,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(image:   NetworkImage(
+                        image,
+
+                      ),)
+                    ),
+                       
+                      )
                       : CircleAvatar(),
                   SizedBox(
                     width: 8.w,

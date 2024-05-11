@@ -19,9 +19,9 @@ class ChatController extends GetxController {
   Future<void> sendmessage(TextEditingController messageController,String chatId) async{
   try{
     if (messageController.text.isNotEmpty) {
-      DocumentSnapshot chatSnap= await FirebaseFirestore.instance.collection('chatMessages').doc(chatId).get();
-      if(chatSnap.exists){
-        await FirebaseFirestore.instance.collection('chatMessages').doc(chatId).collection('messages').add({
+      DocumentSnapshot chatSnap= await FirebaseFirestore.instance.collection("userMessages").doc(chatId).get();
+      // if(chatSnap.exists){
+        await FirebaseFirestore.instance.collection('userMessages').doc(chatId).collection('messages').add({
           'message':messageController.text,
           'timeStamp':DateTime.now(),
           'userId':FirebaseAuth.instance.currentUser!.uid,
@@ -30,10 +30,10 @@ class ChatController extends GetxController {
         print("MEssage sent");
 
 
-      }
-      else{
-        print("chat id doc does not exist");
-      }
+      // }
+      // else{
+      //   print("chat id doc does not exist");
+      // }
 
     }
   }catch(e){
@@ -47,5 +47,37 @@ class ChatController extends GetxController {
     String formattedTime = DateFormat.Hm().format(dateTime);
     return formattedTime;
   }
+  
+  
+//   Create chat with seller when buy book
+Future<void> createChatConvo(String listingId,String orderId,String bookName,String sellerId) async{
+
+    await FirebaseFirestore.instance.collection('chats').doc(FirebaseAuth.instance.currentUser!.uid).collection("convo").doc(orderId).set({
+      'orderId':orderId,
+      'bookId':listingId,
+      'sellerId':sellerId,
+      'orderDate':DateTime.now(),
+      'bookName':bookName,
+      'buyerId':FirebaseAuth.instance.currentUser!.uid,
+
+    },SetOptions(merge: true));
+    print("chat created");
+    await FirebaseFirestore.instance.collection('chats').doc(sellerId).collection("convo").doc(orderId).set({
+      'orderId':orderId,
+      'bookId':listingId,
+      'sellerId':sellerId,
+      'orderDate':DateTime.now(),
+      'bookName':bookName,
+      'buyerId':FirebaseAuth.instance.currentUser!.uid
+
+    },SetOptions(merge: true));
+    print("chat created");
+    await FirebaseFirestore.instance.collection('userMessages').doc(orderId).collection('messages').add({
+      'message': "You Got the Order on ${bookName}",
+      'timeStamp':DateTime.now(),
+      'userId':FirebaseAuth.instance.currentUser!.uid,
+    });
+    
+}
 
 }

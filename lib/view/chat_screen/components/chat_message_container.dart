@@ -21,7 +21,7 @@ final String chatId;
     final width = MediaQuery.of(context).size.width;
 
     return  StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('chatMessages').doc(chatId).collection('messages').orderBy('timeStamp',descending: false).snapshots(),
+        stream: FirebaseFirestore.instance.collection('userMessages').doc(chatId).collection('messages').orderBy('timeStamp',descending: false).snapshots(),
       builder: (context, snapshot) {
         if(snapshot.connectionState==ConnectionState.waiting){
           return Center(child: CircularProgressIndicator());

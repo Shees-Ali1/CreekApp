@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/const/assets/image_assets.dart';
+import 'package:creekapp/controller/chat_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
@@ -19,6 +20,7 @@ import 'notification_controller.dart';
 class BookListingController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
   final NotificationController notificationController = Get.put(NotificationController());
+  final ChatController chatController=Get.put(ChatController());
   final UserController userController = Get.put(UserController());
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bookPartController = TextEditingController();
@@ -304,7 +306,7 @@ String imageUrl='';
 
 // **************buy book**********
   RxBool isLoading=false.obs;
-Future<void> buyBook(String listingId,String sellerId,BuildContext context) async{
+Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,) async{
    try{
      isLoading.value=true;
      DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
@@ -322,6 +324,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context) asyn
      },SetOptions(merge: true));
      userController.userPurchases.add(listingId);
 await notificationController.storeNotification(50, docRef.id, listingId);
+await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
      // await checkUserBookOrder(listingId,sellerId);
 
      showDialog(
@@ -346,6 +349,7 @@ await notificationController.storeNotification(50, docRef.id, listingId);
 
    }
 }
+
 
 
 
