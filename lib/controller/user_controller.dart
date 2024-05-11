@@ -222,14 +222,16 @@ class UserController extends GetxController {
 
       if (idTokenResult == null || idTokenResult.token == null) {
         print("User is deleted");
-          FirebaseAuth.instance.signOut();
+          await FirebaseAuth.instance.signOut();
+          Get.offAll(LoginView());
         // do logout stuff here...
       } else {
         print("User is available");
       }
     } catch (er) {
       print("User is deleted");
-        FirebaseAuth.instance.signOut();
+      await FirebaseAuth.instance.signOut();
+      Get.offAll(LoginView());
     }
   }
 }
