@@ -54,7 +54,11 @@ dependencies:
   intl:
   firebase_storage:
   google_sign_in:
-  infinite_scroll_pagination:
+
+  fluttertoast:
+  firebase_messaging:
+  flutter_local_notifications:
+  app_settings:
 
 
 dev_dependencies:
