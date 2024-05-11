@@ -20,13 +20,25 @@ import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
 import 'components/books_filter_sheet.dart';
 
-class HomeScreenBooks extends StatelessWidget {
+class HomeScreenBooks extends StatefulWidget {
   const HomeScreenBooks({super.key});
 
   @override
+  State<HomeScreenBooks> createState() => _HomeScreenBooksState();
+}
+
+class _HomeScreenBooksState extends State<HomeScreenBooks> {
+  final HomeController homeController = Get.find<HomeController>();
+  final UserController userController = Get.find<UserController>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userController.checkIfAccountIsDeleted();
+  }
+  @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.find<HomeController>();
-    final UserController userController = Get.find<UserController>();
+
     // final TextEditingController bookController=TextEditingController();
     return Scaffold(
         resizeToAvoidBottomInset: false,

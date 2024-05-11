@@ -43,6 +43,9 @@ class LoginAuthController extends GetxController {
         signUpController.isLoading.value = false;
         Get.snackbar('Success', 'Login Success');
         Get.offAll(const BottomNavBar());
+        emailController.clear();
+        passwordController.clear();
+
       } else {
         signUpController.isLoading.value = false;
 

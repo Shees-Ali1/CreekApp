@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,8 @@ class UserController extends GetxController {
   RxString userImage = ''.obs;
   RxString userEmail = ''.obs;
   RxString userSchool = ''.obs;
-  RxList<dynamic> userPurchases=[].obs;
+  RxString userPassword = ''.obs;
+  RxList<dynamic> userPurchases = [].obs;
   final HomeController homeController = Get.put(HomeController());
   File? imageFile;
   void pickImage() async {
@@ -46,9 +48,12 @@ class UserController extends GetxController {
           userPurchases.clear();
           userName.value = userInfo["userName"] ?? "";
           userEmail.value = userInfo["userEmail"] ?? "";
-          userImage.value = userInfo["userImage"] ?? "";
           homeController.classOption.value = userInfo["userSchool"] ?? "";
-          userPurchases.value=userInfo['userPurchases'];
+          userPassword.value = userInfo['userPassword'];
+          userImage.value = userInfo["userImage"] ?? "";
+          userPurchases.value = userInfo['userPurchases'];
+
+
           update();
         } else {
           // User not found
@@ -113,48 +118,118 @@ class UserController extends GetxController {
 //   ************Get user history sell
   List<dynamic> bookId = [];
   List<dynamic> booksSale = [];
-  RxInt saleSum=0.obs;
+  RxInt saleSum = 0.obs;
   Future<void> getSellHistory() async {
-   try{
-     bookId.clear();
-     booksSale.clear();
-     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-         .collection('booksListing')
-         .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-         .get();
-     if (querySnapshot.docs.isNotEmpty) {
-       querySnapshot.docs.forEach((booksList) async {
-         bookId.add(booksList['listingId']);
-       });
-       bookId.forEach((ids) async {
-         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-             .collection('booksListing')
-             .doc(ids)
-             .collection('orders')
-             .get();
-         if (querySnapshot.docs.isNotEmpty) {
-           // print(querySnapshot.docs.length);
-           booksSale.add(querySnapshot.docs.length);
-           print(booksSale);
-           saleSum.value = booksSale.reduce((a, b) => a + b);
-           update();
-
-         }else{
-           print('no orders');
-         }
-       });
-
-     }else{
-       print('no listing or seller listing found');
-     }
-
-   }catch(e){
-     print("error getting sales $e");
-   }
+    try {
+      bookId.clear();
+      booksSale.clear();
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('booksListing')
+          .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        querySnapshot.docs.forEach((booksList) async {
+          bookId.add(booksList['listingId']);
+        });
+        bookId.forEach((ids) async {
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              .collection('booksListing')
+              .doc(ids)
+              .collection('orders')
+              .get();
+          if (querySnapshot.docs.isNotEmpty) {
+            // print(querySnapshot.docs.length);
+            booksSale.add(querySnapshot.docs.length);
+            print(booksSale);
+            saleSum.value = booksSale.reduce((a, b) => a + b);
+            update();
+          } else {
+            print('no orders');
+          }
+        });
+      } else {
+        print('no listing or seller listing found');
+      }
+    } catch (e) {
+      print("error getting sales $e");
+    }
   }
 
+  Future<void> changePassword(TextEditingController password) async {
+    try {
+      final AuthCredential credential = EmailAuthProvider.credential(
+        email: userEmail.value,
+        password: userPassword.value,
+      );
 
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        return;
+      }
 
+      UserCredential reauthenticatedUser =
+          await currentUser.reauthenticateWithCredential(credential);
 
+      User? user = reauthenticatedUser.user;
+      if (user == null) {
+        return;
+      }
 
+      await user.updatePassword(password.text);
+      await FirebaseFirestore.instance
+          .collection('userDetails')
+          .doc(user.uid)
+          .update({
+        'userPassword': password.text,
+      });
+      // await FirebaseAuth.instance.signOut();
+
+      Get.snackbar("Success", "Password updated successfully");
+    } catch (error) {
+      print('Error updating password');
+    }
+  }
+  Future<void>deleteAccont()async{
+   try{
+     final AuthCredential credential = EmailAuthProvider.credential(
+       email: userEmail.value,
+       password: userPassword.value,
+     );
+
+     final currentUser = FirebaseAuth.instance.currentUser;
+     if (currentUser == null) {
+       return;
+     }
+
+     UserCredential reauthenticatedUser =
+     await currentUser.reauthenticateWithCredential(credential);
+
+     User? user = reauthenticatedUser.user;
+     if (user == null) {
+       return;
+     }
+     await FirebaseAuth.instance.currentUser?.delete();
+     Get.offAll(LoginView());
+   }catch(e){
+     print('Error Deleting Account$e');
+   }
+
+  }
+  checkIfAccountIsDeleted() async {
+    try {
+      IdTokenResult? idTokenResult =
+      await FirebaseAuth.instance.currentUser?.getIdTokenResult(true);
+
+      if (idTokenResult == null || idTokenResult.token == null) {
+        print("User is deleted");
+          FirebaseAuth.instance.signOut();
+        // do logout stuff here...
+      } else {
+        print("User is available");
+      }
+    } catch (er) {
+      print("User is deleted");
+        FirebaseAuth.instance.signOut();
+    }
+  }
 }

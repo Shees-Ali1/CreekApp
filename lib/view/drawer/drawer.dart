@@ -10,6 +10,7 @@ import 'package:creekapp/widgets/custom_route.dart';
 import 'package:creekapp/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -94,15 +95,18 @@ class MyDrawer extends StatelessWidget {
                 CustomRoute.navigateTo(context, const TermCond());
               },
             ),
-            const DrawerItemsWidget(
-              text: 'Change Password',
-              image: AppIcons.password,
-            ),
+            // const DrawerItemsWidget(
+            //   text: 'Change Password',
+            //   image: AppIcons.password,
+            // ),
             const DrawerItemsWidget(
               text: 'Customer Support',
               image: AppIcons.customercare,
             ),
-            const DrawerItemsWidget(
+             DrawerItemsWidget(
+             onTap: ()async{
+               await userController.deleteAccont();
+             },
               text: 'Delete Account',
               image: AppIcons.deleteaccount,
             ),

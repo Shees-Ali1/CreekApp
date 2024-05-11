@@ -169,6 +169,7 @@ class SignUpController extends GetxController {
         'userPassword': passwordController.text,
         'userEmail': emailController.text,
         'userSchool': "Harker",
+        'userImage':'',
 
       },SetOptions(merge: true));
       userController.userName.value = nameController.text;

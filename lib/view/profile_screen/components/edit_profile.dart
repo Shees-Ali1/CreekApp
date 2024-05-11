@@ -44,6 +44,7 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     nameController.text = userController.userName.value;
     emailController.text = userController.userEmail.value;
+    passwordController.text = userController.userPassword.value;
     userController.imageFile = null;
   }
 
@@ -351,6 +352,12 @@ class _EditProfileState extends State<EditProfile> {
                                 text: 'Yes',
                                 onPressed: () {
                                   userController.profileUpdate(nameController);
+                                  if(passwordController.text!=userController.userPassword.value){
+                                    userController.changePassword(passwordController);
+
+                                  }else{
+                                    print('No changes');
+                                  }
                                 },
                                 backgroundColor: primaryColor,
                                 textColor: whiteColor),
