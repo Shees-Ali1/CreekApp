@@ -28,7 +28,7 @@ class SignUpController extends GetxController {
       final smtpServer =
           gmail('attaulmohiman112@gmail.com', 'jnjc bcje rnol qtfz');
       final messageToSend = Message()
-        ..from = const Address('attaulmohiman112@gmail.com', 'Lectura')
+        ..from = const Address('attaulmohiman112@gmail.com', 'Creek')
         ..recipients.add(toEmail)
         ..subject = subject
         ..text = message;
@@ -129,6 +129,9 @@ class SignUpController extends GetxController {
         }
         isLoading.value = false;
       } else {
+        Get.back();
+
+
         // Handle missing OTP entry in Firestore
         Get.snackbar("Error", "OTP not found");
         print('OTP not found');
@@ -148,12 +151,26 @@ class SignUpController extends GetxController {
       await storeUserData(userId.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
+        Get.back();
+
+
         Get.snackbar(
             "Error", "The email address is already in use by another account.");
-      } else {
+      } else if (e.code == "weak-password") {
+        Get.back();
+
+        Get.snackbar(
+            "Weak Password", "Password must be greater than 6 characters and contains numbers & alphabets");
+      }
+      else {
+        Get.back();
+
         print('error auth $e');
+        Get.snackbar(
+            "Error", "${e.code}");
       }
     } catch (e) {
+
       print("Error signing $e");
     }
   }
@@ -198,6 +215,8 @@ class SignUpController extends GetxController {
 
       return imageUrl;
     } catch (e) {
+      isLoading.value = false;
+
       print('Error uploading image to Firebase Storage: $e');
       throw e;
     }

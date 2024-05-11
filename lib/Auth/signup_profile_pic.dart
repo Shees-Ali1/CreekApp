@@ -25,7 +25,7 @@ class SignupProfilePic extends StatelessWidget {
         body: Container(
             margin: EdgeInsets.symmetric(horizontal: 25.sp),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
                 height: 46.h,
               ),
@@ -42,52 +42,52 @@ class SignupProfilePic extends StatelessWidget {
               GetBuilder<UserController>(builder: (userController) {
                 return userController.imageFile != null
                     ? GestureDetector(
-                        onTap: () {
-                          userController.pickImage();
-                        },
-                        child: Center(
-                          child: Container(
-                            height: 106.78.h,
-                            width: 106.78.w,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey,
-                                image: DecorationImage(
-                                    image: FileImage(
-                                      userController.imageFile!,
-                                      // height: 14.h,
-                                      // width: 26.w,
-                                    ),
-                                    fit: BoxFit.cover)),
-                          ),
-                        ),
-                      )
+                  onTap: () {
+                    userController.pickImage();
+                  },
+                  child: Center(
+                    child: Container(
+                      height: 106.78.h,
+                      width: 106.78.w,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              image: FileImage(
+                                userController.imageFile!,
+                                // height: 14.h,
+                                // width: 26.w,
+                              ),
+                              fit: BoxFit.cover)),
+                    ),
+                  ),
+                )
                     : GestureDetector(
-                        onTap: () {
-                          userController.pickImage();
-                        },
-                        child: Center(
-                            child: CircleAvatar(
-                          backgroundColor: primaryColor.withOpacity(0.7),
-                          radius: 60.r,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AppImages.upload,
-                                color: whiteColor,
-                                scale: 3,
-                              ),
-                              LexendCustomText(
-                                text: 'Upload Image',
-                                fontWeight: FontWeight.w500,
-                                fontsize: 12.sp,
-                                textColor: whiteColor,
-                              ),
-                            ],
-                          ),
-                        )),
-                      );
+                  onTap: () {
+                    userController.pickImage();
+                  },
+                  child: Center(
+                      child: CircleAvatar(
+                        backgroundColor: primaryColor.withOpacity(0.7),
+                        radius: 60.r,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.upload,
+                              color: whiteColor,
+                              scale: 3,
+                            ),
+                            LexendCustomText(
+                              text: 'Upload Image',
+                              fontWeight: FontWeight.w500,
+                              fontsize: 12.sp,
+                              textColor: whiteColor,
+                            ),
+                          ],
+                        ),
+                      )),
+                );
               }),
               Spacer(),
               Padding(
@@ -110,30 +110,40 @@ class SignupProfilePic extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        String imageUrl = await signupController.uploadImage(
-                            FirebaseAuth.instance.currentUser!.uid);
-                        await FirebaseFirestore.instance
-                            .collection('userDetails')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({'userImage': imageUrl},
-                                SetOptions(merge: true));
-                        userController.userImage.value = imageUrl;
-                        CustomRoute.navigateTo(context, const BottomNavBar());
+                        if (userController.imageFile != null) {
+                          String imageUrl = await signupController.uploadImage(
+                              FirebaseAuth.instance.currentUser!.uid);
+                          await FirebaseFirestore.instance
+                              .collection('userDetails')
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .set({'userImage': imageUrl},
+                              SetOptions(merge: true));
+                          userController.userImage.value = imageUrl;
+                          CustomRoute.navigateTo(context, const BottomNavBar());
+                        } else {
+                          Get.snackbar(
+                              'Error Uploading', 'Pick image to Upload');
+                        }
                       },
-                      child: Container(
-                          width: 127.w,
-                          height: 48.h,
-                          decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(40.r)),
-                          child: Center(
-                            child: LexendCustomText(
-                              textColor: whiteColor,
-                              fontsize: 16.sp,
-                              text: 'Upload',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )),
+                      child: Obx(() {
+                        return Container(
+                            width: 127.w,
+                            height: 48.h,
+                            decoration: BoxDecoration(
+                                color: primaryColor,
+                                borderRadius: BorderRadius.circular(40.r)),
+                            child: Center(
+                              child: signupController.isLoading.value == true
+                                  ? CircularProgressIndicator(
+                                color: Colors.white,)
+                                  : LexendCustomText(
+                                textColor: whiteColor,
+                                fontsize: 16.sp,
+                                text: 'Upload',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ));
+                      }),
                     )
                   ],
                 ),
