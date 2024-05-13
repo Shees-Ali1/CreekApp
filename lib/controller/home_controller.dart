@@ -144,17 +144,19 @@ class HomeController extends GetxController{
     return str.replaceAll(RegExp(r'[\W_]+'), '').toLowerCase();
   }
   void applyFilters(String author) {
+
     filteredBooks.value = bookListing.where((book) {
       final matchesClass = book['bookClass'] == classOption.value;
       final priceRange = book['bookPrice'] <= priceSliderValue.value;
       final matchesCondition = selectedCondition.value == 1 ||
           (selectedCondition.value == 2 && book['bookCondition'] == 'New') ||
           (selectedCondition.value == 3 && book['bookCondition'] == 'Like New') ||
-          (selectedCondition.value == 4 && book['bookCondition'] == 'Old');
+          (selectedCondition.value == 4 && book['bookCondition'] == 'Used');
       // final matchesAuthor = book['bookAuthor'].toLowerCase().contains(author.toLowerCase());
       final matchesAuthor = normalize(book['bookAuthor']).contains(normalize(author));
       return matchesClass && (matchesCondition || selectedCondition.value == 1) && matchesAuthor && priceRange;
     }).toList();
+
   }
 
 

@@ -22,7 +22,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  final NotificationController notificationController =Get.find();
+  final NotificationController notificationController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +84,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
             } else if (snapshot.hasError) {
               return Text("Snapshot Error");
             } else if (snapshot.data!.docs.isEmpty) {
-              return Text("NO Data");
+              return Center(
+                  child: Column(
+                children: [
+                  SizedBox(
+                    height: 180.h,
+                  ),
+                  Text(
+                    "No Notifications",
+                    style:
+                        TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ));
             } else {
               dynamic notification = snapshot.data!.docs;
               return ListView.builder(
@@ -92,7 +104,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   itemCount: notification.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                 String time =   notificationController.formatNotificationTime(notification[index]['time']);
+                    String time = notificationController
+                        .formatNotificationTime(notification[index]['time']);
                     return ListTile(
                       contentPadding: EdgeInsets.only(left: 23.5, right: 24.w),
                       horizontalTitleGap: 8,

@@ -60,7 +60,9 @@ dependencies:
   flutter_local_notifications:
   app_settings:
   http:
-  timeago: 
+  timeago:
+  cached_network_image:
+
 
 
 dev_dependencies:

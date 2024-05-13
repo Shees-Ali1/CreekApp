@@ -251,8 +251,8 @@ class UserController extends GetxController {
       }
     } catch (er) {
       print("User is deleted");
-      await FirebaseAuth.instance.signOut();
-      Get.offAll(LoginView());
+      // await FirebaseAuth.instance.signOut();
+      // Get.offAll(LoginView());
     }
   }
 

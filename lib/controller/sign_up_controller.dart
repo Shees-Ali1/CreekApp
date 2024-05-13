@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'dart:math';
+import 'package:creekapp/controller/home_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +22,7 @@ class SignUpController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final UserController userController =Get.put(UserController());
+  final HomeController homeController =Get.put(HomeController());
   RxBool isChecked = false.obs;
   RxBool isLoading = false.obs;
   Future<void> sendEmailMessage(
@@ -185,7 +188,7 @@ class SignUpController extends GetxController {
         'userName': nameController.text,
         'userPassword': passwordController.text,
         'userEmail': emailController.text,
-        'userSchool': "Harker",
+        'userSchool': homeController.classOption.value,
         'userImage':'',
 
       },SetOptions(merge: true));

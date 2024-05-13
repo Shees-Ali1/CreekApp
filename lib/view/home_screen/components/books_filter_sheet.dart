@@ -61,6 +61,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
                   homeController.classOption.value = 'Class 10';
                   homeController.filteredBooks.value = homeController.bookListing;
                   homeController.update();
+                  Get.back();
                 },
                 child: Container(
                   width: 68.w,
@@ -276,6 +277,8 @@ class BooksFilterBottomSheet extends StatelessWidget {
             onTap: () {
               print("HI");
               homeController.applyFilters(authorController.text);
+              Get.back();
+
               print(homeController.filteredBooks);
             },
             child: Center(
