@@ -29,7 +29,7 @@ class NotificationController extends GetxController {
 
   Future<void> sendFcmMessage(String title, String message,String sellerId) async {
     try {
-      DocumentSnapshot docref =  await FirebaseFirestore.instance.collection('userDetails').doc(sellerId).get();
+    DocumentSnapshot docref =  await FirebaseFirestore.instance.collection('userDetails').doc(sellerId).get();
       dynamic seller = docref.data();
       String fcmToken = seller['fcmToken'];
 
@@ -42,17 +42,18 @@ class NotificationController extends GetxController {
       var request = {
         "notification": {
           "title": title,
-          "text": message,
+          "body": message,
           "sound": "default",
           "color": "#990000",
         },
         "priority": "high",
-        "to": fcmToken,
+        "to": fcmToken
       };
 
       var client = new Client();
 
       await client.post(Uri.parse(url), headers: header, body: json.encode(request));
+      print('notification to seller');
     } catch (e, s) {
       print(e);
     }

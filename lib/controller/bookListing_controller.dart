@@ -335,10 +335,11 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
       'userPurchases':FieldValue.arrayUnion([listingId]),
      },SetOptions(merge: true));
      userController.userPurchases.add(listingId);
-await notificationController.storeNotification(50, docRef.id, listingId);
+     await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
+
+     await notificationController.storeNotification(50, docRef.id, listingId);
 
 await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
-await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
      // await checkUserBookOrder(listingId,sellerId);
 
      showDialog(
