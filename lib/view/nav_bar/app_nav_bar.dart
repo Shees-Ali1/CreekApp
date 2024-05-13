@@ -227,6 +227,8 @@ class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver
   final HomeController homeController=Get.find<HomeController>();
   final BookListingController bookListingController=Get.find<BookListingController>();
   final UserController userController=Get.find<UserController>();
+  final AppLifecycleObserver lifecycleObserver = AppLifecycleObserver();
+
 
   @override
   void initState() {
@@ -242,7 +244,6 @@ class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver
     userController.fetchUserData();
     super.initState();
   }
-  final AppLifecycleObserver lifecycleObserver = AppLifecycleObserver();
 
 
 

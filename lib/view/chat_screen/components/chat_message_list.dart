@@ -54,7 +54,7 @@ class ChatMessageList extends StatelessWidget {
                           return StreamBuilder<QuerySnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('userMessages')
-                                  .doc(chat['orderId'])
+                                  .doc(chat['chatId'])
                                   .collection('messages')
                                   .orderBy('timeStamp', descending: true)
                                   .snapshots(),
@@ -70,69 +70,87 @@ class ChatMessageList extends StatelessWidget {
                                   String formattedTime =
                                       chatController.formatTimestamp(
                                           latestMessage[0]['timeStamp']);
-                                  return ListTile(
-                                    onTap: () {
-                                      CustomRoute.navigateTo(
-                                          context,
-                                          ChatScreen(
-                                              image: bookData['bookImage'],
-                                              chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
-                                              chatId: chat['orderId']));
-                                      //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
-                                    },
-                                    leading: Container(
-                                      alignment: Alignment.bottomRight,
-                                      height: 62.h,
-                                      width: 62.w,
-                                      decoration: BoxDecoration(
-                                          color: Colors.black26,
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                            bookData['bookImage'],
-                                          ))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Image.asset(
-                                          AppImages.onlinedot,
-                                          height: 10.h,
-                                          width: 10.w,
-                                        ),
-                                      ),
-                                    ),
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: 200.w,
-                                          child: LexendCustomText(
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            text: chat['sellerId'] !=
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid
-                                                ? "YOU bought ${chat['bookName']}"
-                                                : chat['bookName'],
-                                            textColor: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontsize: 16.sp,
-                                          ),
-                                        ),
-                                        LexendCustomText(
-                                          text: formattedTime,
-                                          textColor: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          fontsize: 12.sp,
-                                        ),
-                                      ],
-                                    ),
-                                    subtitle: LexendCustomText(
-                                      text: latestMessage[0]['message'],
-                                      textColor: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontsize: 12.sp,
-                                    ),
+                                  return StreamBuilder<DocumentSnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('userDetails')
+                                          .doc(chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
+                                          ? chat['buyerId']
+                                          : chat['sellerId']).snapshots()  ,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return SizedBox.shrink();
+                                        } else if (snapshot.hasError) {
+                                          return SizedBox.shrink();
+                                        }
+                                       else{
+                                         dynamic userStatus=snapshot.data!.data();
+                                          return ListTile(
+                                            onTap: () {
+                                              CustomRoute.navigateTo(
+                                                  context,
+                                                  ChatScreen(
+                                                      image: bookData['bookImage'],
+                                                      chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
+                                                      chatId: chat['chatId']));
+                                              //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
+                                            },
+                                            leading: Container(
+                                              alignment: Alignment.bottomRight,
+                                              height: 62.h,
+                                              width: 62.w,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black26,
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                        bookData['bookImage'],
+                                                      ))),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child:userStatus['online']? Image.asset(
+                                                  AppImages.onlinedot,
+                                                  height: 10.h,
+                                                  width: 10.w,
+                                                ):SizedBox.shrink(),
+                                              ),
+                                            ),
+                                            title: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200.w,
+                                                  child: LexendCustomText(
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    text: chat['sellerId'] !=
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid
+                                                        ? "YOU bought ${chat['bookName']}"
+                                                        : chat['bookName'],
+                                                    textColor: Colors.black,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontsize: 16.sp,
+                                                  ),
+                                                ),
+                                                LexendCustomText(
+                                                  text: formattedTime,
+                                                  textColor: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontsize: 12.sp,
+                                                ),
+                                              ],
+                                            ),
+                                            subtitle: LexendCustomText(
+                                              text: latestMessage[0]['message'],
+                                              textColor: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontsize: 12.sp,
+                                            ),
+                                          );
+                                        }
+                                    }
                                   );
                                 }
                               });

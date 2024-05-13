@@ -117,44 +117,61 @@ class UserController extends GetxController {
   }
 
 //   ************Get user history sell
-  List<dynamic> bookId = [];
-  List<dynamic> booksSale = [];
-  RxInt saleSum = 0.obs;
-  Future<void> getSellHistory() async {
-    try {
-      bookId.clear();
-      booksSale.clear();
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('booksListing')
-          .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        querySnapshot.docs.forEach((booksList) async {
-          bookId.add(booksList['listingId']);
-        });
-        bookId.forEach((ids) async {
-          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-              .collection('booksListing')
-              .doc(ids)
-              .collection('orders')
-              .get();
-          if (querySnapshot.docs.isNotEmpty) {
-            // print(querySnapshot.docs.length);
-            booksSale.add(querySnapshot.docs.length);
-            print(booksSale);
-            saleSum.value = booksSale.reduce((a, b) => a + b);
-            update();
-          } else {
-            print('no orders');
-          }
-        });
-      } else {
-        print('no listing or seller listing found');
-      }
-    } catch (e) {
-      print("error getting sales $e");
-    }
+    RxInt saleSum = 0.obs;
+
+  Future<void> getSellHistory() async{
+try{
+  QuerySnapshot orderData=  await FirebaseFirestore.instance.collection('orders').where('sellerId',isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+
+  if(orderData.docs.isNotEmpty){
+    saleSum.value=orderData.docs.length;
+    print('total sale $saleSum');
+  }else{
+    print("NO orders or data");
   }
+
+}catch(e){
+  print("error fetchnig user sale history");
+}
+
+  }
+//   List<dynamic> bookId = [];
+//   List<dynamic> booksSale = [];
+//   Future<void> getSellHistory() async {
+//     try {
+//       bookId.clear();
+//       booksSale.clear();
+//       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+//           .collection('booksListing')
+//           .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+//           .get();
+//       if (querySnapshot.docs.isNotEmpty) {
+//         querySnapshot.docs.forEach((booksList) async {
+//           bookId.add(booksList['listingId']);
+//         });
+//         bookId.forEach((ids) async {
+//           QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+//               .collection('booksListing')
+//               .doc(ids)
+//               .collection('orders')
+//               .get();
+//           if (querySnapshot.docs.isNotEmpty) {
+//             // print(querySnapshot.docs.length);
+//             booksSale.add(querySnapshot.docs.length);
+//             print(booksSale);
+//             saleSum.value = booksSale.reduce((a, b) => a + b);
+//             update();
+//           } else {
+//             print('no orders');
+//           }
+//         });
+//       } else {
+//         print('no listing or seller listing found');
+//       }
+//     } catch (e) {
+//       print("error getting sales $e");
+//     }
+//   }
 
   Future<void> changePassword(TextEditingController password) async {
     try {
@@ -238,7 +255,7 @@ class UserController extends GetxController {
 
 
 
-//   *****************Check if user online
+  // *****************Check if user online
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 

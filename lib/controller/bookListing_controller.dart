@@ -309,13 +309,25 @@ String imageUrl='';
 Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,) async{
    try{
      isLoading.value=true;
-     DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
+     // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
+     //   'bookId':listingId,
+     //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
+     //   'orderDate':DateTime.now(),
+     //   'deliveryStatus':false
+     // });
+     DocumentReference docRef=   await FirebaseFirestore.instance.collection('orders').add({
+       // listing id is our book id
        'bookId':listingId,
        'buyerId':FirebaseAuth.instance.currentUser!.uid,
        'orderDate':DateTime.now(),
-       'deliveryStatus':false
+       'deliveryStatus':false,
+       'sellerId':sellerId
      });
-     await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
+     // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
+     //   'orderId':docRef.id
+     // },SetOptions(merge: true)
+     // );
+     await FirebaseFirestore.instance.collection('orders').doc(docRef.id).set({
        'orderId':docRef.id
      },SetOptions(merge: true)
      );
@@ -356,31 +368,31 @@ await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
 
 
 // **************check if user bought that book**********
-  RxBool userBoughtBook=false.obs;
-Future<void> checkUserBookOrder(String listingId,String sellerId) async{
-try{
-  QuerySnapshot querySnapshot= await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').where('buyerId',isEqualTo:FirebaseAuth.instance.currentUser!.uid).get();
-  if(querySnapshot.docs.isNotEmpty) {
-    dynamic data=querySnapshot.docs.first;
-
-    if(data['buyerId']!=sellerId){
-      userBoughtBook.value=true;
-    }
-    else{
-      print("Not match");
-      userBoughtBook.value=false;
-    }
-  }else{
-    userBoughtBook.value=false;
-    print("No order on that id");
-  }
-
-}catch(e){
-  print("error checking order user $e");
-}
-
-
-}
+//   RxBool userBoughtBook=false.obs;
+// Future<void> checkUserBookOrder(String listingId,String sellerId) async{
+// try{
+//   QuerySnapshot querySnapshot= await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').where('buyerId',isEqualTo:FirebaseAuth.instance.currentUser!.uid).get();
+//   if(querySnapshot.docs.isNotEmpty) {
+//     dynamic data=querySnapshot.docs.first;
+//
+//     if(data['buyerId']!=sellerId){
+//       userBoughtBook.value=true;
+//     }
+//     else{
+//       print("Not match");
+//       userBoughtBook.value=false;
+//     }
+//   }else{
+//     userBoughtBook.value=false;
+//     print("No order on that id");
+//   }
+//
+// }catch(e){
+//   print("error checking order user $e");
+// }
+//
+//
+// }
 
 // **************get seller data**********
   RxString sellerName=''.obs;
