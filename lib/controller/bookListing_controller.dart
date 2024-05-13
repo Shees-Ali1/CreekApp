@@ -348,7 +348,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
      );
      await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
 
-     await notificationController.storeNotification(50, docRef.id, listingId);
+     await notificationController.storeNotification(50, docRef.id, listingId,bookName);
 
 await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
      // await checkUserBookOrder(listingId,sellerId);

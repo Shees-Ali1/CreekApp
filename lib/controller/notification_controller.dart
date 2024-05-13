@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:timeago/timeago.dart'as timeago;
 
 class NotificationController extends GetxController {
   Future<void> storeNotification(
-      int price, String orderId, String bookId) async {
+      int price, String orderId, String bookId,String bookName) async {
     await FirebaseFirestore.instance
         .collection('userNotifications')
         .doc(
@@ -16,7 +17,7 @@ class NotificationController extends GetxController {
         .collection('notifications')
         .add({
       'userId': FirebaseAuth.instance.currentUser!.uid,
-      'title': 'you successfully purchased',
+      'title': 'You successfully purchased $bookName',
       'time': DateTime.timestamp(),
       'price': price,
       'orderId': orderId,
@@ -59,6 +60,19 @@ class NotificationController extends GetxController {
       print('notification to seller');
     } catch (e, s) {
       print(e);
+    }
+  }
+  String formatNotificationTime(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    DateTime now = DateTime.now();
+
+    Duration difference = now.difference(dateTime);
+    if (difference.inDays == 0) {
+      return 'Today ${dateTime.hour}:${dateTime.minute}';
+    } else if (difference.inDays == 1) {
+      return 'Yesterday ${dateTime.hour}:${dateTime.minute}';
+    } else {
+      return timeago.format(dateTime);
     }
   }
 }

@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:creekapp/controller/notification_controller.dart';
 import 'package:creekapp/widgets/custom%20_backbutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
@@ -20,6 +22,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  final NotificationController notificationController =Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +92,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   itemCount: notification.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
+                 String time =   notificationController.formatNotificationTime(notification[index]['time']);
                     return ListTile(
                       contentPadding: EdgeInsets.only(left: 23.5, right: 24.w),
                       horizontalTitleGap: 8,
@@ -165,7 +169,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           LexendCustomText(
-                            text: notificationListing[index]['Timestamp'],
+                            text: time,
                             textColor: const Color(0xff78838D),
                             fontWeight: FontWeight.w400,
                             fontsize: 12.sp,
