@@ -71,6 +71,7 @@ class LoginAuthController extends GetxController {
   void checkUserLogin() async {
     try {
       if (FirebaseAuth.instance.currentUser?.uid != null) {
+
         Get.offAll(BottomNavBar());
       } else {
         Get.offAll(OnBoarding());

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -44,38 +47,4 @@ class NotificationServices {
     });
   }
 
-  // void firebaseInit() {
-  //   FirebaseMessaging.onMessage.listen((message) {
-  //     print(message.notification!.title.toString());
-  //     print(message.notification!.body.toString());
-  //     initlocalNotification(context, message)
-  //     showNotification(message);
-  //   });
-  // }
-  //
-  // Future<void> showNotification(RemoteMessage message) async {
-  //   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-  //   AndroidNotificationDetails(
-  //     'your_channel_id', // Change this to your channel ID
-  //     'Channel Name', // Change this to your channel name
-  //
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //     ticker: 'ticker',
-  //   );
-  //   const NotificationDetails platformChannelSpecifics =
-  //   NotificationDetails(android: androidPlatformChannelSpecifics);
-  //   await _flutterLocalNotificationsPlugin.show(
-  //     0, // Notification ID
-  //     'Payment Completed', // Notification title
-  //     message.toString(), // Notification body
-  //     platformChannelSpecifics,
-  //     payload: 'Custom_Sound', // You can use this to handle onTap events
-  //   );
-  //   // await FirebaseFirestore.instance.collection('appNotifications').doc(FirebaseAuth.instance.currentUser!.uid).collection('purchaseNotifications').add({
-  //   //   'notificationTitle':'Payment Completed',
-  //   //   'notificationBody':'Thank you for purchasing',
-  //   //   'timestamp':DateTime.now()
-  //   // });
-  // }
 }

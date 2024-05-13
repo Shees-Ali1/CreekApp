@@ -5,6 +5,7 @@ import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ class UserController extends GetxController {
   RxString userEmail = ''.obs;
   RxString userSchool = ''.obs;
   RxString userPassword = ''.obs;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   RxList<dynamic> userPurchases = [].obs;
   final HomeController homeController = Get.put(HomeController());
@@ -53,7 +55,6 @@ class UserController extends GetxController {
           userPassword.value = userInfo['userPassword'];
           userImage.value = userInfo["userImage"] ?? "";
           userPurchases.value = userInfo['userPurchases'];
-
 
           update();
         } else {
@@ -117,23 +118,24 @@ class UserController extends GetxController {
   }
 
 //   ************Get user history sell
-    RxInt saleSum = 0.obs;
+  RxInt saleSum = 0.obs;
 
-  Future<void> getSellHistory() async{
-try{
-  QuerySnapshot orderData=  await FirebaseFirestore.instance.collection('orders').where('sellerId',isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+  Future<void> getSellHistory() async {
+    try {
+      QuerySnapshot orderData = await FirebaseFirestore.instance
+          .collection('orders')
+          .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
-  if(orderData.docs.isNotEmpty){
-    saleSum.value=orderData.docs.length;
-    print('total sale $saleSum');
-  }else{
-    print("NO orders or data");
-  }
-
-}catch(e){
-  print("error fetchnig user sale history");
-}
-
+      if (orderData.docs.isNotEmpty) {
+        saleSum.value = orderData.docs.length;
+        print('total sale $saleSum');
+      } else {
+        print("NO orders or data");
+      }
+    } catch (e) {
+      print("error fetchnig user sale history");
+    }
   }
 //   List<dynamic> bookId = [];
 //   List<dynamic> booksSale = [];
@@ -207,41 +209,42 @@ try{
       print('Error updating password');
     }
   }
-  Future<void>deleteAccont()async{
-   try{
-     final AuthCredential credential = EmailAuthProvider.credential(
-       email: userEmail.value,
-       password: userPassword.value,
-     );
 
-     final currentUser = FirebaseAuth.instance.currentUser;
-     if (currentUser == null) {
-       return;
-     }
+  Future<void> deleteAccont() async {
+    try {
+      final AuthCredential credential = EmailAuthProvider.credential(
+        email: userEmail.value,
+        password: userPassword.value,
+      );
 
-     UserCredential reauthenticatedUser =
-     await currentUser.reauthenticateWithCredential(credential);
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        return;
+      }
 
-     User? user = reauthenticatedUser.user;
-     if (user == null) {
-       return;
-     }
-     await FirebaseAuth.instance.currentUser?.delete();
-     Get.offAll(LoginView());
-   }catch(e){
-     print('Error Deleting Account$e');
-   }
+      UserCredential reauthenticatedUser =
+          await currentUser.reauthenticateWithCredential(credential);
 
+      User? user = reauthenticatedUser.user;
+      if (user == null) {
+        return;
+      }
+      await FirebaseAuth.instance.currentUser?.delete();
+      Get.offAll(LoginView());
+    } catch (e) {
+      print('Error Deleting Account$e');
+    }
   }
+
   checkIfAccountIsDeleted() async {
     try {
       IdTokenResult? idTokenResult =
-      await FirebaseAuth.instance.currentUser?.getIdTokenResult(true);
+          await FirebaseAuth.instance.currentUser?.getIdTokenResult(true);
 
       if (idTokenResult == null || idTokenResult.token == null) {
         print("User is deleted");
-          await FirebaseAuth.instance.signOut();
-          Get.offAll(LoginView());
+        await FirebaseAuth.instance.signOut();
+        Get.offAll(LoginView());
         // do logout stuff here...
       } else {
         print("User is available");
@@ -253,8 +256,6 @@ try{
     }
   }
 
-
-
   // *****************Check if user online
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -263,7 +264,8 @@ try{
     try {
       User? user = _auth.currentUser;
       if (user != null) {
-        DocumentReference userRef = _firestore.collection('userDetails').doc(user.uid);
+        DocumentReference userRef =
+            _firestore.collection('userDetails').doc(user.uid);
         await userRef.update({'online': isOnline});
         print("USer online status $isOnline");
       }
@@ -272,4 +274,29 @@ try{
     }
   }
 
+  String? token;
+
+  Future<void> getDeviceStoreToken() async {
+    try {
+      if (Platform.isIOS) {
+        token = await FirebaseMessaging.instance.getAPNSToken();
+       if(FirebaseAuth.instance.currentUser !=null){
+         await FirebaseFirestore.instance
+             .collection('userDetails')
+             .doc(FirebaseAuth.instance.currentUser!.uid)
+             .set({'fcmToken': token}, SetOptions(merge: true));
+       }
+      } else if (Platform.isAndroid) {
+        token = await FirebaseMessaging.instance.getToken();
+        if(FirebaseAuth.instance.currentUser !=null){
+          await FirebaseFirestore.instance
+              .collection('userDetails')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({'fcmToken': token}, SetOptions(merge: true));
+        }
+      }
+    } catch (e) {
+      print('Error Storing token');
+    }
+  }
 }

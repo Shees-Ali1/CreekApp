@@ -59,6 +59,7 @@ dependencies:
   firebase_messaging:
   flutter_local_notifications:
   app_settings:
+  http:
 
 
 dev_dependencies:

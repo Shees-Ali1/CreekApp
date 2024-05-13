@@ -1,7 +1,8 @@
 import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/controller/login_auth_controller.dart';
+import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
-import 'package:creekapp/view/notification/notification_services.dart';
+import 'package:creekapp/helper/notification_services.dart';
 import 'package:creekapp/view/on_boarding/on_boarding_screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final LoginAuthController loginAuthController=Get.find<LoginAuthController>();
   NotificationServices notificationServices = NotificationServices();
+  final UserController userController = Get.find();
   @override
   void initState() {
     super.initState();
@@ -29,8 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
       notificationServices.requestNotificationPermission();
       notificationServices.getdevicetoken().then((value){
         print('device token');
-        print('$value');
       });
+      userController.getDeviceStoreToken();
+
 
     });
   }
