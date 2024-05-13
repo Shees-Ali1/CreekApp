@@ -16,6 +16,7 @@ class ChatMessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController chatController = Get.find<ChatController>();
+
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('chats')
@@ -30,7 +31,9 @@ class ChatMessageList extends StatelessWidget {
           } else if (snapshot.data!.docs.isEmpty) {
             return SizedBox.shrink();
           } else {
+
             return ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemCount: snapshot.data!.docs.length,
                 shrinkWrap: true,
@@ -50,41 +53,45 @@ class ChatMessageList extends StatelessWidget {
                         } else if (snapshot.data == null) {
                           return SizedBox.shrink();
                         } else {
+
                           dynamic bookData = snapshot.data!.data();
-                          return StreamBuilder<QuerySnapshot>(
+                          return StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
-                                  .collection('userMessages')
-                                  .doc(chat['chatId'])
-                                  .collection('messages')
-                                  .orderBy('timeStamp', descending: true)
-                                  .snapshots(),
-                              builder: (context, latestMsgSnapshot) {
-                                if (latestMsgSnapshot.connectionState ==
+                                  .collection('userDetails')
+                                  .doc(chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
+                                  ? chat['buyerId']
+                                  : chat['sellerId']).snapshots()  ,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
                                   return SizedBox.shrink();
-                                } else if (latestMsgSnapshot.hasError) {
+                                } else if (snapshot.hasError) {
                                   return SizedBox.shrink();
                                 } else {
-                                  dynamic latestMessage =
-                                      latestMsgSnapshot.data!.docs;
-                                  String formattedTime =
-                                      chatController.formatTimestamp(
-                                          latestMessage[0]['timeStamp']);
-                                  return StreamBuilder<DocumentSnapshot>(
+                                  dynamic userStatus=snapshot.data!.data();
+
+                                  return StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance
-                                          .collection('userDetails')
-                                          .doc(chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
-                                          ? chat['buyerId']
-                                          : chat['sellerId']).snapshots()  ,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
+                                          .collection('userMessages')
+                                          .doc(chat['chatId'])
+                                          .collection('messages')
+                                          .orderBy('timeStamp', descending: true)
+                                          .snapshots(),
+
+                                      builder: (context, latestMsgSnapshot) {
+                                        if (latestMsgSnapshot.connectionState ==
                                             ConnectionState.waiting) {
                                           return SizedBox.shrink();
-                                        } else if (snapshot.hasError) {
+                                        } else if (latestMsgSnapshot.hasError) {
                                           return SizedBox.shrink();
                                         }
                                        else{
-                                         dynamic userStatus=snapshot.data!.data();
+                                          dynamic latestMessage =
+                                              latestMsgSnapshot.data!.docs;
+                                          String formattedTime =
+                                          chatController.formatTimestamp(
+                                              latestMessage[0]['timeStamp']);
+
                                           return ListTile(
                                             onTap: () {
                                               CustomRoute.navigateTo(
@@ -92,7 +99,9 @@ class ChatMessageList extends StatelessWidget {
                                                   ChatScreen(
                                                       image: bookData['bookImage'],
                                                       chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
-                                                      chatId: chat['chatId']));
+                                                      chatId: chat['chatId'], sellerId: chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
+                                                      ? chat['buyerId']
+                                                      : chat['sellerId'],));
                                               //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
                                             },
                                             leading: Container(

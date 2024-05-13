@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:creekapp/controller/notification_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ChatController extends GetxController {
+  NotificationController notificationController=Get.put(NotificationController());
 
   RxList<dynamic> messages = [
     {
@@ -16,7 +18,7 @@ class ChatController extends GetxController {
       "message": 'I am fine',
     }
   ].obs;
-  Future<void> sendmessage(TextEditingController messageController,String chatId) async{
+  Future<void> sendmessage(TextEditingController messageController,String chatId,String sellerId) async{
   try{
     if (messageController.text.isNotEmpty) {
       DocumentSnapshot chatSnap= await FirebaseFirestore.instance.collection("userMessages").doc(chatId).get();
@@ -26,14 +28,11 @@ class ChatController extends GetxController {
           'timeStamp':DateTime.now(),
           'userId':FirebaseAuth.instance.currentUser!.uid,
         });
+        String message=messageController.text;
         messageController.clear();
         print("MEssage sent");
+        notificationController.sendFcmMessage("New Message","${message}", sellerId);
 
-
-      // }
-      // else{
-      //   print("chat id doc does not exist");
-      // }
 
     }
   }catch(e){
@@ -92,5 +91,9 @@ Future<void> createChatConvo(String listingId,String orderId,String bookName,Str
    print("error creating conv $e");
  }
 }
+
+
+
+
 
 }

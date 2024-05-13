@@ -15,11 +15,14 @@ class ChatScreen extends StatelessWidget {
   final String image;
   final String chatName;
   final String chatId;
+  final String sellerId;
   const ChatScreen(
       {super.key,
       // required this.messagedetail,
       required this.image,
-      required this.chatName, required this.chatId});
+      required this.chatName,
+      required this.chatId,
+      required this.sellerId});
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +55,17 @@ class ChatScreen extends StatelessWidget {
                   ),
                   image != ''
                       ? Container(
-                    height: 53.h,
-                    width: 53.w,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(image:   NetworkImage(
-                        image,
-
-                      ),)
-                    ),
-                       
-                      )
+                          height: 53.h,
+                          width: 53.w,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  image,
+                                ),
+                              )),
+                        )
                       : CircleAvatar(),
                   SizedBox(
                     width: 8.w,
@@ -82,7 +84,8 @@ class ChatScreen extends StatelessWidget {
                 ])
               ])))),
       Expanded(
-          child: ChatMessageContainer(chatId: chatId,
+          child: ChatMessageContainer(
+        chatId: chatId,
       )),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -122,8 +125,7 @@ class ChatScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              print(messageController.text);
-              chatController.sendmessage(messageController,chatId);
+              chatController.sendmessage(messageController, chatId, sellerId);
             },
             child: SizedBox(
                 height: 53.h, width: 53.w, child: Image.asset(AppImages.send)),

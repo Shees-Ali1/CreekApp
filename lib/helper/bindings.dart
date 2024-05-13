@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/controller/notification_controller.dart';
+import 'package:creekapp/controller/order_controller.dart';
 import 'package:creekapp/controller/sign_up_controller.dart';
 import 'package:creekapp/controller/user_controller.dart';
 import 'package:creekapp/firebase_options.dart';
@@ -19,12 +20,12 @@ class UserBinding extends Bindings {
   void dependencies() {
     Get.put(OnBoardingController());
     Get.put(SignUpController());
-
     Get.put(LoginAuthController());
     Get.put(HomeController());
     Get.put(ChatController());
     Get.put(BookListingController());
     Get.put(UserController());
     Get.put(NotificationController());
+    Get.put(OrderController());
   }
 }
