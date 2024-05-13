@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,9 +25,13 @@ class NotificationController extends GetxController {
     print('Notification sent');
   }
 
-  Future<void> sendFcmMessage(String title, String message,String sellerId) async {
+  Future<void> sendFcmMessage(
+      String title, String message, String sellerId) async {
     try {
-    DocumentSnapshot docref =  await FirebaseFirestore.instance.collection('userDetails').doc(sellerId).get();
+      DocumentSnapshot docref = await FirebaseFirestore.instance
+          .collection('userDetails')
+          .doc(sellerId)
+          .get();
       dynamic seller = docref.data();
       String fcmToken = seller['fcmToken'];
 
@@ -37,7 +39,7 @@ class NotificationController extends GetxController {
       var header = {
         "Content-Type": "application/json",
         "Authorization":
-        "key=AAAA_pa3Gss:APA91bHFIqNtUNX7_WS6A7V9QriLHLFAAyU62eXHwDRBL_7UbYmc1EyoBpC9EoZgVSg0fNZ2XZKmByaqYwxqO1ar_3hSLfBBIcY3cmqBrZdXlYglx9eowgSM-fONPozs1paBVk6ZlRxH",
+            "key=AAAA_pa3Gss:APA91bHFIqNtUNX7_WS6A7V9QriLHLFAAyU62eXHwDRBL_7UbYmc1EyoBpC9EoZgVSg0fNZ2XZKmByaqYwxqO1ar_3hSLfBBIcY3cmqBrZdXlYglx9eowgSM-fONPozs1paBVk6ZlRxH",
       };
       var request = {
         "notification": {
@@ -52,11 +54,11 @@ class NotificationController extends GetxController {
 
       var client = new Client();
 
-      await client.post(Uri.parse(url), headers: header, body: json.encode(request));
+      await client.post(Uri.parse(url),
+          headers: header, body: json.encode(request));
       print('notification to seller');
     } catch (e, s) {
       print(e);
     }
   }
-
 }

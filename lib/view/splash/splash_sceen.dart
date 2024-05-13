@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,7 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final LoginAuthController loginAuthController=Get.find<LoginAuthController>();
+  final LoginAuthController loginAuthController =
+      Get.find<LoginAuthController>();
   NotificationServices notificationServices = NotificationServices();
   final UserController userController = Get.find();
   final NotificationController notificationController = Get.find();
@@ -33,13 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
       notificationServices.requestNotificationPermission();
       notificationServices.firebaseInit(context);
 
-
       userController.getDeviceStoreToken();
-       // FirebaseMessaging.onBackgroundMessage(notificationServices.firebaseMessagingBackgroundHandler);
-
-
-
-
+      // FirebaseMessaging.onBackgroundMessage(notificationServices.firebaseMessagingBackgroundHandler);
     });
   }
 
