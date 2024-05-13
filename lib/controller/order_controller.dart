@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
@@ -30,7 +31,7 @@ class OrderController extends GetxController {
       isLoading.value = false;
     }
   }
-  Future<void> changeOrderStatus(String orderId) async {
+  Future<void> changeOrderStatus(String orderId,String buyerId,String bookId,String bookName) async {
     try {
       isLoading.value = true;
 
@@ -39,6 +40,17 @@ class OrderController extends GetxController {
           .doc(orderId)
           .update({
         'deliveryStatus': true,
+      });
+      await FirebaseFirestore.instance
+          .collection('userNotifications').doc(buyerId)
+          .collection('notifications')
+          .add({
+        'bookId': bookId,
+        'orderId':orderId,
+        // 'price':price,
+        'time':DateTime.timestamp(),
+        'title': "Seller has marked ${bookName} as delivered",
+        'userId':FirebaseAuth.instance.currentUser!.uid,
       });
       orderStatus.value = true;
       isLoading.value = false;

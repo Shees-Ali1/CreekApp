@@ -31,7 +31,6 @@ class ChatMessageList extends StatelessWidget {
           } else if (snapshot.data!.docs.isEmpty) {
             return SizedBox.shrink();
           } else {
-
             return ListView.builder(
               physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -60,7 +59,7 @@ class ChatMessageList extends StatelessWidget {
                                   .collection('userDetails')
                                   .doc(chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
                                   ? chat['buyerId']
-                                  : chat['sellerId']).snapshots()  ,
+                                  : chat['sellerId']).snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -88,9 +87,7 @@ class ChatMessageList extends StatelessWidget {
                                        else{
                                           dynamic latestMessage =
                                               latestMsgSnapshot.data!.docs;
-                                          String formattedTime =
-                                          chatController.formatTimestamp(
-                                              latestMessage[0]['timeStamp']);
+                                          String formattedTime = chatController.formatTimestamp(latestMessage[0]['timeStamp']);
 
                                           return ListTile(
                                             onTap: () {
@@ -101,7 +98,7 @@ class ChatMessageList extends StatelessWidget {
                                                       chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
                                                       chatId: chat['chatId'], sellerId: chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
                                                       ? chat['buyerId']
-                                                      : chat['sellerId'], buyerId: chat['buyerId'], seller: chat['sellerId'],));
+                                                      : chat['sellerId'], buyerId: chat['buyerId'], seller: chat['sellerId'], bookId:chat['bookId'],  bookName: chat['bookName'],));
                                               //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
                                             },
                                             leading: Container(

@@ -21,13 +21,16 @@ class ChatScreen extends StatefulWidget {
   final String sellerId;
   final String buyerId;
   final String seller;
+  final String bookId;
+  final String bookName;
+
 
   const ChatScreen({super.key,
     // required this.messagedetail,
     required this.image,
     required this.chatName,
     required this.chatId,
-    required this.sellerId, required this.buyerId, required this.seller});
+    required this.sellerId, required this.buyerId, required this.seller, required this.bookId, required this.bookName});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -117,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: ElevatedButton(
                           onPressed: () {
                             orderController.orderStatus.value==false?
-                                orderController.changeOrderStatus(widget.chatId):null;
+                                orderController.changeOrderStatus(widget.chatId, widget.sellerId,widget.bookId,widget.bookName):null;
                           },
                           style: ElevatedButton.styleFrom(
                             maximumSize: Size(350.w, 80.h),
