@@ -101,7 +101,7 @@ class ChatMessageList extends StatelessWidget {
                                                       chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
                                                       chatId: chat['chatId'], sellerId: chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
                                                       ? chat['buyerId']
-                                                      : chat['sellerId'],));
+                                                      : chat['sellerId'], buyerId: chat['buyerId'], seller: chat['sellerId'],));
                                               //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
                                             },
                                             leading: Container(
