@@ -136,6 +136,8 @@ class BookListingController extends GetxController {
           'listingId': bookId.id,
          'bookImage': imageUrl,
         }, SetOptions(merge: true));
+        imageFile=null;
+
         Get.snackbar('Success', "Book Listing Added");
         isLoading.value=false;
         CustomRoute.navigateTo(context, ApprovalSellScreen());
@@ -169,7 +171,6 @@ String imageUrl='';
       TaskSnapshot taskSnapshot = await uploadTask;
 
        imageUrl=await taskSnapshot.ref.getDownloadURL();
-       imageFile=null;
        update();
 
       print("Image uploaded");
@@ -215,13 +216,16 @@ String imageUrl='';
           'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
         });
-        await uploadBookImage(listingId);
-        await FirebaseFirestore.instance
-            .collection('booksListing')
-            .doc(listingId)
-            .set({
-          'bookImage': imageUrl,
-        }, SetOptions(merge: true));
+       if(imageFile!=null)
+         { await uploadBookImage(listingId);
+         await FirebaseFirestore.instance
+             .collection('booksListing')
+             .doc(listingId)
+             .set({
+           'bookImage': imageUrl,
+         }, SetOptions(merge: true));
+         imageFile=null;
+         }
         // mySellListings.refresh();
         // update();
         // Get.back();

@@ -11,9 +11,12 @@ import '../../../controller/chat_controller.dart';
 
 class ChatMessageContainer extends StatelessWidget {
   final String chatId;
+  final String image;
+
   const ChatMessageContainer({
     super.key,
     required this.chatId,
+    required this.image,
   });
 
   @override
@@ -72,11 +75,20 @@ class ChatMessageContainer extends StatelessWidget {
                                       padding: EdgeInsets.only(
                                         top: 10.sp,
                                       ),
-                                      child: Image.asset(
-                                        AppImages.profile1,
-                                        height: 26.h,
-                                        width: 31.w,
-                                      ),
+                                      child: image != ''
+                                          ? Container(
+                                              height: 24.h,
+                                              width: 24.w,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                        image,
+                                                      ),
+                                                      fit: BoxFit.cover)),
+                                            )
+                                          : CircleAvatar(),
                                     ),
                               Container(
                                 margin: role == currentUser

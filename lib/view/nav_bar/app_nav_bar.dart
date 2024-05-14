@@ -240,8 +240,8 @@ class _BottomNavBarState extends State<BottomNavBar> with WidgetsBindingObserver
     ];
     WidgetsBinding.instance?.addObserver(lifecycleObserver);
 
-    bookListingController.fetchUserBookListing();
-    userController.fetchUserData();
+    // bookListingController.fetchUserBookListing();
+    // userController.fetchUserData();
     super.initState();
   }
 

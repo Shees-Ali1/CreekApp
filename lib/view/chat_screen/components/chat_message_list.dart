@@ -29,7 +29,19 @@ class ChatMessageList extends StatelessWidget {
           } else if (snapshot.hasError) {
             return SizedBox.shrink();
           } else if (snapshot.data!.docs.isEmpty) {
-            return SizedBox.shrink();
+            return Center(
+                child: Column(
+              children: [
+                SizedBox(
+                  height: 180.h,
+                ),
+                Text(
+                  "No Chats",
+                  style:
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ));
           } else {
             return ListView.builder(
                 physics: NeverScrollableScrollPhysics(),

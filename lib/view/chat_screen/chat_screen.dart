@@ -113,6 +113,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Stack(
         children: [
           ChatMessageContainer(
+            image: widget.image,
             chatId: widget.chatId,
           ),
           Positioned(

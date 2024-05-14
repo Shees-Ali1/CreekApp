@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/bookListing_controller.dart';
 import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
 import 'components/books_filter_sheet.dart';
@@ -30,10 +31,13 @@ class HomeScreenBooks extends StatefulWidget {
 class _HomeScreenBooksState extends State<HomeScreenBooks> {
   final HomeController homeController = Get.find<HomeController>();
   final UserController userController = Get.find<UserController>();
+  final BookListingController bookListingController = Get.find<BookListingController>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    bookListingController.fetchUserBookListing();
+    userController.fetchUserData();
     userController.checkIfAccountIsDeleted();
   }
   @override
