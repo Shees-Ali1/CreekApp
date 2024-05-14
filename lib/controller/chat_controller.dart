@@ -108,6 +108,10 @@ class ChatController extends GetxController {
       print("error creating conv $e");
     }
   }
+
+
+
+
 RxString orderId =''.obs;
   RxString sellerId = ''.obs;
   RxString buyerId = ''.obs;
@@ -136,5 +140,19 @@ RxString orderId =''.obs;
   }catch(e){
     print('Error fetching orderID$e');
   }
+  }
+
+
+
+//   formT MEESAGE TIME
+  String formatMessageTimestamp(Timestamp timestamp) {
+    var date = timestamp.toDate();
+    return DateFormat('d MMM HH:mm').format(date);
+  }
+
+  bool shouldShowTimestamp(DateTime current, DateTime? previous) {
+    if (previous == null)
+      return true;
+    return current.difference(previous).inMinutes >= 10;
   }
 }

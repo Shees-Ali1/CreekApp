@@ -100,6 +100,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             } else {
               dynamic notification = snapshot.data!.docs;
               return ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemCount: notification.length,
                   shrinkWrap: true,
@@ -169,8 +170,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             });
                       },
                       leading: Image.asset(
-                        notificationListing[index]['notificationImage']
-                            .toString(),
+                       AppImages.notification,
+
                         height: 32.h,
                         width: 32.w,
                       ),

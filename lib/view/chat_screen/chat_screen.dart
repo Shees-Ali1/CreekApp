@@ -126,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onPressed: () {
                     orderController.orderStatus.value == false
                         ? orderController.changeOrderStatus(widget.chatId,
-                            widget.sellerId, widget.bookId, widget.bookName)
+                            widget.buyerId, widget.bookId, widget.bookName,widget.seller)
                         : null;
                   },
                   style: ElevatedButton.styleFrom(
@@ -161,6 +161,7 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ],
       )),
+
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

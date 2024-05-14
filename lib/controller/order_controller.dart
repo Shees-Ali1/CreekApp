@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:creekapp/controller/notification_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   RxBool orderStatus = false.obs;
   RxBool isLoading = false.obs;
   Future<void> checkOrderStatus(String orderId) async {
@@ -31,7 +35,9 @@ class OrderController extends GetxController {
       isLoading.value = false;
     }
   }
-  Future<void> changeOrderStatus(String orderId,String buyerId,String bookId,String bookName) async {
+
+  Future<void> changeOrderStatus(
+      String orderId, String buyerId, String bookId, String bookName,String sellerId) async {
     try {
       isLoading.value = true;
 
@@ -42,16 +48,33 @@ class OrderController extends GetxController {
         'deliveryStatus': true,
       });
       await FirebaseFirestore.instance
-          .collection('userNotifications').doc(buyerId)
+          .collection('userNotifications')
+          .doc(buyerId)
           .collection('notifications')
           .add({
         'bookId': bookId,
-        'orderId':orderId,
+        'orderId': orderId,
         // 'price':price,
-        'time':DateTime.timestamp(),
+        'time': DateTime.timestamp(),
         'title': "Seller has marked ${bookName} as delivered",
-        'userId':FirebaseAuth.instance.currentUser!.uid,
+        'userId': FirebaseAuth.instance.currentUser!.uid,
       });
+      DocumentSnapshot usersnap = await FirebaseFirestore.instance
+          .collection('userDetails')
+          .doc(buyerId== FirebaseAuth.instance.currentUser!.uid?sellerId:buyerId)
+          .get();
+      dynamic data = usersnap.data();
+      String fcmToken = data['fcmToken'];
+      print(buyerId);
+      if(buyerId!= FirebaseAuth.instance.currentUser!.uid){
+        notificationController.sendFcmMessage('Order Alert',
+            "Seller has marked ${bookName} as delivered", buyerId);
+      }else{
+        notificationController.sendFcmMessage('Order Alert',
+            "Buyer has marked ${bookName} as Received", sellerId);
+      }
+
+
       orderStatus.value = true;
       isLoading.value = false;
     } catch (e) {
