@@ -351,6 +351,8 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
      await notificationController.storeNotification(50, docRef.id, listingId,bookName);
 
 await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
+   await  chatController.getorderId(listingId);
+
      // await checkUserBookOrder(listingId,sellerId);
 
 

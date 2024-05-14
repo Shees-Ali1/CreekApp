@@ -328,7 +328,7 @@ class _SellScreenMainState extends State<SellScreenMain> {
                                           right: 3.h,
                                           child: GestureDetector(
                                               onTap:(){
-                                                CustomRoute.navigateTo(context, ListSellBookScreen(title: books['bookName'],bookPart: books['bookPart'],author:books['bookAuthor'],bookClass: books['bookClass'],bookCondition: books['bookCondition'],bookPrice: books['bookPrice'] ,listingId:books['listingId'] ,comingFromEdit: true,)) ;
+                                                CustomRoute.navigateTo(context, ListSellBookScreen(bookImage: books['bookImage'],title: books['bookName'],bookPart: books['bookPart'],author:books['bookAuthor'],bookClass: books['bookClass'],bookCondition: books['bookCondition'],bookPrice: books['bookPrice'] ,listingId:books['listingId'] ,comingFromEdit: true,)) ;
                                               },
                                               child: SizedBox(height: 24.h,width: 24.w,child: SvgPicture.asset(AppIcons.editIcon,color: primaryColor,),)))
                                     ],

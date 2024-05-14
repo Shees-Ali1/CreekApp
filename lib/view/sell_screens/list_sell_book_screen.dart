@@ -23,6 +23,7 @@ class ListSellBookScreen extends StatefulWidget {
   final int? bookPrice;
   final bool? comingFromEdit;
   final String? listingId;
+  final String? bookImage;
 
   const ListSellBookScreen({super.key,
     this.title,
@@ -31,7 +32,7 @@ class ListSellBookScreen extends StatefulWidget {
     this.bookClass,
     this.bookCondition,
     this.bookPrice,
-    this.comingFromEdit, this.listingId});
+    this.comingFromEdit, this.listingId, this.bookImage});
 
   @override
   State<ListSellBookScreen> createState() => _ListSellBookScreenState();
@@ -44,7 +45,7 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
   @override
   void initState() {
     // TODO: implement initState
-
+print(widget.bookImage);
     bookListingController.titleController.text = widget.title!;
     bookListingController.bookPartController.text = widget.bookPart!;
     bookListingController.authorController.text = widget.author!;
@@ -66,10 +67,13 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         body: SingleChildScrollView(
+
           child: Column(
             children: [
+
               ClipPath(
                 clipper: OvalBottomBorderClipper(),
                 child: Container(
@@ -152,10 +156,10 @@ class _ListSellBookScreenState extends State<ListSellBookScreen> {
                             borderRadius: BorderRadius.circular(10.r),
                             border: Border.all(color: primaryColor),
                             color: primaryColor.withOpacity(0.08)),
-                        child: SizedBox(
+                        child: widget.bookImage==''?SizedBox(
                             height: 65.h,
                             width: 68.w,
-                            child: Image.asset(AppImages.pickImage)),
+                            child: Image.asset(AppImages.pickImage)):Image.network(widget.bookImage.toString(),fit: BoxFit.cover,),
                       ),
                     )
                         : GestureDetector(

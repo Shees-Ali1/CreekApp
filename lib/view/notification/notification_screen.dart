@@ -104,8 +104,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   itemCount: notification.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    String time = notificationController
-                        .formatNotificationTime(notification[index]['time']);
+                    String time = notificationController.formatNotificationTime(notification[index]['time']);
+                    String? price = notification[index].data().containsKey('price')
+                        ? "\$${notification[index]['price'].toString()}"
+                        : '';
                     return ListTile(
                       contentPadding: EdgeInsets.only(left: 23.5, right: 24.w),
                       horizontalTitleGap: 8,
@@ -190,7 +192,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           const Spacer(),
                           LexendCustomText(
                             text:
-                                "\$${notification[index]['price'].toString()}",
+                                "${price}",
                             textColor: const Color(0xff78838D),
                             fontWeight: FontWeight.w400,
                             fontsize: 12.sp,

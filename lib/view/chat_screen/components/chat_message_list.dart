@@ -32,7 +32,7 @@ class ChatMessageList extends StatelessWidget {
             return SizedBox.shrink();
           } else {
             return ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 itemCount: snapshot.data!.docs.length,
                 shrinkWrap: true,
@@ -52,14 +52,15 @@ class ChatMessageList extends StatelessWidget {
                         } else if (snapshot.data == null) {
                           return SizedBox.shrink();
                         } else {
-
                           dynamic bookData = snapshot.data!.data();
                           return StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('userDetails')
-                                  .doc(chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
-                                  ? chat['buyerId']
-                                  : chat['sellerId']).snapshots(),
+                                  .doc(chat['sellerId'] ==
+                                          FirebaseAuth.instance.currentUser!.uid
+                                      ? chat['buyerId']
+                                      : chat['sellerId'])
+                                  .snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -67,38 +68,57 @@ class ChatMessageList extends StatelessWidget {
                                 } else if (snapshot.hasError) {
                                   return SizedBox.shrink();
                                 } else {
-                                  dynamic userStatus=snapshot.data!.data();
+                                  dynamic userStatus = snapshot.data!.data();
 
                                   return StreamBuilder<QuerySnapshot>(
                                       stream: FirebaseFirestore.instance
                                           .collection('userMessages')
                                           .doc(chat['chatId'])
                                           .collection('messages')
-                                          .orderBy('timeStamp', descending: true)
+                                          .orderBy('timeStamp',
+                                              descending: true)
                                           .snapshots(),
-
                                       builder: (context, latestMsgSnapshot) {
                                         if (latestMsgSnapshot.connectionState ==
                                             ConnectionState.waiting) {
                                           return SizedBox.shrink();
                                         } else if (latestMsgSnapshot.hasError) {
                                           return SizedBox.shrink();
-                                        }
-                                       else{
+                                        } else {
                                           dynamic latestMessage =
                                               latestMsgSnapshot.data!.docs;
-                                          String formattedTime = chatController.formatTimestamp(latestMessage[0]['timeStamp']);
+                                          String formattedTime = chatController
+                                              .formatTimestamp(latestMessage[0]
+                                                  ['timeStamp']);
 
                                           return ListTile(
                                             onTap: () {
                                               CustomRoute.navigateTo(
                                                   context,
                                                   ChatScreen(
-                                                      image: bookData['bookImage'],
-                                                      chatName: chat['buyerId']!=FirebaseAuth.instance.currentUser!.uid?chat['bookName']:"You Bought ${chat['bookName']}",
-                                                      chatId: chat['chatId'], sellerId: chat['sellerId'] == FirebaseAuth.instance.currentUser!.uid
-                                                      ? chat['buyerId']
-                                                      : chat['sellerId'], buyerId: chat['buyerId'], seller: chat['sellerId'], bookId:chat['bookId'],  bookName: chat['bookName'],));
+                                                    image:
+                                                        bookData['bookImage'],
+                                                    chatName: chat['buyerId'] !=
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid
+                                                        ? chat['bookName']
+                                                        : "You Bought ${chat['bookName']}",
+                                                    chatId: chat['chatId'],
+                                                    sellerId: chat[
+                                                                'sellerId'] ==
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid
+                                                        ? chat['buyerId']
+                                                        : chat['sellerId'],
+                                                    buyerId: chat['buyerId'],
+                                                    seller: chat['sellerId'],
+                                                    bookId: chat['bookId'],
+                                                    bookName: chat['bookName'],
+                                                  ));
                                               //    CustomRoute.navigateTo(context, ChatScreen(receiverUserID: chat['sellerId']));
                                             },
                                             leading: Container(
@@ -110,29 +130,36 @@ class ChatMessageList extends StatelessWidget {
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
                                                       image: NetworkImage(
-                                                        bookData['bookImage'],
-                                                      ))),
+                                                    bookData['bookImage'],
+                                                  ))),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(4.0),
-                                                child:userStatus['online']? Image.asset(
-                                                  AppImages.onlinedot,
-                                                  height: 10.h,
-                                                  width: 10.w,
-                                                ):SizedBox.shrink(),
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: userStatus['online']
+                                                    ? Image.asset(
+                                                        AppImages.onlinedot,
+                                                        height: 10.h,
+                                                        width: 10.w,
+                                                      )
+                                                    : SizedBox.shrink(),
                                               ),
                                             ),
                                             title: Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 SizedBox(
                                                   width: 200.w,
                                                   child: LexendCustomText(
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     text: chat['sellerId'] !=
-                                                        FirebaseAuth.instance
-                                                            .currentUser!.uid
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid
                                                         ? "YOU bought ${chat['bookName']}"
                                                         : chat['bookName'],
                                                     textColor: Colors.black,
@@ -156,8 +183,7 @@ class ChatMessageList extends StatelessWidget {
                                             ),
                                           );
                                         }
-                                    }
-                                  );
+                                      });
                                 }
                               });
                         }
