@@ -4,8 +4,11 @@ import 'package:creekapp/widgets/custom_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../const/assets/image_assets.dart';
+import '../../controller/home_controller.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_text.dart';
 import 'chat_screen.dart';
 
@@ -17,42 +20,18 @@ class MainChat extends StatefulWidget {
 }
 
 class _MainChatState extends State<MainChat> {
+  final HomeController homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: CustomAppBar2(
+          homeController: homeController,
+          text: 'Book Chats',
+        ),
         body: SingleChildScrollView(
             child: Column(children: [
-              ClipPath(
-                  clipper: OvalBottomBorderClipper(),
-                  child: Container(
-                      height: 160.h,
-                      // padding: EdgeInsets.symmetric(vertical: 50.h),
-                      decoration: const BoxDecoration(
-                          color: Color(0xff29604E),
-                          image: DecorationImage(
-                              image: AssetImage(AppImages.appbardesign),
-                              fit: BoxFit.cover)),
-                      child: SafeArea(
-                          child: Column(children: [
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(children: [
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          const CustomBackButton(),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          InterCustomText(
-                            text: 'Book Chats',
-                            textColor: Colors.white,
-                            fontsize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ])
-                      ])))),
+
               SizedBox(
                 height: 57.h,
               ),

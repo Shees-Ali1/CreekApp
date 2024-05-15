@@ -20,6 +20,8 @@ class UserController extends GetxController {
   RxString userSchool = ''.obs;
   RxString userPassword = ''.obs;
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  RxBool isLoading = false.obs;
+
 
   RxList<dynamic> userPurchases = [].obs;
   final HomeController homeController = Get.put(HomeController());
@@ -72,6 +74,7 @@ class UserController extends GetxController {
 
   Future<void> profileUpdate(TextEditingController nameController) async {
     try {
+      isLoading.value = true;
       await FirebaseFirestore.instance
           .collection('userDetails')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -89,7 +92,10 @@ class UserController extends GetxController {
         userImage.value = img;
       }
       userName.value = nameController.text;
+
       Get.back();
+      Get.back();
+      isLoading.value = false;
     } catch (e) {
       print('Error Updateing Profile $e');
     }
@@ -97,8 +103,10 @@ class UserController extends GetxController {
 
   Future<String> updateUserImage(String userId) async {
     try {
+      isLoading.value = true;
+
       // Get a reference to the Firebase Storage location
-      Reference storageReference = FirebaseStorage.instance
+      Reference storageReference = await FirebaseStorage.instance
           .ref()
           .child('profile_images')
           .child('$userId.jpg'); // You can customize the file name as needed
@@ -109,8 +117,10 @@ class UserController extends GetxController {
 
       // Get the download URL of the uploaded image
       String imageUrl = await taskSnapshot.ref.getDownloadURL();
+      isLoading.value = false;
 
       return imageUrl;
+
     } catch (e) {
       print('Error uploading image to Firebase Storage: $e');
       throw e;
@@ -176,7 +186,10 @@ class UserController extends GetxController {
 //   }
 
   Future<void> changePassword(TextEditingController password) async {
+
+
     try {
+      isLoading.value = true;
       final AuthCredential credential = EmailAuthProvider.credential(
         email: userEmail.value,
         password: userPassword.value,
@@ -203,7 +216,7 @@ class UserController extends GetxController {
         'userPassword': password.text,
       });
       // await FirebaseAuth.instance.signOut();
-
+      isLoading.value = false;
       Get.snackbar("Success", "Password updated successfully");
     } catch (error) {
       print('Error updating password');

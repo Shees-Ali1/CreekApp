@@ -12,7 +12,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/home_controller.dart';
 import '../../widgets/custom _backbutton.dart';
+import '../../widgets/custom_appbar.dart';
 
 class ListSellBookScreen extends StatefulWidget {
   final String? title;
@@ -25,27 +27,31 @@ class ListSellBookScreen extends StatefulWidget {
   final String? listingId;
   final String? bookImage;
 
-  const ListSellBookScreen({super.key,
-    this.title,
-    this.bookPart,
-    this.author,
-    this.bookClass,
-    this.bookCondition,
-    this.bookPrice,
-    this.comingFromEdit, this.listingId, this.bookImage});
+  const ListSellBookScreen(
+      {super.key,
+      this.title,
+      this.bookPart,
+      this.author,
+      this.bookClass,
+      this.bookCondition,
+      this.bookPrice,
+      this.comingFromEdit,
+      this.listingId,
+      this.bookImage});
 
   @override
   State<ListSellBookScreen> createState() => _ListSellBookScreenState();
 }
 
 class _ListSellBookScreenState extends State<ListSellBookScreen> {
-  final BookListingController bookListingController = Get.find<
-      BookListingController>();
+  final BookListingController bookListingController =
+      Get.find<BookListingController>();
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   void initState() {
     // TODO: implement initState
-print(widget.bookImage);
+    print(widget.bookImage);
     bookListingController.titleController.text = widget.title!;
     bookListingController.bookPartController.text = widget.bookPart!;
     bookListingController.authorController.text = widget.author!;
@@ -67,60 +73,14 @@ print(widget.bookImage);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+        appBar: CustomAppBar1(
+          homeController: homeController,
+          text: 'Sell Items',
+        ),
         body: SingleChildScrollView(
-
           child: Column(
             children: [
-
-              ClipPath(
-                clipper: OvalBottomBorderClipper(),
-                child: Container(
-                  // height: 200.h,
-                  padding: EdgeInsets.only(bottom: 62.h),
-                  decoration: const BoxDecoration(
-                      color: primaryColor,
-                      image: DecorationImage(
-                          image: AssetImage(AppImages.appbardesign),
-                          fit: BoxFit.cover)),
-                  child: SafeArea(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            const CustomBackButton(),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            InterCustomText(
-                              text: 'Sell Items',
-                              textColor: Colors.white,
-                              fontsize: 20.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(AppIcons.chaticon),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            SvgPicture.asset(AppIcons.notificationIcon),
-                            SizedBox(
-                              width: 23.w,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 14.h,
               ),
@@ -143,44 +103,49 @@ print(widget.bookImage);
               ),
               GetBuilder<BookListingController>(
                   builder: (bookListingController) {
-                    return bookListingController.imageFile == null
-                        ? GestureDetector(
-                      onTap: () {
-                        bookListingController.pickImage();
-                      },
-                      child: Container(
-                        width: 321.w,
-                        height: 129.h,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: primaryColor),
-                            color: primaryColor.withOpacity(0.08)),
-                        child: widget.bookImage==''?SizedBox(
-                            height: 65.h,
-                            width: 68.w,
-                            child: Image.asset(AppImages.pickImage)):Image.network(widget.bookImage.toString(),fit: BoxFit.cover,),
-                      ),
-                    )
-                        : GestureDetector(
-                      onTap: () {
-                        bookListingController.pickImage();
-                      },
-                      child: Container(
-                        width: 321.w,
-                        height: 129.h,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: primaryColor),
-                            color: primaryColor.withOpacity(0.08),
-                            image: DecorationImage(
-                                image:
-                                FileImage(bookListingController.imageFile!),
-                                fit: BoxFit.fill)),
-                      ),
-                    );
-                  }),
+                return bookListingController.imageFile == null
+                    ? GestureDetector(
+                        onTap: () {
+                          bookListingController.pickImage();
+                        },
+                        child: Container(
+                          width: 321.w,
+                          height: 129.h,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: primaryColor),
+                              color: primaryColor.withOpacity(0.08)),
+                          child: widget.bookImage == ''
+                              ? SizedBox(
+                                  height: 65.h,
+                                  width: 68.w,
+                                  child: Image.asset(AppImages.pickImage))
+                              : Image.network(
+                                  widget.bookImage.toString(),
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          bookListingController.pickImage();
+                        },
+                        child: Container(
+                          width: 321.w,
+                          height: 129.h,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: primaryColor),
+                              color: primaryColor.withOpacity(0.08),
+                              image: DecorationImage(
+                                  image: FileImage(
+                                      bookListingController.imageFile!),
+                                  fit: BoxFit.fill)),
+                        ),
+                      );
+              }),
               SizedBox(
                 height: 8.h,
               ),
@@ -302,8 +267,8 @@ print(widget.bookImage);
                       underline: const SizedBox.shrink(),
                       isExpanded: true,
                       value: bookListingController.bookCondition.value,
-                      items:
-                      bookListingController.bookConditions.map((String option) {
+                      items: bookListingController.bookConditions
+                          .map((String option) {
                         return DropdownMenuItem<String>(
                           value: option,
                           child: RalewayCustomText(
@@ -354,10 +319,10 @@ print(widget.bookImage);
 
               GestureDetector(
                 onTap: () {
-                  widget.comingFromEdit == false ?
-                  bookListingController.addBookListing(context) :
-                  bookListingController.updateBookListing(
-                      context, widget.listingId.toString());
+                  widget.comingFromEdit == false
+                      ? bookListingController.addBookListing(context)
+                      : bookListingController.updateBookListing(
+                          context, widget.listingId.toString());
                 },
                 child: Obx(() {
                   return Container(
@@ -369,13 +334,16 @@ print(widget.bookImage);
                           borderRadius: BorderRadius.circular(20.r)),
                       child: bookListingController.isLoading.value == false
                           ? LexendCustomText(
-                        text: "Next",
-                        textColor: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontsize: 18.sp,
-                      )
-                          : Center(child: CircularProgressIndicator(
-                        color: Colors.white,),));
+                              text: "Next",
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontsize: 18.sp,
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ));
                 }),
               ),
               SizedBox(
@@ -393,11 +361,12 @@ class CustomSellTextField extends StatelessWidget {
   final TextInputType? keyboard;
   final Icon? suffixIcon;
 
-  const CustomSellTextField({super.key,
-    this.controller,
-    this.prefixIcon,
-    this.keyboard,
-    this.suffixIcon});
+  const CustomSellTextField(
+      {super.key,
+      this.controller,
+      this.prefixIcon,
+      this.keyboard,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -421,17 +390,17 @@ class CustomSellTextField extends StatelessWidget {
               fillColor: primaryColor.withOpacity(0.08),
               filled: true,
               contentPadding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               suffixIconColor: greenColor
-            // hintText: 'Search',
-            // hintStyle: GoogleFonts.inter(
-            //     textStyle: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 15.11.sp,
-            //         fontWeight: FontWeight.w500)),
-          ),
+              // hintText: 'Search',
+              // hintStyle: GoogleFonts.inter(
+              //     textStyle: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 15.11.sp,
+              //         fontWeight: FontWeight.w500)),
+              ),
         ),
       ),
     );

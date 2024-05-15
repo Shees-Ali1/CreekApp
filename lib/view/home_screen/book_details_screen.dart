@@ -56,13 +56,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               Stack(
                 children: [
                   Center(
-                    child: SizedBox(
-                      height: 400.h,
+                    child: Container(
+                      height: 452.h,
                       width: 282.w,
-                      child: Image.network(
-                        widget.bookDetail['bookImage'],
-                        fit: BoxFit.cover,
-                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                widget.bookDetail['bookImage'],
+                              ))),
                     ),
                   ),
                   SafeArea(

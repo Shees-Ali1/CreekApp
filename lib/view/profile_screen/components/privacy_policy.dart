@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../../const/assets/image_assets.dart';
 import '../../../const/assets/svg_assets.dart';
+import '../../../controller/home_controller.dart';
 import '../../../widgets/custom _backbutton.dart';
+import '../../../widgets/custom_appbar.dart';
 import '../../../widgets/custom_text.dart';
 
 class PrivacyPolicy extends StatelessWidget {
@@ -13,52 +16,16 @@ class PrivacyPolicy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.find<HomeController>();
+
     return Scaffold(
+        appBar: CustomAppBar1(
+          homeController: homeController,
+          text: 'Privacy Policy',
+        ),
         body: SingleChildScrollView(
             child: Column(children: [
-      Column(children: [
-        ClipPath(
-            clipper: OvalBottomBorderClipper(),
-            child: Container(
-                height: 160.h,
-                // padding: EdgeInsets.symmetric(vertical: 50.h),
-                decoration: const BoxDecoration(
-                    color: Color(0xff29604E),
-                    image: DecorationImage(
-                        image: AssetImage(AppImages.appbardesign),
-                        fit: BoxFit.cover)),
-                child: SafeArea(
-                  child: Column(children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Row(children: [
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const CustomBackButton(),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      InterCustomText(
-                        text: 'Privacy Policy',
-                        textColor: Colors.white,
-                        fontsize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      const Spacer(),
-                      SvgPicture.asset(AppIcons.chaticon),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      SvgPicture.asset(AppIcons.notificationIcon),
-                      SizedBox(
-                        width: 23.w,
-                      ),
-                    ]),
-                  ]),
-                )))
-      ]),
+
       SizedBox(
         height: 17.h,
       ),

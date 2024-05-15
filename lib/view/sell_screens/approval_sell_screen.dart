@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
+import '../../controller/home_controller.dart';
 import '../../widgets/custom _backbutton.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_route.dart';
 import '../nav_bar/app_nav_bar.dart';
 class ApprovalSellScreen extends StatelessWidget {
@@ -15,61 +18,17 @@ class ApprovalSellScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.find<HomeController>();
+
     return Scaffold(
+        appBar: CustomAppBar1(
+          homeController: homeController,
+          text: 'Sell Items',
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              ClipPath(
-                clipper: OvalBottomBorderClipper(),
-                child:  Container(
-                  // height: 200.h,
-                  padding: EdgeInsets.only(bottom: 62.h),
-                  decoration: const BoxDecoration(
-                      color: primaryColor,
 
-                      image: DecorationImage(image: AssetImage(AppImages.appbardesign),fit: BoxFit.cover)
-                  ),
-                  child: SafeArea(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            const CustomBackButton(),
-
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            InterCustomText(
-                              text: 'Sell Items',
-                              textColor: Colors.white,
-                              fontsize: 20.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset(AppIcons.chaticon),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            SvgPicture.asset(AppIcons.notificationIcon),
-                            SizedBox(
-                              width: 23.w,
-                            ),
-                          ],
-                        ),
-
-
-                      ],
-                    ),
-                  ),
-                ),
-
-              ),
               Container(
             margin: EdgeInsets.symmetric(vertical: 63.h),
                 width: 321.w,

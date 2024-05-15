@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../controller/bookListing_controller.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
 import 'components/books_filter_sheet.dart';
@@ -45,6 +46,11 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
 
     // final TextEditingController bookController=TextEditingController();
     return Scaffold(
+        appBar: CustomAppBarHome(
+          homeController: homeController,
+           userController: userController,
+        ),
+
         resizeToAvoidBottomInset: false,
         // key: homeController.scaffoldKey,
         // drawer: MyDrawer(),
@@ -53,141 +59,7 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
 
           child: Column(
             children: [
-              ClipPath(
-                clipper: OvalBottomBorderClipper(),
-                child: Container(
-                  // height: 200.h,
-                  // padding: EdgeInsets.symmetric(vertical: 50.h),
-                  decoration: const BoxDecoration(
-                      color: primaryColor,
-                      image: DecorationImage(
-                          image: AssetImage(AppImages.appbardesign),
-                          fit: BoxFit.cover)),
-                  child: SafeArea(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  homeController.openDrawer();
-                                },
-                                child: SvgPicture.asset(AppIcons.drawericon)),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Obx(() {
-                              return SizedBox(
-                                width: 210.w,
-                                child: InterCustomText(
-                                  text: 'Hey, ${userController.userName.value}',
-                                  textColor: Colors.white,
-                                  fontsize: 20.sp,
-                                  fontWeight: FontWeight.w600,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              );
-                            }),
-                            const Spacer(),
-                            GestureDetector(
-                                onTap: () {
-                                  CustomRoute.navigateTo(
-                                      context, const MainChat());
-                                },
-                                child: SvgPicture.asset(AppIcons.chaticon)),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  CustomRoute.navigateTo(
-                                      context, const NotificationScreen());
-                                },
-                                child: SvgPicture.asset(
-                                    AppIcons.notificationIcon)),
-                            SizedBox(
-                              width: 23.w,
-                            ),
-                          ],
-                        ),
-                        // SizedBox(
-                        //   height: 20.h,
-                        // ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 40.0.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 273.w,
-                                child: TextField(
-                                  controller: homeController
-                                      .bookSearchController,
 
-                                  style: GoogleFonts.inter(
-                                      textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.11.sp,
-                                          fontWeight: FontWeight.w500)),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    fillColor: Colors.black.withOpacity(0.45),
-                                    filled: true,
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 10.w, vertical: 15.h),
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      color: Colors.white,
-                                    ),
-                                    hintText: 'Search',
-                                    hintStyle: GoogleFonts.inter(
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.11.sp,
-                                            fontWeight: FontWeight.w500)),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              GestureDetector(
-                                  onTap: () {
-                                    Get.bottomSheet(
-                                      isScrollControlled: true,
-                                      Container(
-                                        width: double.infinity,
-                                        height: 703.h,
-                                        padding: EdgeInsets.all(20.sp),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(30.r),
-                                                topRight:
-                                                Radius.circular(30.r))),
-                                        child: const BooksFilterBottomSheet(),
-                                      ),
-                                    );
-                                  },
-                                  child: SvgPicture.asset(AppIcons.filtericon)),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 18.h,
               ),
