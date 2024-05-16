@@ -222,14 +222,14 @@ class _ProfileState extends State<Profile> {
                   SizedBox(
                     height: 9.h,
                   ),
-                  ProfileWidget(
-                    onTap: () {},
-                    title: 'Settings',
-                    imgUrl: AppIcons.settingIcon,
-                  ),
-                  SizedBox(
-                    height: 9.h,
-                  ),
+                  // ProfileWidget(
+                  //   onTap: () {},
+                  //   title: 'Settings',
+                  //   imgUrl: AppIcons.settingIcon,
+                  // ),
+                  // SizedBox(
+                  //   height: 9.h,
+                  // ),
                   ProfileWidget(
                     onTap: () {
                       CustomRoute.navigateTo(context, const TermCond());

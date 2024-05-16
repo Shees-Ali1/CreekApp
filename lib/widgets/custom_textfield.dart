@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class InputField extends StatelessWidget {
 
   // final String label;
+  final contentPadding;
   final String hint;
   // final String preIcon;
   // final FocusNode inputFocus;
@@ -18,6 +19,7 @@ class InputField extends StatelessWidget {
 
   const InputField(
 
+
       {super.key,
         // required this.label,
         required this.hint,
@@ -30,11 +32,12 @@ class InputField extends StatelessWidget {
         this.inputTextStyle = const TextStyle(color: Colors.black),
         this.controller,
         this.cursorColor,
-        this.validator, this.readOnly=false});
+        this.validator, this.readOnly=false, this.contentPadding});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       readOnly: readOnly,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
@@ -46,6 +49,7 @@ class InputField extends StatelessWidget {
       style: inputTextStyle,
       cursorColor: cursorColor,
       decoration: InputDecoration(
+
         filled: true,
         fillColor: const Color(0xff29604E).withOpacity(0.06),
         hintText: hint,
@@ -57,7 +61,7 @@ class InputField extends StatelessWidget {
         //   child: SvgPicture.asset(preIcon),
         // ),
         contentPadding:
-        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+       contentPadding,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.r),
           borderSide: const BorderSide(color: Colors.transparent),

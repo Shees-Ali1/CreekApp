@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 
 import '../../controller/user_controller.dart';
 import '../../widgets/custom_button.dart';
+import '../profile_screen/components/customer_support.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -100,9 +101,14 @@ class MyDrawer extends StatelessWidget {
             //   text: 'Change Password',
             //   image: AppIcons.password,
             // ),
-            const DrawerItemsWidget(
+             DrawerItemsWidget(
               text: 'Customer Support',
               image: AppIcons.customercare,
+              onTap: () {
+                CustomRoute.navigateTo(context,  CustomerSupport());
+
+
+              },
             ),
             DrawerItemsWidget(
               onTap: () {
