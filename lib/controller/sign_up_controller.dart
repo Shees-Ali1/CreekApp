@@ -190,6 +190,10 @@ class SignUpController extends GetxController {
         'userEmail': emailController.text,
         'userSchool': homeController.classOption.value,
         'userImage':'',
+        'verified': false,
+        'userPurchases':[]
+
+
 
       },SetOptions(merge: true));
       userController.userName.value = nameController.text;

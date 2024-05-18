@@ -85,7 +85,7 @@ class HomeController extends GetxController{
           'bookCondition': bookData['bookCondition'],
           'bookPrice': bookData['bookPrice'],
           'bookPosted': bookData['bookPosted'],
-          'sellerId': bookData['sellerId'],
+          'sellerId': bookData['sellerId'] ?? "n/a",
           'bookDescription': bookData['bookDescription'],
           'approval': bookData['approval'],
           'listingId':bookData['listingId']

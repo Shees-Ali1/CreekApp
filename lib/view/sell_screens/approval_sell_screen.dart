@@ -26,69 +26,71 @@ class ApprovalSellScreen extends StatelessWidget {
           text: 'Sell Items',
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
+          child: Center(
+            child: Column(
 
-              Container(
-            margin: EdgeInsets.symmetric(vertical: 63.h),
-                width: 321.w,
-                padding: EdgeInsets.only(top: 63.h,),
-                // alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(
-                        color:  primaryColor
-                    ),
-                    color:  primaryColor.withOpacity(0.08)
-                ),
-                child: Column(
+              children: [
 
-                  children: [
-                    Padding(
-                      padding:  EdgeInsets.symmetric(horizontal:12.0.w),
-                      child: SizedBox(
-                        width: 300.w,
-                        child: InterCustomText(
-                          textAlign:  TextAlign.center,
-                          text: 'Your item is pending approval from Creek',
-                          textColor: headingBlackColor,
-                          fontsize: 20.sp,
-                          fontWeight: FontWeight.w500,
+                Container(
+              margin: EdgeInsets.symmetric(vertical: 63.h),
+                  width: 321.w,
+                  padding: EdgeInsets.only(top: 63.h,),
+                  // alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(
+                          color:  primaryColor
+                      ),
+                      color:  primaryColor.withOpacity(0.08)
+                  ),
+                  child: Column(
+
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.symmetric(horizontal:12.0.w),
+                        child: SizedBox(
+                          width: 300.w,
+                          child: InterCustomText(
+                            textAlign:  TextAlign.center,
+                            text: 'Your item is pending approval from Creek',
+                            textColor: headingBlackColor,
+                            fontsize: 20.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 32.h,),
-                    SizedBox(
-                      height: 137.h,
-                      width: 135.w,
-                      child: Image.asset(AppImages.approvalPending),
-
-                    ),
-                    SizedBox(height: 52.h,),
-                    GestureDetector(
-                      onTap: () {
-                    CustomRoute1.navigateAndRemoveUntil(context, const BottomNavBar(), (route) => false);
-                      },
-                      child: Container(
-                          height: 58.h,
-                          width: 284.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color:  primaryColor,
-                              borderRadius: BorderRadius.circular(20.r)
-                          ),
-                          child:
-                          LexendCustomText(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
-
-
+                      SizedBox(height: 32.h,),
+                      SizedBox(
+                        height: 137.h,
+                        width: 135.w,
+                        child: Image.asset(AppImages.approvalPending),
 
                       ),
-                    ),
-                    SizedBox(height: 17.h,),
+                      SizedBox(height: 52.h,),
+                      GestureDetector(
+                        onTap: () {
+                      CustomRoute1.navigateAndRemoveUntil(context, const BottomNavBar(), (route) => false);
+                        },
+                        child: Container(
+                            height: 58.h,
+                            width: 284.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color:  primaryColor,
+                                borderRadius: BorderRadius.circular(20.r)
+                            ),
+                            child:
+                            LexendCustomText(text: "Back to Home", textColor: Colors.white, fontWeight: FontWeight.w400,fontsize: 18.sp,)
 
-                  ],
-                )
-              ),
+
+
+                        ),
+                      ),
+                      SizedBox(height: 17.h,),
+
+                    ],
+                  )
+                ),
 
 
 
@@ -96,7 +98,8 @@ class ApprovalSellScreen extends StatelessWidget {
 
 
 
-            ],
+              ],
+            ),
           ),
         )
     );

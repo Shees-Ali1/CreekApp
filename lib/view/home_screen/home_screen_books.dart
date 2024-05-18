@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../controller/bookListing_controller.dart';
+import '../../controller/wallet_controller.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_route.dart';
 import '../notification/notification_screen.dart';
@@ -33,6 +34,8 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
   final HomeController homeController = Get.find<HomeController>();
   final UserController userController = Get.find<UserController>();
   final BookListingController bookListingController = Get.find<BookListingController>();
+  final WalletController walletController = Get.find();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,6 +43,8 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
     bookListingController.fetchUserBookListing();
     userController.fetchUserData();
     userController.checkIfAccountIsDeleted();
+    walletController.    fetchuserwallet();
+
   }
   @override
   Widget build(BuildContext context) {

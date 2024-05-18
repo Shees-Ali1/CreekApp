@@ -5,6 +5,7 @@ import 'package:creekapp/const/assets/image_assets.dart';
 import 'package:creekapp/controller/chat_controller.dart';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:creekapp/controller/user_controller.dart';
+import 'package:creekapp/controller/wallet_controller.dart';
 import 'package:creekapp/view/home_screen/components/buy_dialog_box.dart';
 import 'package:creekapp/view/sell_screens/approval_sell_screen.dart';
 import 'package:creekapp/widgets/custom_route.dart';
@@ -19,6 +20,7 @@ import 'notification_controller.dart';
 
 class BookListingController extends GetxController {
   final HomeController homeController = Get.find<HomeController>();
+  final WalletController walletController = Get.put(WalletController());
   final NotificationController notificationController = Get.put(NotificationController());
   final ChatController chatController=Get.put(ChatController());
   final UserController userController = Get.put(UserController());
@@ -310,7 +312,7 @@ String imageUrl='';
 
 // **************buy book**********
   RxBool isLoading=false.obs;
-Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,) async{
+Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,int purchasePrice) async{
    try{
      isLoading.value=true;
      // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
@@ -325,7 +327,9 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
        'buyerId':FirebaseAuth.instance.currentUser!.uid,
        'orderDate':DateTime.now(),
        'deliveryStatus':false,
-       'sellerId':sellerId
+       'sellerId':sellerId,
+       'buyerApproval':false,
+       'sellerApproval':false
      });
      // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
      //   'orderId':docRef.id
@@ -335,6 +339,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
        'orderId':docRef.id
      },SetOptions(merge: true)
      );
+     await walletController.updatebalance(purchasePrice);
      await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
       'userPurchases':FieldValue.arrayUnion([listingId]),
      },SetOptions(merge: true));

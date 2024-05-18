@@ -147,8 +147,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                 ? "Order Completed"
                                 : widget.seller ==
                                         FirebaseAuth.instance.currentUser!.uid
-                                    ? 'Click here if u delivered the order'
-                                    : 'Click here if u received the order',
+                                ? orderController.sellerApproval.value == true
+                                ? 'Waiting buyer to approve'
+
+                                    : 'Click here if u delivered the order'
+                                    : orderController.buyerApproval.value == true?
+                            'Waiting seller to approve': 'Click here if u received the order',
                             textColor: Colors.white,
                             fontWeight: FontWeight.w400,
                           )

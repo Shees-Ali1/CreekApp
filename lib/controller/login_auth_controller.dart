@@ -165,6 +165,8 @@ class LoginAuthController extends GetxController {
           'userEmail': uEmail,
           'userImage': uPhoto,
           'userName': uName,
+          'verified': false,
+          'userPurchases':[]
           // 'pushToken': devicetoken,
         });
         // _authController.signupName.value = uName!;

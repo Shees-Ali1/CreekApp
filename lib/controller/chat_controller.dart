@@ -115,6 +115,7 @@ class ChatController extends GetxController {
 RxString orderId =''.obs;
   RxString sellerId = ''.obs;
   RxString buyerId = ''.obs;
+  RxBool deliverystatus = false.obs;
   Future<void> getorderId(String bookId) async {
   try{
     QuerySnapshot snapshot = await FirebaseFirestore.instance
@@ -127,11 +128,13 @@ RxString orderId =''.obs;
       orderId.value = order['orderId'];
       sellerId.value = order['sellerId'];
       buyerId.value = order['buyerId'];
+      deliverystatus.value = order['deliveryStatus'];
       print(orderId.value);
       print(sellerId.value);
       print(buyerId.value);
       update();
     }else{
+      deliverystatus.value =true;
       print('There is no order');
     }
 

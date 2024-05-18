@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/Auth/login_view.dart';
 import 'package:creekapp/controller/home_controller.dart';
+import 'package:creekapp/controller/wallet_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,6 +15,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserController extends GetxController {
+
   RxString userName = ''.obs;
   RxString userImage = ''.obs;
   RxString userEmail = ''.obs;
@@ -21,6 +23,7 @@ class UserController extends GetxController {
   RxString userPassword = ''.obs;
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   RxBool isLoading = false.obs;
+  RxBool verified=false.obs;
 
 
   RxList<dynamic> userPurchases = [].obs;
@@ -55,6 +58,8 @@ class UserController extends GetxController {
           userEmail.value = userInfo["userEmail"] ?? "";
           homeController.classOption.value = userInfo["userSchool"] ?? "";
           userPassword.value = userInfo['userPassword'];
+          verified.value = userInfo["verified"] ?? false;
+
           userImage.value = userInfo["userImage"] ?? "";
           userPurchases.value = userInfo['userPurchases'];
 

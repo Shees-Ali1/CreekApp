@@ -62,6 +62,8 @@ dependencies:
   http:
   timeago:
   cached_network_image:
+  flutter_stripe: ^10.1.1
+
 
 
 

@@ -5,6 +5,7 @@ import 'package:creekapp/controller/notification_controller.dart';
 import 'package:creekapp/controller/order_controller.dart';
 import 'package:creekapp/controller/sign_up_controller.dart';
 import 'package:creekapp/controller/user_controller.dart';
+import 'package:creekapp/controller/wallet_controller.dart';
 import 'package:creekapp/firebase_options.dart';
 import 'package:creekapp/view/splash/splash_sceen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,5 +28,6 @@ class UserBinding extends Bindings {
     Get.put(UserController());
     Get.put(NotificationController());
     Get.put(OrderController());
+    Get.put(WalletController());
   }
 }

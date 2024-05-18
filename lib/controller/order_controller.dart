@@ -19,6 +19,8 @@ class OrderController extends GetxController {
       if (documentSnapshot.exists) {
         dynamic order = documentSnapshot.data();
         orderStatus.value = order['deliveryStatus'];
+        buyerApproval.value =order['buyerApproval'];
+        sellerApproval.value =order['sellerApproval'];
         print(order['deliveryStatus']);
         update();
       } else {
@@ -35,18 +37,54 @@ class OrderController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  Future<void> changeOrderStatus(
-      String orderId, String buyerId, String bookId, String bookName,String sellerId) async {
+RxBool buyerApproval =false.obs;
+RxBool sellerApproval =false.obs;
+  Future<void> changeOrderStatus(String orderId, String buyerId, String bookId, String bookName,String sellerId) async {
     try {
       isLoading.value = true;
-
-      await FirebaseFirestore.instance
+      if(sellerId == FirebaseAuth.instance.currentUser!.uid){
+        await FirebaseFirestore.instance
+            .collection('orders')
+            .doc(orderId)
+            .update({
+          'sellerApproval': true,
+        });
+        sellerApproval.value=true;
+      }else{
+        await FirebaseFirestore.instance
+            .collection('orders')
+            .doc(orderId)
+            .update({
+          'buyerApproval': true,
+        });
+        buyerApproval.value=true;
+      }
+      DocumentSnapshot snapshot =   await FirebaseFirestore.instance
           .collection('orders')
           .doc(orderId)
-          .update({
-        'deliveryStatus': true,
-      });
+          .get();
+      if(snapshot.exists){
+        dynamic status = snapshot.data();
+        if(status['sellerApproval']&&status['buyerApproval'] == true){
+          await FirebaseFirestore.instance
+              .collection('orders')
+              .doc(orderId)
+              .update({
+            'deliveryStatus': true,
+          });
+          orderStatus.value = true;
+
+        }
+      }
+
+
+
+      // await FirebaseFirestore.instance
+      //     .collection('orders')
+      //     .doc(orderId)
+      //     .update({
+      //   'deliveryStatus': true,
+      // });
       await FirebaseFirestore.instance
           .collection('userNotifications')
           .doc(buyerId)
@@ -75,7 +113,6 @@ class OrderController extends GetxController {
       }
 
 
-      orderStatus.value = true;
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
