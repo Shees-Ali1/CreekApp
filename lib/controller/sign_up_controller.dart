@@ -196,6 +196,11 @@ class SignUpController extends GetxController {
 
 
       },SetOptions(merge: true));
+      await FirebaseFirestore.instance.collection('wallet').doc(userId).set(
+          {
+            'balance':0,
+            'userId':userId,
+          },SetOptions(merge: true));
       userController.userName.value = nameController.text;
       Get.offAll(SignupProfilePic());
     } catch (e) {

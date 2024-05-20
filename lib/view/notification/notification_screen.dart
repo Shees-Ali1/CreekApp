@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/controller/notification_controller.dart';
+import 'package:creekapp/controller/order_controller.dart';
 import 'package:creekapp/widgets/custom%20_backbutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
 import '../../const/color.dart';
@@ -26,6 +26,7 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   final NotificationController notificationController = Get.find();
   final HomeController homeController = Get.find<HomeController>();
+  final OrderController orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +135,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         ),
                                         CustomButton(
                                             text: 'Yes',
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              DocumentSnapshot docref =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection(
+                                                          'userNotifications')
+                                                      .doc(FirebaseAuth.instance
+                                                          .currentUser!.uid)
+                                                      .collection(
+                                                          'notifications')
+                                                      .doc(notification[index]
+                                                          ['notificationId'])
+                                                      .get();
+                                              dynamic sellerId = docref.data();
+                                              print(sellerId);
+                                              await FirebaseFirestore.instance
+                                                  .collection('orders')
+                                                  .doc(notification[index]
+                                              ['orderId'])
+                                                  .update({
+                                                'buyerApproval': true,
+                                              });
+                                            },
                                             backgroundColor: primaryColor,
                                             textColor: whiteColor),
                                         SizedBox(
@@ -188,7 +211,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       });
                 }
               }),
-                  SizedBox(height: 20.h,)
+          SizedBox(
+            height: 20.h,
+          )
         ])));
   }
 }

@@ -289,14 +289,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                     widget.bookDetail['sellerId'],
                                     context,
                                     widget.bookDetail['bookName'],
-                                    widget.bookDetail['bookPrice'])
+                                    widget.bookDetail['bookPrice'],widget.bookDetail['bookImage'])
+
                                 : widget.comingfromSellScreen == true
                                     ? bookListingController
                                         .removeListingfromSell(widget.index,
                                             widget.bookDetail['listingId'])
                                     : homeController.removeBookListing(
                                         widget.index,
-                                        widget.bookDetail['listingId']);}else{
+                                        widget.bookDetail['listingId']);}
+                           else{
                              Get.snackbar('Your Profile is UnderReview', 'Wait for Admin Approval');
                            }
                           },

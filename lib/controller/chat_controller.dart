@@ -57,7 +57,7 @@ class ChatController extends GetxController {
 
 //   Create chat with seller when buy book
   Future<void> createChatConvo(String listingId, String orderId,
-      String bookName, String sellerId) async {
+      String bookName, String sellerId,String bookImage) async {
     try {
       // On buyer side chat creation
 
@@ -75,6 +75,7 @@ class ChatController extends GetxController {
         'bookName': bookName,
         'buyerId': FirebaseAuth.instance.currentUser!.uid,
         'person': 'buyer',
+        'bookImage':bookImage
       }, SetOptions(merge: true));
       print("chat created");
       // On seller side chat creation
@@ -92,6 +93,7 @@ class ChatController extends GetxController {
         'bookName': bookName,
         'buyerId': FirebaseAuth.instance.currentUser!.uid,
         'person': 'seller',
+        'bookImage':bookImage
       }, SetOptions(merge: true));
       print("chat created");
       // creating a message with address

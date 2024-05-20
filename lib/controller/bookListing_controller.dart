@@ -312,60 +312,71 @@ String imageUrl='';
 
 // **************buy book**********
   RxBool isLoading=false.obs;
-Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,int purchasePrice) async{
+Future<void> buyBook(String listingId,String sellerId,BuildContext context,String bookName,int purchasePrice,String bookImage) async{
    try{
      isLoading.value=true;
-     // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
-     //   'bookId':listingId,
-     //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
-     //   'orderDate':DateTime.now(),
-     //   'deliveryStatus':false
-     // });
-     DocumentReference docRef=   await FirebaseFirestore.instance.collection('orders').add({
-       // listing id is our book id
-       'bookId':listingId,
-       'buyerId':FirebaseAuth.instance.currentUser!.uid,
-       'orderDate':DateTime.now(),
-       'deliveryStatus':false,
-       'sellerId':sellerId,
-       'buyerApproval':false,
-       'sellerApproval':false
-     });
-     // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
-     //   'orderId':docRef.id
-     // },SetOptions(merge: true)
-     // );
-     await FirebaseFirestore.instance.collection('orders').doc(docRef.id).set({
-       'orderId':docRef.id
-     },SetOptions(merge: true)
-     );
-     await walletController.updatebalance(purchasePrice);
-     await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
-      'userPurchases':FieldValue.arrayUnion([listingId]),
-     },SetOptions(merge: true));
-     userController.userPurchases.add(listingId);
-     showDialog(
-       context: context,
-       builder: (BuildContext context) {
-         return const AlertDialog(
-           // title: Text('Hello!'),
+     // Check if balance is zero
+     if (walletController.walletbalance.value == 0) {
+       Get.snackbar('Low Balance', ' Add money to their wallet');
+       isLoading.value=false;
 
-             content: BuyDialogBox()
+     }
+     else{
+       // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
+       //   'bookId':listingId,
+       //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
+       //   'orderDate':DateTime.now(),
+       //   'deliveryStatus':false
+       // });
+       DocumentReference docRef=   await FirebaseFirestore.instance.collection('orders').add({
+         // listing id is our book id
+         'bookId':listingId,
+         'buyerId':FirebaseAuth.instance.currentUser!.uid,
+         'orderDate':DateTime.now(),
+         'deliveryStatus':false,
+         'sellerId':sellerId,
+         'buyerApproval':false,
+         'sellerApproval':false,
+         'buyingprice':purchasePrice
+       });
+       // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
+       //   'orderId':docRef.id
+       // },SetOptions(merge: true)
+       // );
+       await FirebaseFirestore.instance.collection('orders').doc(docRef.id).set({
+         'orderId':docRef.id
+       },SetOptions(merge: true)
+       );
+       await walletController.updatebalance(purchasePrice);
+       await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
+         'userPurchases':FieldValue.arrayUnion([listingId]),
+       },SetOptions(merge: true));
+       userController.userPurchases.add(listingId);
+       showDialog(
+         context: context,
+         builder: (BuildContext context) {
+           return const AlertDialog(
+             // title: Text('Hello!'),
 
-         );
-       },
-     );
-     await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
+               content: BuyDialogBox()
 
-     await notificationController.storeNotification(50, docRef.id, listingId,bookName);
+           );
+         },
+       );
+       await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
 
-await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId);
-   await  chatController.getorderId(listingId);
+       await notificationController.storeNotification(50, docRef.id, listingId,bookName);
 
-     // await checkUserBookOrder(listingId,sellerId);
+       await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId,bookImage);
+       await  chatController.getorderId(listingId);
+
+       // await checkUserBookOrder(listingId,sellerId);
 
 
-     print("book bought");
+       print("book bought");
+       isLoading.value=false;
+     }
+
      isLoading.value=false;
 
    }catch(e){

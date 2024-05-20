@@ -169,6 +169,11 @@ class LoginAuthController extends GetxController {
           'userPurchases':[]
           // 'pushToken': devicetoken,
         });
+        await FirebaseFirestore.instance.collection('wallet').doc(uid).set(
+            {
+              'balance':0,
+              'userId':uid,
+            },SetOptions(merge: true));
         // _authController.signupName.value = uName!;
         // _authController.signupEmail.value = uEmail!;
         // _authController.profileURL.value = uPhoto!;

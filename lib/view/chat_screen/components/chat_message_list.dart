@@ -109,7 +109,7 @@ class ChatMessageList extends StatelessWidget {
                                                   context,
                                                   ChatScreen(
                                                     image:
-                                                        bookData['bookImage'],
+                                                        chat['bookImage']??'',
                                                     chatName: chat['buyerId'] !=
                                                             FirebaseAuth
                                                                 .instance
@@ -142,7 +142,7 @@ class ChatMessageList extends StatelessWidget {
                                                   shape: BoxShape.circle,
                                                   image: DecorationImage(
                                                       image: NetworkImage(
-                                                    bookData['bookImage'],
+                                                    chat['bookImage']??'',
                                                   ))),
                                               child: Padding(
                                                 padding:

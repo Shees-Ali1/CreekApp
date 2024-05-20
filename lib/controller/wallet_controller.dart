@@ -3,19 +3,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import 'package:get/state_manager.dart';
-import 'package:timeago/timeago.dart'as timeago;
+import 'package:timeago/timeago.dart' as timeago;
 
 class WalletController extends GetxController {
   RxInt walletbalance = 0.obs;
 
   Future<void> fetchuserwallet() async {
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-        .collection('wallet')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    dynamic list = documentSnapshot.data();
-    walletbalance.value = list['balance'];
-    print(walletbalance.value);
+    try {
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('wallet')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      if (documentSnapshot.exists) {
+        dynamic list = documentSnapshot.data();
+        walletbalance.value = list['balance'];
+        print(walletbalance.value);
+
+
+      } else {
+        // Handle case where the document does not exist
+        print("Wallet document does not exist.");
+      }
+    } catch (e) {
+      // Handle errors
+      print("An error occurred while fetching the wallet: $e");
+    }
   }
 
   Future<void> updatebalance(int purchasePrice) async {
@@ -25,13 +38,14 @@ class WalletController extends GetxController {
           .collection('wallet')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'balance': newbalance});
-      await storetransactionhistory(purchasePrice,'buy','Walmart');
+      await storetransactionhistory(purchasePrice, 'buy', 'Walmart');
     } catch (e) {
       print('Error update balance$e');
     }
   }
 
-  Future<void> storetransactionhistory(int purchasePrice ,String purchaseType,String purchaseName) async {
+  Future<void> storetransactionhistory(
+      int purchasePrice, String purchaseType, String purchaseName) async {
     try {
       await FirebaseFirestore.instance
           .collection('wallet')
@@ -41,21 +55,20 @@ class WalletController extends GetxController {
         'purchasePrice': purchasePrice,
         'purchaseDate': DateTime.timestamp(),
         'purchaseName': purchaseName,
-        'purchaseType':purchaseType
+        'purchaseType': purchaseType
       });
     } catch (e) {
       print('Error storeTransaction$e');
     }
   }
+
   Future<void> storetopup(int purchasePrice) async {
     try {
       await FirebaseFirestore.instance
           .collection('wallet')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-
           .update({
         'balance': purchasePrice,
-
       });
     } catch (e) {
       print('Error storeTransaction$e');
@@ -67,9 +80,10 @@ class WalletController extends GetxController {
     QuerySnapshot data = await FirebaseFirestore.instance
         .collection('wallet')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('transaction').orderBy('purchaseDate',descending: true)
+        .collection('transaction')
+        .orderBy('purchaseDate', descending: true)
         .get();
-transaction.clear();
+    transaction.clear();
     data.docs.forEach((tran) {
       transaction.add({
         'purchasePrice': tran['purchasePrice'],
@@ -79,6 +93,7 @@ transaction.clear();
       });
     });
   }
+
   String formattransactionTime(Timestamp timestamp) {
     DateTime dateTime = timestamp.toDate();
     DateTime now = DateTime.now();
@@ -92,6 +107,4 @@ transaction.clear();
       return timeago.format(dateTime);
     }
   }
-
-
 }
