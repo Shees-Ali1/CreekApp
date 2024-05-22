@@ -96,96 +96,119 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               EdgeInsets.only(left: 23.5, right: 24.w),
                           horizontalTitleGap: 8,
                           onTap: () {
-                            showModalBottomSheet(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.r)),
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return SizedBox(
-                                    width: double.infinity,
-                                    height: 241.h,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Container(
-                                          width: 30.w,
-                                          height: 4.h,
-                                          decoration: BoxDecoration(
-                                              color: Colors.black,
-                                              borderRadius:
-                                                  BorderRadius.circular(4.r)),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Center(
-                                            child: WorkSansCustomText(
-                                          text:
-                                              'Mike has marked this sale as complete,\n     did you finish this transaction?”',
-                                          textColor: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          fontsize: 16.sp,
-                                        )),
-                                        SizedBox(
-                                          height: 14.h,
-                                        ),
-                                        CustomButton(
-                                            text: 'Yes',
-                                            onPressed: () async {
-                                              DocumentSnapshot docref =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection(
-                                                          'userNotifications')
-                                                      .doc(FirebaseAuth.instance
-                                                          .currentUser!.uid)
-                                                      .collection(
-                                                          'notifications')
-                                                      .doc(notification[index]
-                                                          ['notificationId'])
-                                                      .get();
-                                              dynamic sellerId = docref.data();
-                                              print(sellerId);
-                                              await FirebaseFirestore.instance
-                                                  .collection('orders')
-                                                  .doc(notification[index]
-                                              ['orderId'])
-                                                  .update({
-                                                'buyerApproval': true,
-                                              });
-                                              Get.back();
-                                            },
-                                            backgroundColor: primaryColor,
-                                            textColor: whiteColor),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        CustomButton(
-                                            text: 'No, I have not recieved.',
-                                            onPressed: () async {
+                            if(notification[index]['notificationType']=='seller'){
+                              showModalBottomSheet(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.r)),
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SizedBox(
+                                      width: double.infinity,
+                                      height: 241.h,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Container(
+                                            width: 30.w,
+                                            height: 4.h,
+                                            decoration: BoxDecoration(
+                                                color: Colors.black,
+                                                borderRadius:
+                                                BorderRadius.circular(4.r)),
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Center(
+                                              child: WorkSansCustomText(
+                                                text:
+                                                'Seller has marked this sale as complete,\n     did you finish this transaction?”',
+                                                textColor: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontsize: 16.sp,
+                                              )),
+                                          SizedBox(
+                                            height: 14.h,
+                                          ),
+                                          CustomButton(
+                                              text: 'Yes',
+                                              onPressed: () async {
+                                                // First true statuses both
+                                                await FirebaseFirestore.instance
+                                                    .collection('orders')
+                                                    .doc(notification[index]['orderId']).update({
+                                                  'buyerApproval': true,'deliveryStatus':true});
 
-                                              await FirebaseFirestore.instance
-                                                  .collection('orders')
-                                                  .doc(notification[index]
-                                              ['orderId'])
-                                                  .update({
-                                                'sellerApproval': false,
-                                                'deliveryStatus':false
-                                              });
-                                              Get.back();
-                                            },
-                                            backgroundColor:
-                                                primaryColor.withOpacity(0.2),
-                                            textColor: whiteColor),
-                                      ],
-                                    ),
-                                  );
-                                });
+
+                                                // Store notification in seller id for successfull purchase
+                                                DocumentSnapshot docref =
+                                                await FirebaseFirestore.instance.collection('userNotifications').doc(FirebaseAuth.instance.currentUser!.uid)
+                                                    .collection('notifications').doc(notification[index]['notificationId']).get();
+                                                dynamic data=docref.data();
+                                                String sellerId= data['userId'];
+                                           DocumentReference docRefs=     await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').add({
+                                                  'bookId': notification[index]['bookId'],
+                                                  'orderId': notification[index]['orderId'],
+                                                  // 'price':price,
+                                                  'time': DateTime.timestamp(),
+                                                  'title': "Buyer has marked book order as delivered",
+                                                  'userId': FirebaseAuth.instance.currentUser!.uid,
+                                                  'notificationType':'buyer'
+                                                });
+                                                 await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').doc(docRefs.id).update({
+                                                  'notificationId': docRefs.id});
+
+                                                Get.back();
+                                              },
+                                              backgroundColor: primaryColor,
+                                              textColor: whiteColor),
+                                          SizedBox(
+                                            height: 10.h,
+                                          ),
+                                          CustomButton(
+                                              text: 'No, I have not recieved.',
+                                              onPressed: () async {
+                                                // First false statuses both
+                                                await FirebaseFirestore.instance
+                                                    .collection('orders')
+                                                    .doc(notification[index]['orderId']).update({
+                                                  'buyerApproval': false,'deliveryStatus':false,'sellerApproval':false});
+
+
+                                                // Store notification in seller id for successfull purchase
+                                                DocumentSnapshot docref =
+                                                await FirebaseFirestore.instance.collection('userNotifications').doc(FirebaseAuth.instance.currentUser!.uid)
+                                                    .collection('notifications').doc(notification[index]['notificationId']).get();
+                                                dynamic data=docref.data();
+                                                String sellerId= data['userId'];
+                                                DocumentReference docRefs=     await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').add({
+                                                  'bookId': notification[index]['bookId'],
+                                                  'orderId': notification[index]['orderId'],
+                                                  // 'price':price,
+                                                  'time': DateTime.timestamp(),
+                                                  'title': "Buyer has marked book order as not delivered",
+                                                  'userId': FirebaseAuth.instance.currentUser!.uid,
+                                                  'notificationType':'buyer'
+                                                });
+                                                await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').doc(docRefs.id).update({
+                                                  'notificationId': docRefs.id});
+                                                Get.back();
+                                              },
+                                              backgroundColor:
+                                              primaryColor.withOpacity(0.2),
+                                              textColor: whiteColor),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            }else{
+                              print("No seller notification");
+                            }
                           },
                           leading: Image.asset(
                             AppImages.notification,

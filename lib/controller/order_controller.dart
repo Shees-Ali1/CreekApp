@@ -52,6 +52,31 @@ class OrderController extends GetxController {
           'sellerApproval': true,
         });
         sellerApproval.value = true;
+     DocumentReference notiId  = await FirebaseFirestore.instance
+            .collection('userNotifications')
+            .doc(buyerId)
+            .collection('notifications')
+            .add({
+          'bookId': bookId,
+          'orderId': orderId,
+          // 'price':price,
+          'time': DateTime.timestamp(),
+          'title': "Seller has marked ${bookName} as delivered",
+          'userId': sellerId,
+          'notificationType':'seller'
+
+        });
+        await FirebaseFirestore.instance
+            .collection('userNotifications')
+            .doc(sellerId)
+            .collection('notifications').doc(notiId.id).update({
+          'notificationId':notiId.id
+
+        });
+
+          await notificationController.sendFcmMessage('Order Alert',
+              "Seller has marked ${bookName} as delivered", buyerId);
+
       } else {
         await FirebaseFirestore.instance
             .collection('orders')
@@ -60,6 +85,34 @@ class OrderController extends GetxController {
           'buyerApproval': true,
         });
         buyerApproval.value = true;
+     DocumentReference docId=   await FirebaseFirestore.instance
+            .collection('userNotifications')
+            .doc(sellerId)
+            .collection('notifications')
+            .add({
+          'bookId': bookId,
+          'orderId': orderId,
+          // 'price':price,
+          'time': DateTime.timestamp(),
+          'title': "Buyer has marked ${bookName} as delivered",
+          'userId': FirebaseAuth.instance.currentUser!.uid,
+          'notificationType':'buyer'
+
+        });
+        await FirebaseFirestore.instance
+            .collection('userNotifications')
+            .doc(sellerId)
+            .collection('notifications').doc(docId.id).update({
+          'notificationId':docId.id
+
+        });
+        // DocumentSnapshot usersnap = await FirebaseFirestore.instance.collection('userDetails').doc(buyerId).get();
+        // dynamic data = usersnap.data();
+        // String fcmToken = data['fcmToken'];
+        print(buyerId);
+          await notificationController.sendFcmMessage('Order Alert',
+              "Buyer has marked ${bookName} as Received", sellerId);
+
       }
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('orders')
@@ -90,40 +143,35 @@ class OrderController extends GetxController {
       await  storetransactionhistory(status['finalPrice'],'topup','Book Sold',sellerId);
       }
 
+
       // await FirebaseFirestore.instance
-      //     .collection('orders')
-      //     .doc(orderId)
-      //     .update({
-      //   'deliveryStatus': true,
+      //     .collection('userNotifications')
+      //     .doc(buyerId)
+      //     .collection('notifications')
+      //     .add({
+      //   'bookId': bookId,
+      //   'orderId': orderId,
+      //   // 'price':price,
+      //   'time': DateTime.timestamp(),
+      //   'title': "Seller has marked ${bookName} as delivered",
+      //   'userId': FirebaseAuth.instance.currentUser!.uid,
       // });
-      await FirebaseFirestore.instance
-          .collection('userNotifications')
-          .doc(buyerId)
-          .collection('notifications')
-          .add({
-        'bookId': bookId,
-        'orderId': orderId,
-        // 'price':price,
-        'time': DateTime.timestamp(),
-        'title': "Seller has marked ${bookName} as delivered",
-        'userId': FirebaseAuth.instance.currentUser!.uid,
-      });
-      DocumentSnapshot usersnap = await FirebaseFirestore.instance
-          .collection('userDetails')
-          .doc(buyerId == FirebaseAuth.instance.currentUser!.uid
-              ? sellerId
-              : buyerId)
-          .get();
-      dynamic data = usersnap.data();
-      String fcmToken = data['fcmToken'];
-      print(buyerId);
-      if (buyerId != FirebaseAuth.instance.currentUser!.uid) {
-        notificationController.sendFcmMessage('Order Alert',
-            "Seller has marked ${bookName} as delivered", buyerId);
-      } else {
-        notificationController.sendFcmMessage('Order Alert',
-            "Buyer has marked ${bookName} as Received", sellerId);
-      }
+      // DocumentSnapshot usersnap = await FirebaseFirestore.instance
+      //     .collection('userDetails')
+      //     .doc(buyerId == FirebaseAuth.instance.currentUser!.uid
+      //         ? sellerId
+      //         : buyerId)
+      //     .get();
+      // dynamic data = usersnap.data();
+      // String fcmToken = data['fcmToken'];
+      // print(buyerId);
+      // if (buyerId != FirebaseAuth.instance.currentUser!.uid) {
+      //   notificationController.sendFcmMessage('Order Alert',
+      //       "Seller has marked ${bookName} as delivered", buyerId);
+      // } else {
+      //   notificationController.sendFcmMessage('Order Alert',
+      //       "Buyer has marked ${bookName} as Received", sellerId);
+      // }
 
       isLoading.value = false;
     } catch (e) {
