@@ -55,6 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   .collection('userNotifications')
                   .doc(FirebaseAuth.instance.currentUser!.uid)
                   .collection('notifications')
+                  .orderBy('time', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -166,7 +167,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                         ),
                                         CustomButton(
                                             text: 'No, I have not recieved.',
-                                            onPressed: () {
+                                            onPressed: () async {
+
+                                              await FirebaseFirestore.instance
+                                                  .collection('orders')
+                                                  .doc(notification[index]
+                                              ['orderId'])
+                                                  .update({
+                                                'sellerApproval': false,
+                                                'deliveryStatus':false
+                                              });
                                               Get.back();
                                             },
                                             backgroundColor:
@@ -199,8 +209,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               const Spacer(),
                               LexendCustomText(
-                                text: "${price}",
-                                textColor: const Color(0xff78838D),
+                                text: "-${price}",
+                                textColor: Color(0xffD85454),
                                 fontWeight: FontWeight.w400,
                                 fontsize: 12.sp,
                               ),

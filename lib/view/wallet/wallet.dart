@@ -208,7 +208,7 @@ class _WalletState extends State<Wallet> {
                           ['purchaseType'] !=
                               'topup'?
                           Image.asset(
-                            AppImages.notification,
+                            AppImages.walmart,
                             height: 40.h,
                             width: 40.w,
                           ):Image.asset(
@@ -245,7 +245,7 @@ class _WalletState extends State<Wallet> {
                                   : SoraCustomText(
                                       text:
                                           "+\$${walletController.transaction[index]['purchasePrice']}",
-                                      textColor: greenColor,
+                                      textColor: Color(0xff289B4F),
                                       fontWeight: FontWeight.w400,
                                       fontsize: 12.sp,
                                     ),

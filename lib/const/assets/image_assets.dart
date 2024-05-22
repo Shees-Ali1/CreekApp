@@ -23,4 +23,5 @@ class AppImages {
   static const onlinedot = 'assets/images/onlinedot.png';
   static const upload = 'assets/images/upload.png';
   static const backbutton = 'assets/images/backbutton.png';
+  static const walmart = 'assets/images/walmart.png';
 }
