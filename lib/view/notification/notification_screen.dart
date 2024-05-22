@@ -157,6 +157,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                                   .update({
                                                 'buyerApproval': true,
                                               });
+                                              Get.back();
                                             },
                                             backgroundColor: primaryColor,
                                             textColor: whiteColor),

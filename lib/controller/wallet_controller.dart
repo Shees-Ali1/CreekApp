@@ -33,7 +33,9 @@ class WalletController extends GetxController {
 
   Future<void> updatebalance(int purchasePrice) async {
     try {
-      int newbalance = walletbalance.value - purchasePrice;
+      int appFees = (purchasePrice * 0.2).round();
+      int finalPrice = purchasePrice - appFees;
+      int newbalance = walletbalance.value - finalPrice;
       await FirebaseFirestore.instance
           .collection('wallet')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -107,4 +109,10 @@ class WalletController extends GetxController {
       return timeago.format(dateTime);
     }
   }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  //   fetchuserwallet();
+  // }
 }

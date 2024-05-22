@@ -306,6 +306,7 @@ class _EditProfileState extends State<EditProfile> {
                                     onPressed: () {
                                       userController
                                           .profileUpdate(nameController);
+
                                       if (passwordController.text !=
                                           userController.userPassword.value) {
                                         userController

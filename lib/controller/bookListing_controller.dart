@@ -260,6 +260,7 @@ String imageUrl='';
   Future<void> fetchUserBookListing() async {
     try {
       mySellListings.clear();
+      isLoading.value =true;
       QuerySnapshot listingsData = await FirebaseFirestore.instance
           .collection('booksListing')
           .where('sellerId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -283,11 +284,16 @@ String imageUrl='';
           });
         });
         print('Current User sell listings ${mySellListings}');
+
       } else {
         print("No user listings found");
       }
+      isLoading.value =false;
+
     } catch (e) {
       print("Error fetch user listings $e");
+      isLoading.value =false;
+
     }
   }
 
@@ -322,6 +328,8 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
 
      }
      else{
+       int appFees = (purchasePrice * 0.2).round();
+       int finalPrice = purchasePrice - appFees;
        // DocumentReference docRef=   await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').add({
        //   'bookId':listingId,
        //   'buyerId':FirebaseAuth.instance.currentUser!.uid,
@@ -337,7 +345,9 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
          'sellerId':sellerId,
          'buyerApproval':false,
          'sellerApproval':false,
-         'buyingprice':purchasePrice
+         'buyingprice':purchasePrice,
+         'appFees': appFees,
+         'finalPrice': finalPrice,
        });
        // await FirebaseFirestore.instance.collection('booksListing').doc(listingId).collection('orders').doc(docRef.id).set({
        //   'orderId':docRef.id
@@ -347,7 +357,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
          'orderId':docRef.id
        },SetOptions(merge: true)
        );
-       await walletController.updatebalance(purchasePrice);
+       await walletController.updatebalance(finalPrice);
        await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
          'userPurchases':FieldValue.arrayUnion([listingId]),
        },SetOptions(merge: true));
@@ -437,5 +447,12 @@ Future<void> getSellerData(String sellerId) async {
    print("Error fetching seller data $e");
  }
 }
+// @override
+//   void onInit() {
+//     // TODO: implement onInit
+//     super.onInit();
+//     fetchUserBookListing();
+//
+// }
 
 }

@@ -80,14 +80,14 @@ class OrderController extends GetxController {
               .doc(sellerId)
               .get();
           dynamic sellerwallet = snapshot.data();
-          int balance = sellerwallet['balance'] + status['buyingprice'];
+          int balance = sellerwallet['balance'] + status['finalPrice'];
 
           await FirebaseFirestore.instance
               .collection('wallet')
               .doc(sellerId)
               .update({'balance': balance});
         }
-      await  storetransactionhistory(status['buyingprice'],'topup','Book Sold',sellerId);
+      await  storetransactionhistory(status['finalPrice'],'topup','Book Sold',sellerId);
       }
 
       // await FirebaseFirestore.instance

@@ -31,40 +31,39 @@ class HomeScreenBooks extends StatefulWidget {
 }
 
 class _HomeScreenBooksState extends State<HomeScreenBooks> {
-  final HomeController homeController = Get.find<HomeController>();
+  final HomeController homeController = Get.put(HomeController());
   final UserController userController = Get.find<UserController>();
-  final BookListingController bookListingController = Get.find<BookListingController>();
+  final BookListingController bookListingController =
+      Get.find<BookListingController>();
   final WalletController walletController = Get.find();
 
   @override
   void initState() {
     // TODO: implement initState
+    print("home");
     super.initState();
-    bookListingController.fetchUserBookListing();
-    userController.fetchUserData();
+    userController.fetchUserData().then((value) =>     homeController.fetchAllListings());
+ bookListingController.fetchUserBookListing();
+  userController.approveProfileUpdate(FirebaseAuth.instance.currentUser!.uid);
     userController.checkIfAccountIsDeleted();
-    walletController.    fetchuserwallet();
+    walletController.fetchuserwallet();
 
   }
+
   @override
   Widget build(BuildContext context) {
-
-    // final TextEditingController bookController=TextEditingController();
     return Scaffold(
         appBar: CustomAppBarHome(
           homeController: homeController,
-           userController: userController,
+          userController: userController,
         ),
-
         resizeToAvoidBottomInset: false,
         // key: homeController.scaffoldKey,
         // drawer: MyDrawer(),
-        body: SingleChildScrollView(
+        body: Obx(() => userController.isLoading.value==false &&homeController.isLoading.value ==false?SingleChildScrollView(
           controller: homeController.scrollController,
-
           child: Column(
             children: [
-
               SizedBox(
                 height: 18.h,
               ),
@@ -214,6 +213,6 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
               ),
             ],
           ),
-        ));
+        ):Center(child: CircularProgressIndicator(color: primaryColor,))));
   }
 }

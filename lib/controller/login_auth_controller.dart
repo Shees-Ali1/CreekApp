@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Auth/login_view.dart';
 import '../Auth/signup_profile_pic.dart';
+import '../helper/loading.dart';
 
 class LoginAuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -40,11 +41,20 @@ class LoginAuthController extends GetxController {
         // SharedPreferences prefs  = await SharedPreferences.getInstance();
         // await prefs.setString('email', emailController.text);
         // await prefs.setString('password', passwordController.text);
-        signUpController.isLoading.value = false;
+      await  userController.fetchUserData();
+        await homeController.fetchAllListings();
+        await bookListingController.fetchUserBookListing();
+        await userController.approveProfileUpdate(FirebaseAuth.instance.currentUser!.uid);
+        await userController.checkIfAccountIsDeleted();
+        await  walletController.fetchuserwallet();
         Get.snackbar('Success', 'Login Success');
+      signUpController.isLoading.value = false;
+
+
         Get.offAll(const BottomNavBar());
         emailController.clear();
         passwordController.clear();
+
       } else {
         signUpController.isLoading.value = false;
 
@@ -87,6 +97,7 @@ class LoginAuthController extends GetxController {
   void checkUserLogin() async {
     try {
       if (FirebaseAuth.instance.currentUser?.uid != null) {
+
         Get.offAll(BottomNavBar());
       } else {
         Get.offAll(OnBoarding());

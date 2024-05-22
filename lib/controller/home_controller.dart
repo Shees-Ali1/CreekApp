@@ -69,12 +69,13 @@ class HomeController extends GetxController{
   //
   //
   // ].obs;
-
+RxBool isLoading = false.obs;
   RxList<Map<String, dynamic>> bookListing = <Map<String, dynamic>>[].obs;
   Future<void> fetchAllListings()async{
     try{
+      isLoading.value =true;
       bookListing.clear();
-      QuerySnapshot data= await FirebaseFirestore.instance.collection('booksListing').where('approval',isEqualTo: true).get();
+      QuerySnapshot data= await FirebaseFirestore.instance.collection('booksListing').where('approval',isEqualTo: true).where('bookClass',isEqualTo: classOption.value).get();
       data.docs.forEach((bookData) {
         bookListing.add({
           'bookImage': bookData['bookImage'],
@@ -92,10 +93,14 @@ class HomeController extends GetxController{
 
         });
       });
+      print(bookListing);
+      isLoading.value =false;
 
 
     }catch(e){
       print("Error fetching all listings $e");
+      isLoading.value =false;
+
     }
   }
   void removeBookListing(int index,String listingId) async{
@@ -170,8 +175,9 @@ class HomeController extends GetxController{
   bookSearchController.addListener(() {
     filterBooks();
   });
-  fetchAllListings();
+  // fetchAllListings();
   scrollController.addListener(_scrollListener);
+
 
   super.onInit();
   }

@@ -58,7 +58,7 @@ class BooksFilterBottomSheet extends StatelessWidget {
                   homeController.sliderValue.value = 50;
                   authorController.clear();
                   teacherController.clear();
-                  homeController.classOption.value = 'Class 10';
+                  // homeController.classOption.value = 'Class 10';
                   homeController.filteredBooks.value = homeController.bookListing;
                   homeController.update();
                   Get.back();

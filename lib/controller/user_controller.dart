@@ -15,7 +15,6 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserController extends GetxController {
-
   RxString userName = ''.obs;
   RxString userImage = ''.obs;
   RxString userEmail = ''.obs;
@@ -23,8 +22,7 @@ class UserController extends GetxController {
   RxString userPassword = ''.obs;
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   RxBool isLoading = false.obs;
-  RxBool verified=false.obs;
-
+  RxBool verified = false.obs;
 
   RxList<dynamic> userPurchases = [].obs;
   final HomeController homeController = Get.put(HomeController());
@@ -42,6 +40,7 @@ class UserController extends GetxController {
 
   Future<void> fetchUserData() async {
     try {
+      isLoading.value =true;
       if (FirebaseAuth.instance.currentUser != null) {
         // Reference to the users collection
         CollectionReference usersCollection =
@@ -62,7 +61,7 @@ class UserController extends GetxController {
 
           userImage.value = userInfo["userImage"] ?? "";
           userPurchases.value = userInfo['userPurchases'];
-
+print(  homeController.classOption.value);
           update();
         } else {
           // User not found
@@ -70,39 +69,122 @@ class UserController extends GetxController {
       } else {
         print("User not login");
       }
+      isLoading.value =false;
+
     } catch (e) {
       print('Error fetching user data: $e');
+      isLoading.value =false;
+
     } finally {
       update();
+    }
+  }
+
+  // Future<void> profileUpdate(TextEditingController nameController) async {
+  //   try {
+  //     isLoading.value = true;
+  //     await FirebaseFirestore.instance
+  //         .collection('userDetails')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
+  //         .update({
+  //       'userName': nameController.text.trim(),
+  //       'userSchool': homeController.classOption.value,
+  //     });
+  //     if (imageFile != null) {
+  //       String img =
+  //           await updateUserImage(FirebaseAuth.instance.currentUser!.uid);
+  //       await FirebaseFirestore.instance
+  //           .collection('userDetails')
+  //           .doc(FirebaseAuth.instance.currentUser!.uid)
+  //           .update({'userImage': img});
+  //       userImage.value = img;
+  //     }
+  //     userName.value = nameController.text;
+  //
+  //     Get.back();
+  //     Get.back();
+  //     isLoading.value = false;
+  //   } catch (e) {
+  //     print('Error Updateing Profile $e');
+  //   }
+  // }
+  Future<void> approveProfileUpdate(String userId) async {
+    try {
+      // Get pending updates
+      DocumentSnapshot pendingUpdates = await FirebaseFirestore.instance
+          .collection('pendingUserUpdates')
+          .doc(userId)
+          .get();
+      if (pendingUpdates.exists) {
+        Map<String, dynamic> update =
+            pendingUpdates.data() as Map<String, dynamic>;
+        bool approval = update['pendingApproval'];
+        if (approval == true) {
+          await FirebaseFirestore.instance
+              .collection('userDetails')
+              .doc(userId)
+              .update(
+            {
+              'userName': update['pendingUserName'],
+            },
+          );
+          if (update.containsKey('pendingUserImage') &&
+              update['pendingUserImage'] != '') {
+            await FirebaseFirestore.instance
+                .collection('userDetails')
+                .doc(userId)
+                .update(
+              {
+                'userImage': update['pendingUserImage'],
+              },
+            );
+          }
+
+          // Remove the pending updates after approval
+          await FirebaseFirestore.instance
+              .collection('pendingUserUpdates')
+              .doc(userId)
+              .delete();
+        }
+      }
+    } catch (e) {
+      print('Error Approving Profile Update $e');
     }
   }
 
   Future<void> profileUpdate(TextEditingController nameController) async {
     try {
       isLoading.value = true;
+      // Save pending changes for approval
       await FirebaseFirestore.instance
-          .collection('userDetails')
+          .collection('pendingUserUpdates')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({
-        'userName': nameController.text.trim(),
-        'userSchool': homeController.classOption.value,
+          .set({
+        'pendingUserName': nameController.text.trim(),
+        'pendingApproval': false, // Mark for approval
+        'timestamp': FieldValue.serverTimestamp(),
       });
+
+      // If there's an image, add it to the pending updates as well
       if (imageFile != null) {
         String img =
             await updateUserImage(FirebaseAuth.instance.currentUser!.uid);
         await FirebaseFirestore.instance
-            .collection('userDetails')
+            .collection('pendingUserUpdates')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({'userImage': img});
-        userImage.value = img;
+            .update({'pendingUserImage': img});
       }
-      userName.value = nameController.text;
+      Get.back();
+      Get.back();
 
-      Get.back();
-      Get.back();
+      // Inform the user that their request is pending approval
+      Get.snackbar('Profile Update',
+          'Your profile update is pending approval by the administrator.');
+
       isLoading.value = false;
     } catch (e) {
-      print('Error Updateing Profile $e');
+      print('Error Updating Profile $e');
+      isLoading.value = false;
     }
   }
 
@@ -125,7 +207,6 @@ class UserController extends GetxController {
       isLoading.value = false;
 
       return imageUrl;
-
     } catch (e) {
       print('Error uploading image to Firebase Storage: $e');
       throw e;
@@ -191,8 +272,6 @@ class UserController extends GetxController {
 //   }
 
   Future<void> changePassword(TextEditingController password) async {
-
-
     try {
       isLoading.value = true;
       final AuthCredential credential = EmailAuthProvider.credential(
@@ -298,15 +377,15 @@ class UserController extends GetxController {
     try {
       if (Platform.isIOS) {
         token = await FirebaseMessaging.instance.getAPNSToken();
-       if(FirebaseAuth.instance.currentUser !=null){
-         await FirebaseFirestore.instance
-             .collection('userDetails')
-             .doc(FirebaseAuth.instance.currentUser!.uid)
-             .set({'fcmToken': token}, SetOptions(merge: true));
-       }
+        if (FirebaseAuth.instance.currentUser != null) {
+          await FirebaseFirestore.instance
+              .collection('userDetails')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({'fcmToken': token}, SetOptions(merge: true));
+        }
       } else if (Platform.isAndroid) {
         token = await FirebaseMessaging.instance.getToken();
-        if(FirebaseAuth.instance.currentUser !=null){
+        if (FirebaseAuth.instance.currentUser != null) {
           await FirebaseFirestore.instance
               .collection('userDetails')
               .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -317,4 +396,13 @@ class UserController extends GetxController {
       print('Error Storing token');
     }
   }
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  //   approveProfileUpdate(FirebaseAuth.instance.currentUser!.uid);
+  //   fetchUserData();
+  //   checkIfAccountIsDeleted();
+  //
+  // }
 }
