@@ -128,6 +128,8 @@ class UserController extends GetxController {
               .update(
             {
               'userName': update['pendingUserName'],
+              'userSchool':update['pendinguserSchool']
+
             },
           );
           if (update.containsKey('pendingUserImage') &&
@@ -138,6 +140,7 @@ class UserController extends GetxController {
                 .update(
               {
                 'userImage': update['pendingUserImage'],
+
               },
             );
           }
@@ -163,6 +166,9 @@ class UserController extends GetxController {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({
         'pendingUserName': nameController.text.trim(),
+        'pendinguserSchool': homeController.classOption.value,
+
+
         'pendingApproval': false, // Mark for approval
         'timestamp': FieldValue.serverTimestamp(),
       });
