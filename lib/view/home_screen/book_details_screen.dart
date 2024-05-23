@@ -1,4 +1,5 @@
-import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import 'package:creekapp/const/color.dart';
 import 'package:creekapp/controller/bookListing_controller.dart';
@@ -39,6 +40,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   final HomeController homeController = Get.find<HomeController>();
   final UserController userController = Get.find<UserController>();
   final ChatController chatController = Get.find<ChatController>();
+  late final String formattedDate;
 
   @override
   void initState() {
@@ -48,10 +50,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     // bookListingController.checkUserBookOrder(widget.bookDetail['listingId'],widget.bookDetail['sellerId']);
     bookListingController.getSellerData(widget.bookDetail['sellerId']);
     super.initState();
+    Timestamp timestamp = widget.bookDetail['bookPosted'];
+    DateTime dateTime = timestamp.toDate();
+    formattedDate = DateFormat('MMMM dd, yyyy').format(dateTime);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -91,7 +97,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
                                 SizedBox(
                                     height: 84.h,
                                     width: 87.w,
@@ -157,6 +162,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         fontWeight: FontWeight.w500,
                         fontsize: 16.sp,
                       ),
+                      MontserratCustomText(
+                        text: formattedDate,
+                        textColor: Color(0xff919191),
+                        fontWeight: FontWeight.w500,
+                        fontsize: 16.sp,
+                      )
                       // MontserratCustomText(text: bookDetail['bookPosted'], textColor: lightColor, fontWeight: FontWeight.w500,fontsize: 16.sp,),
                     ],
                   ),
@@ -280,27 +291,27 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         )
                       : GestureDetector(
                           onTap: () {
-                           if( userController.verified.value == true){
-
-                            widget.bookDetail['sellerId'] !=
-                                    FirebaseAuth.instance.currentUser!.uid
-                                ? bookListingController.buyBook(
-                                    widget.bookDetail['listingId'],
-                                    widget.bookDetail['sellerId'],
-                                    context,
-                                    widget.bookDetail['bookName'],
-                                    widget.bookDetail['bookPrice'],widget.bookDetail['bookImage'])
-
-                                : widget.comingfromSellScreen == true
-                                    ? bookListingController
-                                        .removeListingfromSell(widget.index,
-                                            widget.bookDetail['listingId'])
-                                    : homeController.removeBookListing(
-                                        widget.index,
-                                        widget.bookDetail['listingId']);}
-                           else{
-                             Get.snackbar('Your Profile is UnderReview', 'Wait for Admin Approval');
-                           }
+                            if (userController.verified.value == true) {
+                              widget.bookDetail['sellerId'] !=
+                                      FirebaseAuth.instance.currentUser!.uid
+                                  ? bookListingController.buyBook(
+                                      widget.bookDetail['listingId'],
+                                      widget.bookDetail['sellerId'],
+                                      context,
+                                      widget.bookDetail['bookName'],
+                                      widget.bookDetail['bookPrice'],
+                                      widget.bookDetail['bookImage'])
+                                  : widget.comingfromSellScreen == true
+                                      ? bookListingController
+                                          .removeListingfromSell(widget.index,
+                                              widget.bookDetail['listingId'])
+                                      : homeController.removeBookListing(
+                                          widget.index,
+                                          widget.bookDetail['listingId']);
+                            } else {
+                              Get.snackbar('Your Profile is UnderReview',
+                                  'Wait for Admin Approval');
+                            }
                           },
                           child: Center(
                             child: Container(

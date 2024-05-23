@@ -12,7 +12,7 @@ class StripePaymentMethod {
   final WalletController walletController = Get.put(WalletController());
 
   Map<String, dynamic>? paymentIntents;
-  String secretKey="sk_test_51OnVQyCQaWi7YOjCkjZPjAVIcYc3WwAh5tUjx0NiTrVEMj0AcicGqxFoS7wrHWN4Y6fXiubOYcD53Uc6DDBXOICH00xTSJHCGr";
+  String secretKey="sk_test_51PF3XJBD4iwEMWA7nvI3hZ14p1gCIEI4dWzkhTliZkYafzBkm67TkPNwtn6vWwXXFPBaTZlchZpEdeRKICFZURj100ikoXKwel";
   String calculateAmount(String amount) {
     try {
       // Trim any leading or trailing whitespaces

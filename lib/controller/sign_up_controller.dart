@@ -1,28 +1,22 @@
-import 'dart:ffi';
 import 'dart:math';
 import 'package:creekapp/controller/home_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/Auth/verification.dart';
 import 'package:creekapp/controller/user_controller.dart';
-import 'package:creekapp/view/nav_bar/app_nav_bar.dart';
-import 'package:creekapp/widgets/custom_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
-
 import '../Auth/signup_profile_pic.dart';
 
 class SignUpController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final UserController userController =Get.put(UserController());
-  final HomeController homeController =Get.put(HomeController());
+  final UserController userController = Get.put(UserController());
+  final HomeController homeController = Get.put(HomeController());
   RxBool isChecked = false.obs;
   RxBool isLoading = false.obs;
   Future<void> sendEmailMessage(
@@ -55,7 +49,9 @@ class SignUpController extends GetxController {
 
   Future<void> sentCodeEmail() async {
     try {
-      if (emailController.text.isEmpty || nameController.text.isEmpty|| passwordController.text.isEmpty) {
+      if (emailController.text.isEmpty ||
+          nameController.text.isEmpty ||
+          passwordController.text.isEmpty) {
         Get.snackbar("Error", "Please Enter All Fields.");
       } else {
         isLoading.value = true;
@@ -134,7 +130,6 @@ class SignUpController extends GetxController {
       } else {
         Get.back();
 
-
         // Handle missing OTP entry in Firestore
         Get.snackbar("Error", "OTP not found");
         print('OTP not found');
@@ -156,24 +151,20 @@ class SignUpController extends GetxController {
       if (e.code == 'email-already-in-use') {
         Get.back();
 
-
         Get.snackbar(
             "Error", "The email address is already in use by another account.");
       } else if (e.code == "weak-password") {
         Get.back();
 
-        Get.snackbar(
-            "Weak Password", "Password must be greater than 6 characters and contains numbers & alphabets");
-      }
-      else {
+        Get.snackbar("Weak Password",
+            "Password must be greater than 6 characters and contains numbers & alphabets");
+      } else {
         Get.back();
 
         print('error auth $e');
-        Get.snackbar(
-            "Error", "${e.code}");
+        Get.snackbar("Error", "${e.code}");
       }
     } catch (e) {
-
       print("Error signing $e");
     }
   }
@@ -189,24 +180,21 @@ class SignUpController extends GetxController {
         'userPassword': passwordController.text,
         'userEmail': emailController.text,
         'userSchool': homeController.classOption.value,
-        'userImage':'',
+        'userImage': '',
         'verified': false,
-        'userPurchases':[]
-
-
-
-      },SetOptions(merge: true));
-      await FirebaseFirestore.instance.collection('wallet').doc(userId).set(
-          {
-            'balance':0,
-            'userId':userId,
-          },SetOptions(merge: true));
+        'userPurchases': []
+      }, SetOptions(merge: true));
+      await FirebaseFirestore.instance.collection('wallet').doc(userId).set({
+        'balance': 0,
+        'userId': userId,
+      }, SetOptions(merge: true));
       userController.userName.value = nameController.text;
       Get.offAll(SignupProfilePic());
     } catch (e) {
       print("Error storing user data $e");
     }
   }
+
   Future<String> uploadImage(String userId) async {
     try {
       isLoading.value = true;
@@ -218,7 +206,8 @@ class SignUpController extends GetxController {
           .child('$userId.jpg'); // You can customize the file name as needed
 
       // Upload the image
-      UploadTask uploadTask = storageReference.putFile(userController.imageFile!);
+      UploadTask uploadTask =
+          storageReference.putFile(userController.imageFile!);
       TaskSnapshot taskSnapshot = await uploadTask;
 
       // Get the download URL of the uploaded image
@@ -233,5 +222,4 @@ class SignUpController extends GetxController {
       throw e;
     }
   }
-
 }

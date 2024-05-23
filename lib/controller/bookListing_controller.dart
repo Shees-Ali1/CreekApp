@@ -357,7 +357,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
          'orderId':docRef.id
        },SetOptions(merge: true)
        );
-       await walletController.updatebalance(finalPrice);
+       await walletController.updatebalance(purchasePrice);
        await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).set({
          'userPurchases':FieldValue.arrayUnion([listingId]),
        },SetOptions(merge: true));
@@ -375,7 +375,7 @@ Future<void> buyBook(String listingId,String sellerId,BuildContext context,Strin
        );
        await notificationController.sendFcmMessage('New message', 'You got the order', sellerId);
 
-       await notificationController.storeNotification(50, docRef.id, listingId,bookName,'purchased');
+       await notificationController.storeNotification(purchasePrice, docRef.id, listingId,bookName,'purchased');
 
        await chatController.createChatConvo(listingId, docRef.id, bookName,sellerId,bookImage);
        await  chatController.getorderId(listingId);

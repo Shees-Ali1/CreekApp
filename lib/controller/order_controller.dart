@@ -68,14 +68,15 @@ class OrderController extends GetxController {
         });
         await FirebaseFirestore.instance
             .collection('userNotifications')
-            .doc(sellerId)
-            .collection('notifications').doc(notiId.id).update({
+            .doc(buyerId)
+            .collection('notifications').doc(notiId.id).set({
           'notificationId':notiId.id
 
-        });
+        },SetOptions(merge: true));
 
           await notificationController.sendFcmMessage('Order Alert',
               "Seller has marked ${bookName} as delivered", buyerId);
+
 
       } else {
         await FirebaseFirestore.instance
@@ -102,46 +103,49 @@ class OrderController extends GetxController {
         await FirebaseFirestore.instance
             .collection('userNotifications')
             .doc(sellerId)
-            .collection('notifications').doc(docId.id).update({
+            .collection('notifications').doc(docId.id).set({
           'notificationId':docId.id
 
-        });
+        },SetOptions(merge: true));
         // DocumentSnapshot usersnap = await FirebaseFirestore.instance.collection('userDetails').doc(buyerId).get();
         // dynamic data = usersnap.data();
         // String fcmToken = data['fcmToken'];
         print(buyerId);
           await notificationController.sendFcmMessage('Order Alert',
               "Buyer has marked ${bookName} as Received", sellerId);
+        DocumentSnapshot snapshot = await FirebaseFirestore.instance
+            .collection('orders')
+            .doc(orderId)
+            .get();
+        if (snapshot.exists) {
+          dynamic status = snapshot.data();
+          if (status['sellerApproval'] && status['buyerApproval'] == true) {
+            await FirebaseFirestore.instance
+                .collection('orders')
+                .doc(orderId)
+                .update({
+              'deliveryStatus': true,
+            });
+            orderStatus.value = true;
+            DocumentSnapshot snapshot = await FirebaseFirestore.instance
+                .collection('wallet')
+                .doc(sellerId)
+                .get();
+            dynamic sellerwallet = snapshot.data();
+            int balance = sellerwallet['balance'] + status['finalPrice'];
 
-      }
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('orders')
-          .doc(orderId)
-          .get();
-      if (snapshot.exists) {
-        dynamic status = snapshot.data();
-        if (status['sellerApproval'] && status['buyerApproval'] == true) {
-          await FirebaseFirestore.instance
-              .collection('orders')
-              .doc(orderId)
-              .update({
-            'deliveryStatus': true,
-          });
-          orderStatus.value = true;
-          DocumentSnapshot snapshot = await FirebaseFirestore.instance
-              .collection('wallet')
-              .doc(sellerId)
-              .get();
-          dynamic sellerwallet = snapshot.data();
-          int balance = sellerwallet['balance'] + status['finalPrice'];
+            await FirebaseFirestore.instance
+                .collection('wallet')
+                .doc(sellerId)
+                .update({'balance': balance});
+          }
+          await  storetransactionhistory(status['finalPrice'],'topup','Book Sold',sellerId);
 
-          await FirebaseFirestore.instance
-              .collection('wallet')
-              .doc(sellerId)
-              .update({'balance': balance});
         }
-      await  storetransactionhistory(status['finalPrice'],'topup','Book Sold',sellerId);
+
+
       }
+
 
 
       // await FirebaseFirestore.instance

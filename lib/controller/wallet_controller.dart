@@ -33,9 +33,9 @@ class WalletController extends GetxController {
 
   Future<void> updatebalance(int purchasePrice) async {
     try {
-      int appFees = (purchasePrice * 0.2).round();
-      int finalPrice = purchasePrice - appFees;
-      int newbalance = walletbalance.value - finalPrice;
+      // int appFees = (purchasePrice * 0.2).round();
+      // int finalPrice = purchasePrice - appFees;
+      int newbalance = walletbalance.value - purchasePrice;
       await FirebaseFirestore.instance
           .collection('wallet')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -85,6 +85,7 @@ class WalletController extends GetxController {
         .collection('transaction')
         .orderBy('purchaseDate', descending: true)
         .get();
+
     transaction.clear();
     data.docs.forEach((tran) {
       transaction.add({

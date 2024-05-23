@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:creekapp/controller/notification_controller.dart';
 import 'package:creekapp/controller/order_controller.dart';
-import 'package:creekapp/widgets/custom%20_backbutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -59,7 +57,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ));
                 } else if (snapshot.hasError) {
                   return Text("Snapshot Error");
                 } else if (snapshot.data!.docs.isEmpty) {
@@ -96,11 +97,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               EdgeInsets.only(left: 23.5, right: 24.w),
                           horizontalTitleGap: 8,
                           onTap: () {
-                            if(notification[index]['notificationType']=='seller'){
+                            if (notification[index]['notificationType'] ==
+                                'seller') {
                               showModalBottomSheet(
                                   backgroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.r)),
+                                      borderRadius:
+                                          BorderRadius.circular(20.r)),
                                   context: context,
                                   builder: (BuildContext context) {
                                     return SizedBox(
@@ -108,7 +111,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       height: 241.h,
                                       child: Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
                                           SizedBox(
                                             height: 20.h,
@@ -119,94 +122,259 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             decoration: BoxDecoration(
                                                 color: Colors.black,
                                                 borderRadius:
-                                                BorderRadius.circular(4.r)),
+                                                    BorderRadius.circular(4.r)),
                                           ),
                                           SizedBox(
                                             height: 20.h,
                                           ),
                                           Center(
                                               child: WorkSansCustomText(
-                                                text:
+                                            text:
                                                 'Seller has marked this sale as complete,\n     did you finish this transaction?”',
-                                                textColor: Colors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontsize: 16.sp,
-                                              )),
+                                            textColor: Colors.black,
+                                            fontWeight: FontWeight.w400,
+                                            fontsize: 16.sp,
+                                          )),
                                           SizedBox(
                                             height: 14.h,
                                           ),
                                           CustomButton(
-                                              text: 'Yes',
-                                              onPressed: () async {
+                                            text: 'Yes',
+                                            onPressed: () async {
+                                              // Fetch the current order document
+                                              DocumentSnapshot orderSnapshot =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('orders')
+                                                      .doc(notification[index]
+                                                          ['orderId'])
+                                                      .get();
+                                              dynamic orderData =
+                                                  orderSnapshot.data();
+
+                                              // Check if sellerApproval, buyerApproval, and deliveryStatus are all true
+                                              if (orderData['sellerApproval'] ==
+                                                      true &&
+                                                  orderData['buyerApproval'] ==
+                                                      true &&
+                                                  orderData['deliveryStatus'] ==
+                                                      true) {
+                                                // Exit the function early if all are true
+                                                print('alldata');
+                                                Get.back();
+                                                return;
+
+                                              } else {
                                                 // First true statuses both
                                                 await FirebaseFirestore.instance
                                                     .collection('orders')
-                                                    .doc(notification[index]['orderId']).update({
-                                                  'buyerApproval': true,'deliveryStatus':true});
-
-
-                                                // Store notification in seller id for successfull purchase
-                                                DocumentSnapshot docref =
-                                                await FirebaseFirestore.instance.collection('userNotifications').doc(FirebaseAuth.instance.currentUser!.uid)
-                                                    .collection('notifications').doc(notification[index]['notificationId']).get();
-                                                dynamic data=docref.data();
-                                                String sellerId= data['userId'];
-                                           DocumentReference docRefs=     await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').add({
-                                                  'bookId': notification[index]['bookId'],
-                                                  'orderId': notification[index]['orderId'],
-                                                  // 'price':price,
-                                                  'time': DateTime.timestamp(),
-                                                  'title': "Buyer has marked book order as delivered",
-                                                  'userId': FirebaseAuth.instance.currentUser!.uid,
-                                                  'notificationType':'buyer'
+                                                    .doc(notification[index]
+                                                        ['orderId'])
+                                                    .update({
+                                                  'buyerApproval': true,
+                                                  'deliveryStatus': true,
+                                                  'sellerApproval': true
                                                 });
-                                                 await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').doc(docRefs.id).update({
-                                                  'notificationId': docRefs.id});
 
-                                                Get.back();
-                                              },
-                                              backgroundColor: primaryColor,
-                                              textColor: whiteColor),
+                                                // Store notification in seller id for successful purchase
+                                                DocumentSnapshot docref =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection(
+                                                            'userNotifications')
+                                                        .doc(FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid)
+                                                        .collection(
+                                                            'notifications')
+                                                        .doc(notification[index]
+                                                            ['notificationId'])
+                                                        .get();
+                                                dynamic data = docref.data();
+                                                String sellerId =
+                                                    data['userId'];
+                                                DocumentReference docRefs =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection(
+                                                            'userNotifications')
+                                                        .doc(sellerId)
+                                                        .collection(
+                                                            'notifications')
+                                                        .add({
+                                                  'bookId': notification[index]
+                                                      ['bookId'],
+                                                  'orderId': notification[index]
+                                                      ['orderId'],
+                                                  // 'price':price,
+                                                  'time': DateTime
+                                                      .now(), // Corrected from DateTime.timestamp() to DateTime.now()
+                                                  'title':
+                                                      "Buyer has marked book order as delivered",
+                                                  'userId': FirebaseAuth
+                                                      .instance
+                                                      .currentUser!
+                                                      .uid,
+                                                  'notificationType': 'buyer',
+                                                });
+                                                await FirebaseFirestore.instance
+                                                    .collection(
+                                                        'userNotifications')
+                                                    .doc(sellerId)
+                                                    .collection('notifications')
+                                                    .doc(docRefs.id)
+                                                    .update({
+                                                  'notificationId': docRefs.id,
+                                                });
+
+                                                // Update the seller's wallet balance
+                                                DocumentSnapshot
+                                                    walletSnapshot =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('wallet')
+                                                        .doc(sellerId)
+                                                        .get();
+                                                dynamic sellerWallet =
+                                                    walletSnapshot.data();
+                                                int sellerNewBalance =
+                                                    sellerWallet['balance'] +
+                                                        orderData['finalPrice'];
+
+                                                await FirebaseFirestore.instance
+                                                    .collection('wallet')
+                                                    .doc(sellerId)
+                                                    .update({
+                                                  'balance': sellerNewBalance,
+                                                });
+                                              }
+
+                                              Get.back();
+                                            },
+                                            backgroundColor: primaryColor,
+                                            textColor: whiteColor,
+                                          ),
                                           SizedBox(
                                             height: 10.h,
                                           ),
                                           CustomButton(
-                                              text: 'No, I have not recieved.',
-                                              onPressed: () async {
-                                                // First false statuses both
-                                                await FirebaseFirestore.instance
-                                                    .collection('orders')
-                                                    .doc(notification[index]['orderId']).update({
-                                                  'buyerApproval': false,'deliveryStatus':false,'sellerApproval':false});
+                                            text: 'No, I have not received.',
+                                            onPressed: () async {
+                                              // Fetch the current order document
+                                              DocumentSnapshot orderSnapshot =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('orders')
+                                                      .doc(notification[index]
+                                                          ['orderId'])
+                                                      .get();
+                                              dynamic orderData =
+                                                  orderSnapshot.data();
 
-
-                                                // Store notification in seller id for successfull purchase
-                                                DocumentSnapshot docref =
-                                                await FirebaseFirestore.instance.collection('userNotifications').doc(FirebaseAuth.instance.currentUser!.uid)
-                                                    .collection('notifications').doc(notification[index]['notificationId']).get();
-                                                dynamic data=docref.data();
-                                                String sellerId= data['userId'];
-                                                DocumentReference docRefs=     await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').add({
-                                                  'bookId': notification[index]['bookId'],
-                                                  'orderId': notification[index]['orderId'],
-                                                  // 'price':price,
-                                                  'time': DateTime.timestamp(),
-                                                  'title': "Buyer has marked book order as not delivered",
-                                                  'userId': FirebaseAuth.instance.currentUser!.uid,
-                                                  'notificationType':'buyer'
-                                                });
-                                                await FirebaseFirestore.instance.collection('userNotifications').doc(sellerId).collection('notifications').doc(docRefs.id).update({
-                                                  'notificationId': docRefs.id});
+                                              // Check if sellerApproval, buyerApproval, and deliveryStatus are all false
+                                              if (orderData != null &&
+                                                  orderData['sellerApproval'] ==
+                                                      false &&
+                                                  orderData['buyerApproval'] ==
+                                                      false &&
+                                                  orderData['deliveryStatus'] ==
+                                                      false) {
+                                                // Exit the function early if all are false
+                                                print(
+                                                    "All conditions false, function will not proceed.");
                                                 Get.back();
-                                              },
-                                              backgroundColor:
-                                              primaryColor.withOpacity(0.2),
-                                              textColor: whiteColor),
+
+                                                return;
+                                              }
+
+                                              // First false statuses both
+                                              await FirebaseFirestore.instance
+                                                  .collection('orders')
+                                                  .doc(notification[index]
+                                                      ['orderId'])
+                                                  .update({
+                                                'buyerApproval': false,
+                                                'deliveryStatus': false,
+                                                'sellerApproval': false,
+                                              });
+
+                                              // Store notification in seller id for unsuccessful purchase
+                                              DocumentSnapshot docref =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection(
+                                                          'userNotifications')
+                                                      .doc(FirebaseAuth.instance
+                                                          .currentUser!.uid)
+                                                      .collection(
+                                                          'notifications')
+                                                      .doc(notification[index]
+                                                          ['notificationId'])
+                                                      .get();
+                                              dynamic data = docref.data();
+                                              String sellerId = data['userId'];
+                                              DocumentReference docRefs =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection(
+                                                          'userNotifications')
+                                                      .doc(sellerId)
+                                                      .collection(
+                                                          'notifications')
+                                                      .add({
+                                                'bookId': notification[index]
+                                                    ['bookId'],
+                                                'orderId': notification[index]
+                                                    ['orderId'],
+                                                'time': DateTime.now(),
+                                                'title':
+                                                    "Buyer has marked book order as not delivered",
+                                                'userId': FirebaseAuth
+                                                    .instance.currentUser!.uid,
+                                                'notificationType': 'buyer',
+                                              });
+                                              await FirebaseFirestore.instance
+                                                  .collection(
+                                                      'userNotifications')
+                                                  .doc(sellerId)
+                                                  .collection('notifications')
+                                                  .doc(docRefs.id)
+                                                  .update({
+                                                'notificationId': docRefs.id,
+                                              });
+
+                                              // Update the seller's wallet balance
+                                              DocumentSnapshot walletSnapshot =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('wallet')
+                                                      .doc(sellerId)
+                                                      .get();
+                                              dynamic sellerWallet =
+                                                  walletSnapshot.data();
+                                              int sellerNewBalance =
+                                                  sellerWallet['balance'] -
+                                                      orderData['finalPrice'];
+
+                                              await FirebaseFirestore.instance
+                                                  .collection('wallet')
+                                                  .doc(sellerId)
+                                                  .update({
+                                                'balance': sellerNewBalance,
+                                              });
+
+                                              Get.back();
+                                            },
+                                            backgroundColor:
+                                                primaryColor.withOpacity(0.2),
+                                            textColor: whiteColor,
+                                          )
                                         ],
                                       ),
                                     );
                                   });
-                            }else{
+                            } else {
                               print("No seller notification");
                             }
                           },
@@ -232,7 +400,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
                               const Spacer(),
                               LexendCustomText(
-                                text: "-${price}",
+                                text: "${price}",
                                 textColor: Color(0xffD85454),
                                 fontWeight: FontWeight.w400,
                                 fontsize: 12.sp,

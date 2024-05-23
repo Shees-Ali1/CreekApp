@@ -55,13 +55,15 @@ class UserController extends GetxController {
           userPurchases.clear();
           userName.value = userInfo["userName"] ?? "";
           userEmail.value = userInfo["userEmail"] ?? "";
+          verified.value = userInfo["verified"] ?? false;
+          userPurchases.value = userInfo['userPurchases'];
+
           homeController.classOption.value = userInfo["userSchool"] ?? "";
           userPassword.value = userInfo['userPassword'];
-          verified.value = userInfo["verified"] ?? false;
 
           userImage.value = userInfo["userImage"] ?? "";
-          userPurchases.value = userInfo['userPurchases'];
-print(  homeController.classOption.value);
+
+          print(  homeController.classOption.value);
           update();
         } else {
           // User not found
