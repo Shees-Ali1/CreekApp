@@ -14,72 +14,77 @@ class CustomerSupport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find();
-    return Scaffold(
-      appBar: CustomAppBar1(
-        homeController: homeController,
-        text: 'Customer Support',
-      ),
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LexendCustomText(
-                text: 'Topic',
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-                textColor: const Color(0xff1E1E1E),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              InputField(
-                // controller: emailController,
-                hint: 'Enter Your Topic',
-                keyboard: TextInputType.emailAddress,
-                hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              LexendCustomText(
-                text: 'Message',
-                fontWeight: FontWeight.w500,
-                fontsize: 16.sp,
-                textColor: const Color(0xff1E1E1E),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              InputField(
-                contentPadding: EdgeInsets.symmetric(vertical: 70.h,horizontal: 15.w),
-          
-                // controller: emailController,
-                hint: 'Enter Your Message',
-                keyboard: TextInputType.emailAddress,
-                hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Container(
-                width: double.infinity,
-                height: 58.h,
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(20.r),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: CustomAppBar1(
+          homeController: homeController,
+          text: 'Customer Support',
+        ),
+        body: Container(
+          margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LexendCustomText(
+                  text: 'Topic',
+                  fontWeight: FontWeight.w500,
+                  fontsize: 16.sp,
+                  textColor: const Color(0xff1E1E1E),
                 ),
-                child: Center(
-                  child: LexendCustomText(
-                    text: 'Send',
-                    fontWeight: FontWeight.w500,
-                    fontsize: 16.sp,
-                    textColor: whiteColor,
+                SizedBox(
+                  height: 8.h,
+                ),
+                InputField(
+                  // controller: emailController,
+                  hint: 'Enter Your Topic',
+                  keyboard: TextInputType.emailAddress,
+                  hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                LexendCustomText(
+                  text: 'Message',
+                  fontWeight: FontWeight.w500,
+                  fontsize: 16.sp,
+                  textColor: const Color(0xff1E1E1E),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                InputField(
+                  contentPadding: EdgeInsets.symmetric(vertical: 70.h,horizontal: 15.w),
+
+                  // controller: emailController,
+                  hint: 'Enter Your Message',
+                  keyboard: TextInputType.emailAddress,
+                  hintStyle: TextStyle(fontSize: 16.sp, color: Colors.black54),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 58.h,
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Center(
+                    child: LexendCustomText(
+                      text: 'Send',
+                      fontWeight: FontWeight.w500,
+                      fontsize: 16.sp,
+                      textColor: whiteColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

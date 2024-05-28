@@ -38,102 +38,107 @@ class Verification extends StatelessWidget {
           border: Border.all(color: primaryColor, width: 1.32),
           borderRadius: BorderRadius.circular(5.3.r)),
     );
-    return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 25.sp),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 46.h,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          AppImages.greencreekIcon,
-                          height: 168.h,
-                          width: 130.w,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+          body: SingleChildScrollView(
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25.sp),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 46.h,
                         ),
-                      ),
-                      SizedBox(
-                        height: 44.h,
-                      ),
-                      LexendCustomText(
-                        text: 'Verify Your Email',
-                        fontWeight: FontWeight.w700,
-                        fontsize: 26.sp,
-                        textColor: primaryColor,
-                      ),
-                      SizedBox(
-                        height: 11.h,
-                      ),
-                      LexendCustomText(
-                        textAlign: TextAlign.center,
-                        text:
-                            'Enter code that we have sent to your email\nyousafayub***',
-                        fontWeight: FontWeight.w400,
-                        fontsize: 12.36.sp,
-                        textColor: const Color(0xff8A8A8E),
-                      ),
-                      SizedBox(
-                        height: 43.h,
-                      ),
-                      Pinput(
-                        length: 4,
-                        keyboardType: TextInputType.number,
-                        closeKeyboardWhenCompleted: true,
-                        obscureText: false,
-                        controller: verifyController,
-                        defaultPinTheme: defaultPinTheme,
-                        focusedPinTheme: defaultPinTheme,
-                        submittedPinTheme: defaultPinTheme,
-                        textInputAction: TextInputAction.done,
-                        showCursor: true,
-                      ),
-                      SizedBox(
-                        height: 43.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LexendCustomText(
-                            text: 'Didn’t receive the code?',
-                            fontWeight: FontWeight.w400,
-                            fontsize: 12.sp,
-                            textColor: const Color(0xff3C3C43).withOpacity(0.6),
+                        Center(
+                          child: Image.asset(
+                            AppImages.greencreekIcon,
+                            height: 168.h,
+                            width: 130.w,
                           ),
-                          SizedBox(
-                            width: 6.w,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // CustomRoute.navigateTo(context,LoginView() );
-                            },
-                            child: LexendCustomText(
-                              text: 'Resend',
+                        ),
+                        SizedBox(
+                          height: 44.h,
+                        ),
+                        LexendCustomText(
+                          text: 'Verify Your Email',
+                          fontWeight: FontWeight.w700,
+                          fontsize: 26.sp,
+                          textColor: primaryColor,
+                        ),
+                        SizedBox(
+                          height: 11.h,
+                        ),
+                        LexendCustomText(
+                          textAlign: TextAlign.center,
+                          text:
+                              'Enter code that we have sent to your email\nyousafayub***',
+                          fontWeight: FontWeight.w400,
+                          fontsize: 12.36.sp,
+                          textColor: const Color(0xff8A8A8E),
+                        ),
+                        SizedBox(
+                          height: 43.h,
+                        ),
+                        Pinput(
+                          length: 4,
+                          keyboardType: TextInputType.number,
+                          closeKeyboardWhenCompleted: true,
+                          obscureText: false,
+                          controller: verifyController,
+                          defaultPinTheme: defaultPinTheme,
+                          focusedPinTheme: defaultPinTheme,
+                          submittedPinTheme: defaultPinTheme,
+                          textInputAction: TextInputAction.done,
+                          showCursor: true,
+                        ),
+                        SizedBox(
+                          height: 43.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LexendCustomText(
+                              text: 'Didn’t receive the code?',
                               fontWeight: FontWeight.w400,
                               fontsize: 12.sp,
-                              textColor: primaryColor,
+                              textColor: const Color(0xff3C3C43).withOpacity(0.6),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 69.h,
-                      ),
-                      CustomButton(
-                        text: 'Verify',
-                        onPressed: () {
-                          signUpController.verifyOtp(
-                            verifyController,email,
+                            SizedBox(
+                              width: 6.w,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // CustomRoute.navigateTo(context,LoginView() );
+                              },
+                              child: LexendCustomText(
+                                text: 'Resend',
+                                fontWeight: FontWeight.w400,
+                                fontsize: 12.sp,
+                                textColor: primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 69.h,
+                        ),
+                        CustomButton(
+                          text: 'Verify',
+                          onPressed: () {
+                            signUpController.verifyOtp(
+                              verifyController,email,
 
 
-                          );
-                          //  CustomRoute.navigateTo(context, SignupProfilePic());
-                        },
-                        backgroundColor: primaryColor, // Example color
-                        textColor: Colors.white,
-                      ),
-                    ]))));
+                            );
+                            //  CustomRoute.navigateTo(context, SignupProfilePic());
+                          },
+                          backgroundColor: primaryColor, // Example color
+                          textColor: Colors.white,
+                        ),
+                      ])))),
+    );
   }
 }

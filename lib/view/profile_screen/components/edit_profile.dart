@@ -304,16 +304,29 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
-                                      userController
-                                          .profileUpdate(nameController);
+                                      // Check if the name has changed before updating the profile
+                                      if (nameController.text !=
+                                          userController.userName.value) {
+                                        userController
+                                            .profileUpdate(nameController)
+                                            .then(
+                                                (value) => // Inform the user that their request is pending approval
+                                                    Get.snackbar(
+                                                        'Profile Update',
+                                                        'Your profile update is pending approval by the administrator.'));
+                                      }
 
-                                      if (passwordController.text !=
+                                      // Check if the password has changed before updating the password
+                                      else if (passwordController.text !=
                                           userController.userPassword.value) {
                                         userController
                                             .changePassword(passwordController);
                                       } else {
+                                        Get.back();
+                                        Get.back();
                                         print('No changes');
-
+                                        Get.snackbar(
+                                            'Profile Update', 'No Changes');
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -327,8 +340,8 @@ class _EditProfileState extends State<EditProfile> {
                                             BorderRadius.circular(20.r),
                                       ),
                                     ),
-                                    child: Obx(() =>
-                                        userController.isLoading.value
+                                    child:
+                                        Obx(() => userController.isLoading.value
                                             ? CircularProgressIndicator(
                                                 color: Colors.white,
                                               )

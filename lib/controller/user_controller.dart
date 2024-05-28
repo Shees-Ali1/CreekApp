@@ -185,9 +185,7 @@ class UserController extends GetxController {
       Get.back();
       Get.back();
 
-      // Inform the user that their request is pending approval
-      Get.snackbar('Profile Update',
-          'Your profile update is pending approval by the administrator.');
+
 
       isLoading.value = false;
     } catch (e) {
