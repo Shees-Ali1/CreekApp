@@ -118,10 +118,10 @@ class _HomeScreenBooksState extends State<HomeScreenBooks> {
                                         child: books['bookImage'] != ''
                                             ? Image.network(
                                           books['bookImage'].toString(),
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
                                         )
                                             : Container(
-                                          color: Colors.red,
+                                          color: primaryColor ,
                                         ),
                                       ),
                                     ),
