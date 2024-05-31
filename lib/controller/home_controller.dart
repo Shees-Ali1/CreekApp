@@ -75,7 +75,7 @@ RxBool isLoading = false.obs;
     try{
       isLoading.value =true;
       bookListing.clear();
-      QuerySnapshot data= await FirebaseFirestore.instance.collection('booksListing').where('approval',isEqualTo: true).where('bookClass',isEqualTo: classOption.value).get();
+      QuerySnapshot data= await FirebaseFirestore.instance.collection('booksListing').where('approval',isEqualTo: true).where('schoolName',isEqualTo: classOption.value).get();
       data.docs.forEach((bookData) {
         bookListing.add({
           'bookImage': bookData['bookImage'],
@@ -89,7 +89,8 @@ RxBool isLoading = false.obs;
           'sellerId': bookData['sellerId'] ?? "n/a",
           'bookDescription': bookData['bookDescription'],
           'approval': bookData['approval'],
-          'listingId':bookData['listingId']
+          'listingId':bookData['listingId'],
+          'schoolName':bookData['schoolName']
 
         });
       });

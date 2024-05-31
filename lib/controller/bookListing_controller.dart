@@ -129,7 +129,11 @@ class BookListingController extends GetxController {
           'sellerId': FirebaseAuth.instance.currentUser!.uid,
           'bookDescription': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing malesuada sed imperdiet pharetra, quis et a. Purus sed purus sed proin ornare integer proin lectus. Ut in purus mi, cursus integer et massa. Posuere turpis nulla odio eget auctor nulla lorem. ',
           'approval': false,
+
         });
+        DocumentSnapshot userSnap=   await FirebaseFirestore.instance.collection('userDetails').doc(FirebaseAuth.instance.currentUser!.uid).get();
+        dynamic userData=userSnap.data();
+        String schoolName=userData['userSchool'];
         await uploadBookImage(bookId.id);
         await FirebaseFirestore.instance
             .collection('booksListing')
@@ -137,6 +141,7 @@ class BookListingController extends GetxController {
             .set({
           'listingId': bookId.id,
          'bookImage': imageUrl,
+          'schoolName':schoolName
         }, SetOptions(merge: true));
         imageFile=null;
 
