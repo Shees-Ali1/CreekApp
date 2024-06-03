@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 import '../../const/assets/image_assets.dart';
 import '../../const/assets/svg_assets.dart';
+import '../../controller/sign_up_controller.dart';
 import '../../helper/stripe_payment.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_button.dart';
@@ -31,12 +32,16 @@ class _WalletState extends State<Wallet> {
   final WalletController walletController = Get.find<WalletController>();
   final StripePaymentMethod stripePaymentMethod = StripePaymentMethod();
   final TextEditingController amountcontroller = TextEditingController();
+  final SignUpController signUpController = Get.find();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     walletController.fetchuserwallet();
     walletController.transactionfetch();
+    
+    amountcontroller.clear();
   }
 
   @override
@@ -147,8 +152,10 @@ class _WalletState extends State<Wallet> {
                                     CustomButton(
                                         text: 'Next',
                                         onPressed: () {
+
+                                          signUpController.isLoading.value==false?
                                           stripePaymentMethod
-                                              .payment(amountcontroller.text);
+                                              .payment(amountcontroller.text):null;
                                         },
                                         backgroundColor: primaryColor,
                                         textColor: whiteColor),

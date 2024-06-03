@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:creekapp/const/color.dart';
+import 'package:creekapp/controller/sign_up_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import '../controller/wallet_controller.dart';
 
 class StripePaymentMethod {
   final WalletController walletController = Get.put(WalletController());
+  final SignUpController signUpController = Get.put(SignUpController());
 
   Map<String, dynamic>? paymentIntents;
   String secretKey="sk_test_51PF3XJBD4iwEMWA7nvI3hZ14p1gCIEI4dWzkhTliZkYafzBkm67TkPNwtn6vWwXXFPBaTZlchZpEdeRKICFZURj100ikoXKwel";
@@ -40,6 +42,7 @@ class StripePaymentMethod {
 
     /// creating payments intent
     try {
+      signUpController.isLoading.value=true;
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': 'USD',
@@ -54,11 +57,18 @@ class StripePaymentMethod {
           body: body);
 
       paymentIntents = jsonDecode(response.body);
+
       print("payment intents here");
       print(paymentIntents);
+
     } catch (e) {
+      signUpController.isLoading.value=false;
+
       throw Exception(e.toString());
+
     }
+    signUpController.isLoading.value=true;
+
 
     ///initialize payments sheet
     await Stripe.instance
@@ -85,10 +95,16 @@ class StripePaymentMethod {
                     shapes: PaymentSheetShape(
                       borderRadius: BorderSide.strokeAlignCenter,
                     ))))
-        .then((value) {})
+        .then((value) {
+
+    })
         .onError((error, stackTrace) {
       print(error.toString());
+      signUpController.isLoading.value=false;
+
     });
+    signUpController.isLoading.value=true;
+
 
     ///Display payment sheet
 
@@ -105,12 +121,20 @@ class StripePaymentMethod {
         Get.snackbar("Paid Successfully",'Amount is transferred to your wallet');
 
       });
+      signUpController.isLoading.value=false;
+
     } catch (e) {
+      signUpController.isLoading.value=false;
+
       if (kDebugMode) {
         print('payment Error $e');
       }
       Get.snackbar("Error", 'Payment Cancelled');
       throw Exception(e.toString());
+    }
+    finally{
+      signUpController.isLoading.value=false;
+
     }
   }
 }

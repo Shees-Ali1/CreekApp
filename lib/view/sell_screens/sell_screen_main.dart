@@ -78,7 +78,11 @@ class _SellScreenMainState extends State<SellScreenMain> {
                           const Duration(milliseconds: 500),
                           curve: Curves.easeIn,
                         )
-                            : Get.snackbar('Your Profile is UnderReview', 'Wait for Admin Approval');
+                            : Get.snackbar('Your Profile is UnderReview',
+                                           'Wait for Admin Approval',
+                                           colorText: Colors.black,
+                                           backgroundColor: Colors.white
+                        );
                       },
                       child: Container(
                           height: 39.h,
